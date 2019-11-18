@@ -1,0 +1,8 @@
+name: "Histórico del BOE"
+navbar:
+  title: "Histórico del BOE"
+  left:
+    - text: "Inicio"
+      href: index.html
+    - text: "BOE"
+      href: about.html

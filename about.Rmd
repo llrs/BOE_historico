@@ -1,0 +1,341 @@
+---
+title: "El Boe a vista de pájaro"
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = TRUE, collapse = TRUE, warning = FALSE)
+```
+
+```{r explorar, eval=FALSE, include=FALSE}
+library("xml2")
+library("BOE")
+f <- list.files("../BOE_sumario/", full.names = TRUE)
+df <- lapply(f, function(x){
+    xml <- read_xml(x)
+    tidy_sumario(xml)
+})
+dm <- sapply(df, dim)
+df_clean <- df[t(dm)[, 1] != 0]
+done <- sapply(seq_along(df_clean), function(x) {
+    file <- paste0(format(as.Date(df_clean[[x]][1, "date"], "%d/%m/%Y"), "%Y%m%d"), "_sumario.csv")
+    write.table(df_clean[[x]], file = paste0("../BOE_sumario/", file), 
+              quote = FALSE, sep = "\t", row.names = FALSE) 
+})
+dff <- do.call(rbind, df_clean)
+write.table(dff, "../BOE_sumario/till_20191117.csv", sep = "\t", quote = FALSE, row.names = FALSE)
+```
+
+# Preparación
+
+Aquí cargo las liberías que me ayudan a visualizar los datos. 
+También cargamos los datos del BOE del 2009/01/01 (fecha a partir de la qual lo que figure en la página web tiene validez legal) hasta el 2019/11/17:
+```{r cargar}
+library("data.table")
+library("dtplyr")
+library("dplyr")
+library("lubridate")
+library("gghighlight")
+library("ggplot2")
+library("forcats")
+
+dff <- fread("../BOE_sumario/till_20191117.csv", sep = "\t", quote = FALSE)
+dff <- dff %>% 
+    lazy_dt() %>% 
+    mutate(date = as.Date(date, format = "%d/%m/%Y"),
+           weekday = weekdays(date))
+```
+
+Por último le añadimos el día de la semana.
+
+# Sección
+
+Primeros datos: la sección a la que pertenece cada publicación. Tal y como explica en [un manual](https://www.boe.es/datosabiertos/documentos/SumariosBOE_v_1_0.pdf) del BOE, solo pueden ser 6 ( o 9 si contamos el desglose):
+
+ - 1. Disposiciones Generales 
+ - 2. Autoridades y Personal. 
+    - 2A. Nombramientos situaciones e incidencias 
+    - 2B. Oposiciones y concursos 
+ - 3. Otras secciones 
+ - 4. Administración de Justicia 
+ - 5. Anuncios.
+    - 5A. Licitaciones públicas y adjudicaciones
+    - 5B. Otros anuncios oficiales
+    - 5C. Anuncios particulares
+ - T. Tribunal constitucional
+
+Sin mucho detalle (por el momento) solo algunas graficas sobre que se publica, empezando por cuando hay publicaciones del tribunal consitucional:
+
+```{r seccion}
+df2 <- dff %>% 
+    group_by(date) %>% 
+    count(section)
+
+df2 %>%
+    as_tibble() %>% 
+    ggplot() +
+    geom_point(aes(date, n, col = section), alpha = 0.2) +
+    gghighlight(section == "T", use_direct_label = FALSE) +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    scale_y_continuous(expand = c(0, 10)) +
+    labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+    theme_bw()
+
+# From what section are the dates with more publications?
+df2 %>%
+    as_tibble() %>% 
+    ggplot() +
+    geom_point(aes(date, n, col = section), alpha = 0.7) +
+    gghighlight(n > 150, use_direct_label = FALSE) +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    scale_y_continuous(expand = c(0, 10)) +
+    labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+    theme_bw()
+
+# The section with higher prevalence
+dff %>% 
+    group_by(date, section) %>% 
+    summarise(n = n()) %>% 
+    mutate(publications = sum(n), ratio = n/publications) %>% 
+    ungroup() %>% 
+    group_by(date) %>% 
+    filter(ratio == max(ratio)) %>% 
+    as_tibble() %>% 
+    ggplot() +
+    geom_point(aes(date, publications, col = section, alpha = ratio)) +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    scale_y_continuous(expand = c(0, 10)) +
+    labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+    theme_bw()
+
+# An increase of a predominant section
+dff %>% 
+    group_by(date, section) %>% 
+    summarise(n = n()) %>% 
+    mutate(publications = sum(n), ratio = n/publications) %>% 
+    ungroup() %>% 
+    as_tibble() %>% 
+    ggplot() +
+    geom_point(aes(date, ratio, col = section)) +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    scale_y_continuous(expand = c(0, 0)) +
+    labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+    theme_bw()
+```
+ 
+
+# Departamento
+
+El departamento es el segundo desglose de la publicación. Cada departamento tiene un código que no parece que haya cambiado con el tiempo. 
+
+```{r departamento}
+
+df3 <- dff %>% 
+    group_by(date) %>% 
+    count(department)
+
+
+df3 %>%
+    as_tibble() %>% 
+    ggplot() +
+    geom_point(aes(date, n, col = department), alpha = 0.2) +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    scale_y_continuous(expand = c(0, 10)) +
+    labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+    guides(col = FALSE) +
+    scale_color_viridis_d() +
+    theme_bw()
+
+# From what section are the dates with more publications?
+# Juzgados de primera instancia e instruccion
+df3 %>%
+    as_tibble() %>% 
+    ggplot() +
+    geom_point(aes(date, n, col = department), alpha = 0.7) +
+    gghighlight(n > 150, use_direct_label = FALSE) +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    scale_y_continuous(expand = c(0, 10)) +
+    # guides(col = FALSE) +
+    scale_color_viridis_d() +
+    labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+    theme_bw()
+
+# The section with higher prevalence
+dff %>% 
+    group_by(date, department) %>% 
+    summarise(n = n()) %>% 
+    mutate(publications = sum(n), ratio = n/publications) %>% 
+    ungroup() %>% 
+    group_by(date) %>% 
+    filter(ratio == max(ratio)) %>% 
+    as_tibble() %>% 
+    ggplot() +
+    geom_point(aes(date, publications, col = department, alpha = ratio)) +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    scale_y_continuous(expand = c(0, 10)) +
+    guides(col = FALSE) +
+    scale_color_viridis_d() +
+    labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+    theme_bw()
+
+# An increase of a predominant department on 2013
+dff %>% 
+    group_by(date, department) %>% 
+    summarise(n = n()) %>% 
+    mutate(publications = sum(n), ratio = n/publications) %>% 
+    ungroup() %>% 
+    as_tibble() %>% 
+    ggplot() +
+    geom_point(aes(date, ratio, col = department)) +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    scale_y_continuous(expand = c(0, 0)) +
+    guides(col = FALSE) +
+    scale_color_viridis_d() +
+    labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+    theme_bw()
+```
+ 
+Aquí podemos ver que las universidades són el tercer departamento que más publicaciones ha generado (en el BOE) que científicas estamos en la primera línea mundial:
+ 
+```{r barplot, fig.height= 50, fig.width=40}
+dff %>% 
+    mutate(department = tolower(department)) %>% 
+    group_by(department) %>% 
+    count(sort = TRUE) %>% 
+    as_tibble() %>% 
+    ggplot() +
+    geom_col(aes(y= log10(n), x = fct_reorder(department, n), fill = log10(n))) +
+    scale_y_continuous(expand = c(0, 0)) +
+    coord_flip() +
+    guides(fill = FALSE) +
+    labs(x = "Departamento", y= "log10(Publicaciones)") +
+    scale_fill_viridis_c(option = "A", direction = -1) +
+    labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+    theme_bw() +
+    theme(text = element_text(size = 20))
+```
+
+
+# Epigrafe
+
+Los epígrafes solo los tienen las disposiciones, pero no especifíca que [nivel](https://dudaslegislativas.com/tipos-de-leyes-y-jerarquia-normativa/) tienen las disposiciones.
+
+```{r epigrafe}
+df4 <- dff %>% 
+    group_by(date) %>% 
+    filter(epigraf != "") %>% 
+    count(epigraf)
+
+
+df4 %>%
+    as_tibble() %>% 
+    ggplot() +
+    geom_point(aes(date, n, col = epigraf), alpha = 0.2) +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    scale_y_continuous(expand = c(0, 10)) +
+    labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+    guides(col = FALSE) +
+    scale_color_viridis_d() +
+    theme_bw()
+
+# The section with higher prevalence
+dff %>% 
+    filter(epigraf != "") %>% 
+    group_by(date, epigraf) %>% 
+    summarise(n = n()) %>% 
+    mutate(publications = sum(n), ratio = n/publications) %>% 
+    ungroup() %>% 
+    group_by(date) %>% 
+    filter(ratio == max(ratio)) %>% 
+    as_tibble() %>% 
+    ggplot() +
+    geom_point(aes(date, publications, col = epigraf, alpha = ratio)) +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    scale_y_continuous(expand = c(0, 10)) +
+    guides(col = FALSE) +
+    scale_color_viridis_d() +
+    labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+    theme_bw()
+
+dff %>% 
+    filter(epigraf != "") %>% 
+    group_by(date, epigraf) %>% 
+    summarise(n = n()) %>% 
+    mutate(publications = sum(n), ratio = n/publications) %>% 
+    ungroup() %>% 
+    as_tibble() %>% 
+    ggplot() +
+    geom_point(aes(date, ratio, col = epigraf)) +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    scale_y_continuous(expand = c(0, 0)) +
+    guides(col = FALSE) +
+    scale_color_viridis_d() +
+    labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+    theme_bw()
+    
+```
+ 
+# Texto
+
+Podemos buscar algunas palabras del breve resumen:
+
+```{r texto}
+text_search <- dff %>% 
+  mutate(Orden = grepl("^Orden ", text, ignore.case = FALSE),
+         Marco = grepl("marco", text, ignore.case = FALSE),
+         Errores = grepl("error", text, ignore.case = FALSE),
+         Anuncio = grepl("^Anuncio", text, ignore.case = FALSE),
+         Resolucion = grepl("^Resolución", text, ignore.case = FALSE),
+         ) 
+text_search %>%
+  select(Orden, Marco, Errores, Anuncio, Resolucion) %>% 
+  as_tibble() %>% 
+  as.matrix %>% 
+  colSums() %>% 
+  sort()
+```
+
+Parece que hay muchas publicaciones relacionadas con resoluciones y anuncio.
+ 
+# Número de páginas
+
+Por último las páginas publicadas:
+
+```{r pages}
+dff %>% 
+    group_by(sumario_code, weekday) %>% 
+    summarise(n = n(), total = sum(pages)) %>% 
+    ungroup() %>% 
+    as_tibble() %>% 
+    ggplot() +
+    geom_jitter(aes(fct_relevel(weekday, "lunes", "martes", "miércoles", 
+                                "jueves", "viernes", "sábado", "domingo"), 
+                    total)) +
+    labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado", 
+         x = element_blank(), y = "Páginas") +
+    theme_bw()
+
+dff %>% 
+  group_by(sumario_code) %>% 
+  summarise(n = n(), total = sum(pages), 
+            median = median(pages)) %>% 
+  mutate(pub_pages = total/n) %>% 
+  ungroup() %>% 
+  as_tibble() %>% 
+  ggplot() +
+  geom_point(aes(n, total, col = median)) +
+  labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado", 
+       x = "Publicaciones en el mismo día", y = "Total de páginas",
+       col = "Mediana de páginas") +
+  geom_abline(slope = 1, intercept = 0, col = "green") +
+  theme_bw()
+```
+
+En el último gráfico la línia indica la relación 1 página por publicación.
+
+
+# Conclusiones
+
+Mirar las publicaciones del BOE es una fuente interesante de notícias.
+ 
