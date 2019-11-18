@@ -1,0 +1,14 @@
+name: "Histórico del BOE"
+output_dir: docs
+navbar:
+  title: "Histórico del BOE"
+  left:
+    - text: "Inicio"
+      href: index.html
+    - text: "BOE"
+      href: about.html
+  right:
+    - icon: fa-twitter
+      href: https://twitter.com/intent/tweet?text=Thanks%20%40Lluis_Rev%20for%20your%20work%20on%20analyzing%20the%20BOE
+    - icon: fa-github
+      href: https://github.com/llrs/BOE_historico
