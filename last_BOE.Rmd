@@ -1,0 +1,39 @@
+---
+title: "last_BOE"
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r dates, include=FALSE}
+today <- Sys.Date()
+yesterday <- today -1
+```
+Esta página web contine el último sumario públicado en `r today`.
+
+```{r report, echo=FALSE}
+library("BOE")
+sumario_code <- sumario_xml(today) #Code needed to identify it online
+sumario_hoy <- tidy_sumario(get_xml(query_xml(sumario_code)))
+year <- format(today, "%Y")
+month <- format(today, "%m")
+day <- format(today, "%d")
+
+if (nrow(sumario_hoy) == 0) {
+    sumario_code <- sumario_xml(yesterday) #Code needed to identify it online
+    sumario_hoy <- tidy_sumario(get_xml(query_xml(sumario_code)))
+    year <- format(yesterday, "%Y")
+    month <- format(yesterday, "%m")
+    day <- format(yesterday, "%d")
+}
+s <- cbind(sumario_hoy, link = query_pdf(year, month, day, sumario_hoy$publication))
+s <- s[, -c(1, 2, 3, 4, 7, 10)]
+colnames(s) <- c("Sección", "Departamento", "Epígrafe", "Texto", "Páginas", "Link")
+knitr::kable(s, row.name = FALSE, knitr.kable.NA = '', format = "html", align = "c", row.names = TRUE)
+```
+
+

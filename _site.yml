@@ -5,8 +5,10 @@ navbar:
   left:
     - text: "Inicio"
       href: index.html
-    - text: "BOE"
-      href: about.html
+    - text: "Último BOE"
+      href: last_BOE.html
+    - text: "Vista de pájaro"
+      href: BOE.html
   right:
     - icon: fa-twitter
       href: https://twitter.com/intent/tweet?text=Thanks%20%40Lluis_Rev%20for%20your%20work%20on%20analyzing%20the%20BOE
