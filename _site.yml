@@ -9,6 +9,11 @@ navbar:
       href: last_BOE.html
     - text: "Vista de pájaro"
       href: BOE.html
+    - text: "Analysis"
+      icon: fa-chart-bar
+      menu:
+        - text: "Universidades"
+          href: universidades.html
   right:
     - icon: fa-twitter
       href: https://twitter.com/intent/tweet?text=Thanks%20%40Lluis_Rev%20for%20your%20work%20on%20analyzing%20the%20BOE

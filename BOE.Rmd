@@ -32,13 +32,15 @@ write.table(dff, "../BOE_sumario/till_20191117.csv", sep = "\t", quote = FALSE, 
 Aquí cargo las liberías que me ayudan a visualizar los datos. 
 También cargamos los datos del BOE del 2009/01/01 (fecha a partir de la qual lo que figure en la página web tiene validez legal) hasta el 2019/11/17:
 ```{r cargar, echo=FALSE}
-library("data.table")
-library("dtplyr")
-library("dplyr")
-library("lubridate")
-library("gghighlight")
-library("ggplot2")
-library("forcats")
+library("data.table", warn.conflicts = FALSE)
+library("dtplyr", warn.conflicts = FALSE)
+library("dplyr", warn.conflicts = FALSE)
+library("lubridate", warn.conflicts = FALSE)
+library("gghighlight", warn.conflicts = FALSE)
+library("ggplot2", warn.conflicts = FALSE)
+library("forcats", warn.conflicts = FALSE)
+library("tidyr", warn.conflicts = FALSE)
+library("stringr", warn.conflicts = FALSE)
 
 dff <- fread("../BOE_sumario/till_20191117.csv", sep = "\t", quote = FALSE)
 dff <- dff %>% 
@@ -339,8 +341,6 @@ En el último gráfico la línia indica la relación 1 página por publicación.
 Cada publicación tiene un código que va incrementandose según el tipo de publicación que sea.
 
 ```{r nbo, echo=FALSE}
-library("tidyr")
-library("stringr")
 coding <- dff %>% 
   mutate(Number = as.numeric(str_extract(publication, "[0-9]+$")),
          Year = as.numeric(str_extract(str_extract(publication, "-[0-9]+-"), "[0-9]+")),

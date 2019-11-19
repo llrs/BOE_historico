@@ -1,0 +1,118 @@
+---
+title: "¿Universidades en el BOE?"
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, echo = FALSE)
+```
+
+
+```{r setup_BOE}
+suppressPackageStartupMessages(library("data.table", warn.conflicts = FALSE))
+library("dtplyr", warn.conflicts = FALSE)
+library("dplyr", warn.conflicts = FALSE)
+library("lubridate", warn.conflicts = FALSE)
+library("gghighlight", warn.conflicts = FALSE)
+suppressPackageStartupMessages(library("ggplot2", warn.conflicts = FALSE))
+library("forcats", warn.conflicts = FALSE)
+library("stringr", warn.conflicts = FALSE)
+
+dff <- fread("../BOE_sumario/till_20191117.csv", sep = "\t", quote = FALSE)
+dff <- dff %>% 
+    lazy_dt() %>% 
+    mutate(date = as.Date(date, format = "%d/%m/%Y"),
+           weekday = weekdays(date))
+```
+
+
+```{r universities}
+unis <- dff %>% 
+    filter(department == "UNIVERSIDADES") %>% 
+    as_tibble()
+```
+
+Trabajamos solo con las universidades. ¿Por qué publican tanto en el BOE?
+
+# Disposiciones
+
+```{r disposiciones}
+unis %>% 
+    filter(!is.na(epigraf)) %>% 
+    count(epigraf, sort = TRUE) %>% 
+    top_n(7, n) %>% 
+    ggplot() +
+    geom_col(aes(fct_reorder(epigraf, -n), n)) +
+    labs(x = element_blank(), y = "Disposiciones") +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+unis %>% 
+    filter(!is.na(epigraf)) %>% 
+    count(section_number, sort = TRUE) %>% 
+    ggplot() +
+    geom_col(aes(fct_reorder(section_number, -n), n)) +
+    labs(x = element_blank(), y = "Disposiciones") +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+# Anuncios
+
+Cómo no hay epigrafe empezamos directamente por sección y luego el texto:
+
+```{r anuncios}
+unis %>% 
+    filter(is.na(epigraf)) %>% 
+    count(section_number, sort = TRUE) %>% 
+    mutate(s = str_extract(section_number, "[AB]\\. .+$")) %>% 
+    ggplot() +
+    geom_col(aes(fct_reorder(s, -n), n)) +
+    labs(x = element_blank(), y = "Anuncios") +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+extr <- unis %>% 
+    mutate(extravio = str_detect(text, "extrav[íi]o del? (un )?t[íi]tulo"),
+           epigraf = if_else(is.na(epigraf), "Anuncio", epigraf))
+extr %>% 
+    group_by(epigraf) %>% 
+    count(extravio, sort = TRUE) %>%
+    ungroup() %>% 
+    top_n(11, n) %>% 
+    ungroup() %>% 
+    ggplot() +
+    geom_col(aes(fct_reorder(epigraf, -n), n, fill = extravio)) + 
+    scale_fill_manual(values = c("TRUE" = "red", "FALSE" = "darkgray")) +
+    labs(fill = "Extravío títulos", x = element_blank(), y = "Publicaciones") +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+Mirando por fecha:
+```{r anuncios2}
+extr %>% 
+    count(date) %>% 
+    ggplot(aes(date, n)) +
+    geom_point() +
+    theme_bw() +
+    labs(x = element_blank(), y = "Publications")
+extr %>% 
+    count(Year = format(date, "%Y")) %>% 
+    ggplot(aes(Year, n)) +
+    geom_col() +
+    theme_bw() +
+    labs(x = element_blank(), y = "Publications")
+extr %>%
+    group_by(Year = format(date, "%Y"), extravio) %>% 
+    count() %>% 
+    group_by(Year) %>% 
+    ggplot(aes(Year, n, fill = extravio)) +
+    scale_fill_manual(values = c("FALSE" = "grey", "TRUE" = "red"), labels = c("TRUE" = "Sí", "FALSE" =  "No")) +
+    geom_col() +
+    theme_bw() +
+    labs(x = element_blank(), y = "Publications")
+```
+
+Record de extravíos en el 43% de publicaciones fueron por títulos extraviados.
