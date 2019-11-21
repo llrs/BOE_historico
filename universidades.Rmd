@@ -14,8 +14,8 @@ suppressPackageStartupMessages(library("data.table", warn.conflicts = FALSE))
 library("dtplyr", warn.conflicts = FALSE)
 library("dplyr", warn.conflicts = FALSE)
 library("lubridate", warn.conflicts = FALSE)
-library("gghighlight", warn.conflicts = FALSE)
 suppressPackageStartupMessages(library("ggplot2", warn.conflicts = FALSE))
+library("gghighlight", warn.conflicts = FALSE)
 library("forcats", warn.conflicts = FALSE)
 library("stringr", warn.conflicts = FALSE)
 
@@ -39,23 +39,25 @@ Trabajamos solo con las universidades. ¿Por qué publican tanto en el BOE?
 
 ```{r disposiciones}
 unis %>% 
-    filter(!is.na(epigraf)) %>% 
-    count(epigraf, sort = TRUE) %>% 
-    top_n(7, n) %>% 
-    ggplot() +
-    geom_col(aes(fct_reorder(epigraf, -n), n)) +
-    labs(x = element_blank(), y = "Disposiciones") +
-    theme_bw() +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  filter(!is.na(epigraf)) %>% 
+  count(epigraf, sort = TRUE) %>% 
+  top_n(7, n) %>% 
+  ggplot() +
+  geom_col(aes(fct_reorder(epigraf, -n), n)) +
+  labs(x = element_blank(), y = "Disposiciones") +
+  labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 unis %>% 
-    filter(!is.na(epigraf)) %>% 
-    count(section_number, sort = TRUE) %>% 
-    ggplot() +
-    geom_col(aes(fct_reorder(section_number, -n), n)) +
-    labs(x = element_blank(), y = "Disposiciones") +
-    theme_bw() +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  filter(!is.na(epigraf)) %>% 
+  count(section_number, sort = TRUE) %>% 
+  ggplot() +
+  geom_col(aes(fct_reorder(section_number, -n), n)) +
+  labs(x = element_blank(), y = "Disposiciones") +
+  theme_bw() +
+  labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
 # Anuncios
@@ -64,46 +66,51 @@ Cómo no hay epigrafe empezamos directamente por sección y luego el texto:
 
 ```{r anuncios}
 unis %>% 
-    filter(is.na(epigraf)) %>% 
-    count(section_number, sort = TRUE) %>% 
-    mutate(s = str_extract(section_number, "[AB]\\. .+$")) %>% 
-    ggplot() +
-    geom_col(aes(fct_reorder(s, -n), n)) +
-    labs(x = element_blank(), y = "Anuncios") +
-    theme_bw() +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  filter(is.na(epigraf)) %>% 
+  count(section_number, sort = TRUE) %>% 
+  mutate(s = str_extract(section_number, "[AB]\\. .+$")) %>% 
+  ggplot() +
+  geom_col(aes(fct_reorder(s, -n), n)) +
+  labs(x = element_blank(), y = "Anuncios") +
+  theme_bw() +
+  labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 extr <- unis %>% 
     mutate(extravio = str_detect(text, "extrav[íi]o del? (un )?t[íi]tulo"),
            epigraf = if_else(is.na(epigraf), "Anuncio", epigraf))
 extr %>% 
-    group_by(epigraf) %>% 
-    count(extravio, sort = TRUE) %>%
-    ungroup() %>% 
-    top_n(11, n) %>% 
-    ungroup() %>% 
-    ggplot() +
-    geom_col(aes(fct_reorder(epigraf, -n), n, fill = extravio)) + 
-    scale_fill_manual(values = c("TRUE" = "red", "FALSE" = "darkgray")) +
-    labs(fill = "Extravío títulos", x = element_blank(), y = "Publicaciones") +
-    theme_bw() +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  group_by(epigraf) %>% 
+  count(extravio, sort = TRUE) %>%
+  ungroup() %>% 
+  top_n(11, n) %>% 
+  ungroup() %>% 
+  ggplot() +
+  geom_col(aes(fct_reorder(epigraf, -n), n, fill = extravio)) + 
+  scale_fill_manual(values = c("TRUE" = "red", "FALSE" = "darkgray")) +
+  labs(fill = "Extravío títulos", x = element_blank(), y = "Publicaciones",
+       caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
 Mirando por fecha:
+
 ```{r anuncios2}
 extr %>% 
     count(date) %>% 
     ggplot(aes(date, n)) +
     geom_point() +
     theme_bw() +
-    labs(x = element_blank(), y = "Publications")
+    labs(x = element_blank(), y = "Publications",
+         caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado")
 extr %>% 
     count(Year = format(date, "%Y")) %>% 
     ggplot(aes(Year, n)) +
     geom_col() +
     theme_bw() +
-    labs(x = element_blank(), y = "Publications")
+    labs(x = element_blank(), y = "Publications",
+         caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado")
 extr %>%
     group_by(Year = format(date, "%Y"), extravio) %>% 
     count() %>% 
@@ -112,7 +119,8 @@ extr %>%
     scale_fill_manual(values = c("FALSE" = "grey", "TRUE" = "red"), labels = c("TRUE" = "Sí", "FALSE" =  "No")) +
     geom_col() +
     theme_bw() +
-    labs(x = element_blank(), y = "Publications")
+    labs(x = element_blank(), y = "Publications",
+         caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado")
 ```
 
 Record de extravíos en el 43% de publicaciones fueron por títulos extraviados.

@@ -1,5 +1,5 @@
 ---
-title: "last_BOE"
+title: "Lo último del BOE"
 editor_options: 
   chunk_output_type: console
 ---

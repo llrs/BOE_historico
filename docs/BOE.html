@@ -282,6 +282,23 @@ $(document).ready(function () {
 <li>
   <a href="BOE.html">Vista de pájaro</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-chart-bar"></span>
+     
+    Analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="universidades.html">Universidades</a>
+    </li>
+    <li>
+      <a href="cartas_naturaleza.html">Cartas de naturaleza</a>
+    </li>
+  </ul>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -309,31 +326,22 @@ $(document).ready(function () {
 
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#preparación">Preparación</a></li>
+<li><a href="#sección">Sección</a></li>
+<li><a href="#departamento">Departamento</a></li>
+<li><a href="#epigrafe">Epigrafe</a></li>
+<li><a href="#texto">Texto</a></li>
+<li><a href="#número-de-páginas">Número de páginas</a></li>
+<li><a href="#relación-entre-boletines-y-códigos-publicaciones">Relación entre boletines y códigos publicaciones</a></li>
+<li><a href="#conclusiones">Conclusiones</a></li>
+</ul>
+</div>
 
 <div id="preparación" class="section level1">
 <h1>Preparación</h1>
 <p>Aquí cargo las liberías que me ayudan a visualizar los datos. También cargamos los datos del BOE del 2009/01/01 (fecha a partir de la qual lo que figure en la página web tiene validez legal) hasta el 2019/11/17:</p>
-<pre><code>## 
-## Attaching package: &#39;dplyr&#39;
-## The following objects are masked from &#39;package:data.table&#39;:
-## 
-##     between, first, last
-## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     filter, lag
-## The following objects are masked from &#39;package:base&#39;:
-## 
-##     intersect, setdiff, setequal, union
-## 
-## Attaching package: &#39;lubridate&#39;
-## The following objects are masked from &#39;package:data.table&#39;:
-## 
-##     hour, isoweek, mday, minute, month, quarter, second, wday, week,
-##     yday, year
-## The following object is masked from &#39;package:base&#39;:
-## 
-##     date
-## Loading required package: ggplot2</code></pre>
 <p>Por último le añadimos el día de la semana.</p>
 </div>
 <div id="sección" class="section level1">
