@@ -1,5 +1,8 @@
 ---
 title: "El Boe a vista de pájaro"
+output:
+  html_document:
+    toc: true
 editor_options: 
   chunk_output_type: console
 ---
