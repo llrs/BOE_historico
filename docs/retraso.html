@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Tiempo entre decreto y publicación</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Histórico del BOE</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="last_BOE.html">Último BOE</a>
+</li>
+<li>
+  <a href="BOE.html">Vista de pájaro</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-chart-bar"></span>
+     
+    Analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="universidades.html">Universidades</a>
+    </li>
+    <li>
+      <a href="cartas_naturaleza.html">Cartas de naturaleza</a>
+    </li>
+    <li>
+      <a href="retraso.html">Retrasos</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://twitter.com/intent/tweet?text=Thanks%20%40Lluis_Rev%20for%20your%20work%20on%20analyzing%20the%20BOE">
+    <span class="fa fa-twitter"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/llrs/BOE_historico">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Tiempo entre decreto y publicación</h1>
+
+</div>
+
+
+<div id="dias-de-retraso" class="section level1">
+<h1>Dias de retraso</h1>
+<p>Las publicaciones suelen ser efectivas a partir del momento de publicación por eso es importante ver si hay retrasos entre aprovación y publicación.</p>
+<p><img src="retraso_files/figure-html/pressure-1.png" width="672" /><img src="retraso_files/figure-html/pressure-2.png" width="672" /></p>
+<p>Hay algunas fechas que estan escritas en vez de usar números:</p>
+<pre><code>## [1] &quot;Instrumento de Ratificación del Protocolo número 13 al Convenio para la protección de los Derechos Humanos y las Libertades Fundamentales, relativo a la abolición de la pena de muerte en todas las circunstancias, hecho en Vilna el tres de mayo de dos mil dos.&quot;                                                                                        
+## [2] &quot;Instrumento de Ratificación del Convenio Civil sobre la Corrupción (número 174 del Consejo de Europa) hecho en Estrasburgo el cuatro de noviembre de mil novecientos noventa y nueve.&quot;                                                                                                                                                                      
+## [3] &quot;Conflicto positivo de competencia n.º 6862-2012, contra la decisión del Gobierno Vasco de fecha indeterminada por la que acuerda que los trabajadores del sector público vasco cobren la paga extraordinaria de diciembre de 2012, \&quot;así como respecto a las actuaciones o disposiciones que apliquen este criterio\&quot;.&quot;                                     
+## [4] &quot;Conflicto positivo de competencia n.º 6862-2012, contra la Decisión del Gobierno Vasco, de fecha indeterminada, por la que acuerda que los trabajadores del sector público vasco cobren la paga extraordinaria de diciembre de 2012, \&quot;así como respecto a las actuaciones o disposiciones que apliquen este criterio\&quot;.&quot;                                   
+## [5] &quot;Intercambio de Cartas constitutivo de Acuerdo Administrativo Internacional entre el Reino de España y el Organismo Internacional de Energía Atómica (OIEA) para la celebración de un Taller Internacional sobre Cultura de la Seguridad Física Nuclear, del 29 de febrero al 4 de marzo de 2016, hecho en Viena el 20 de octubre y 24 de noviembre de 2015.&quot;</code></pre>
+<p>Hay una publicación del 30 de marzo de 2010 que por fecha pone “el tres de mayo de dos mil dos”! y otras dos que no se sabe el dia que se tomaron y una con demasiadas fechas como para saber con exactitud que pasó.</p>
+<p>También hay publicaciones que han tardado mucho en salir, o que hacen referencia a fechas muy anteriores (más de un año) :</p>
+<p>Hay unas 1094 publicaciones donde las que la diferencia es de más de un año, algunas porque hay varias fechas (error mío), otras estan bien, se aprueban en 2019 cosas de 2007 o similares.</p>
+<p>Sorprendentemente hay publicaciones que se han aprobado el mismo día:</p>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Fecha
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Sección
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Departamento
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Epígrafe
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Texto
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:center;">
+2009-03-29
+</td>
+<td style="text-align:center;">
+I. Disposiciones generales
+</td>
+<td style="text-align:center;">
+JEFATURA DEL ESTADO
+</td>
+<td style="text-align:center;">
+Medidas financieras
+</td>
+<td style="text-align:center;">
+Real Decreto-ley 4/2009, de 29 de marzo, por el que se autoriza la concesión de garantías derivadas de la financiación que pueda otorgar el Banco de España a favor de Caja de Ahorros de Castilla-La Mancha.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:center;">
+2009-04-07
+</td>
+<td style="text-align:center;">
+I. Disposiciones generales
+</td>
+<td style="text-align:center;">
+PRESIDENCIA DEL GOBIERNO
+</td>
+<td style="text-align:center;">
+Organización
+</td>
+<td style="text-align:center;">
+Real Decreto 542/2009, de 7 de abril, por el que se reestructuran los departamentos ministeriales.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:center;">
+2009-04-07
+</td>
+<td style="text-align:center;">
+I. Disposiciones generales
+</td>
+<td style="text-align:center;">
+PRESIDENCIA DEL GOBIERNO
+</td>
+<td style="text-align:center;">
+Organización
+</td>
+<td style="text-align:center;">
+Real Decreto 543/2009, de 7 de abril, sobre las Vicepresidencias del Gobierno.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:center;">
+2009-04-07
+</td>
+<td style="text-align:center;">
+<ol start="2" style="list-style-type: upper-roman">
+<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+</td>
+<td style="text-align:center;">
+PRESIDENCIA DEL GOBIERNO
+</td>
+<td style="text-align:center;">
+Ceses
+</td>
+<td style="text-align:center;">
+Real Decreto 544/2009, de 7 de abril, por el que se dispone el cese de don Pedro Solbes Mira como Vicepresidente Segundo del Gobierno.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:center;">
+2009-04-07
+</td>
+<td style="text-align:center;">
+<ol start="2" style="list-style-type: upper-roman">
+<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+</td>
+<td style="text-align:center;">
+PRESIDENCIA DEL GOBIERNO
+</td>
+<td style="text-align:center;">
+Ceses
+</td>
+<td style="text-align:center;">
+Real Decreto 545/2009, de 7 de abril, por el que se declara el cese de don Manuel Chaves González como Presidente de la Junta de Andalucía.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:center;">
+2009-04-07
+</td>
+<td style="text-align:center;">
+<ol start="2" style="list-style-type: upper-roman">
+<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+</td>
+<td style="text-align:center;">
+PRESIDENCIA DEL GOBIERNO
+</td>
+<td style="text-align:center;">
+Ceses
+</td>
+<td style="text-align:center;">
+Real Decreto 546/2009, de 7 de abril, por el que se dispone el cese de don Pedro Solbes Mira como Ministro de Economía y Hacienda.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:center;">
+2009-04-07
+</td>
+<td style="text-align:center;">
+<ol start="2" style="list-style-type: upper-roman">
+<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+</td>
+<td style="text-align:center;">
+PRESIDENCIA DEL GOBIERNO
+</td>
+<td style="text-align:center;">
+Ceses
+</td>
+<td style="text-align:center;">
+Real Decreto 547/2009, de 7 de abril, por el que se dispone el cese de doña Magdalena Álvarez Arza como Ministra de Fomento.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:center;">
+2009-04-07
+</td>
+<td style="text-align:center;">
+<ol start="2" style="list-style-type: upper-roman">
+<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+</td>
+<td style="text-align:center;">
+PRESIDENCIA DEL GOBIERNO
+</td>
+<td style="text-align:center;">
+Ceses
+</td>
+<td style="text-align:center;">
+Real Decreto 548/2009, de 7 de abril, por el que se dispone el cese de doña Mercedes Cabrera Calvo-Sotelo como Ministra de Educación, Política Social y Deporte.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:center;">
+2009-04-07
+</td>
+<td style="text-align:center;">
+<ol start="2" style="list-style-type: upper-roman">
+<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+</td>
+<td style="text-align:center;">
+PRESIDENCIA DEL GOBIERNO
+</td>
+<td style="text-align:center;">
+Ceses
+</td>
+<td style="text-align:center;">
+Real Decreto 549/2009, de 7 de abril, por el que se dispone el cese de doña Elena Salgado Méndez como Ministra de Administraciones Públicas.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:center;">
+2009-04-07
+</td>
+<td style="text-align:center;">
+<ol start="2" style="list-style-type: upper-roman">
+<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+</td>
+<td style="text-align:center;">
+PRESIDENCIA DEL GOBIERNO
+</td>
+<td style="text-align:center;">
+Ceses
+</td>
+<td style="text-align:center;">
+Real Decreto 550/2009, de 7 de abril, por el que se dispone el cese de don César Antonio Molina Sánchez como Ministro de Cultura.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+11
+</td>
+<td style="text-align:center;">
+2009-04-07
+</td>
+<td style="text-align:center;">
+<ol start="2" style="list-style-type: upper-roman">
+<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+</td>
+<td style="text-align:center;">
+PRESIDENCIA DEL GOBIERNO
+</td>
+<td style="text-align:center;">
+Ceses
+</td>
+<td style="text-align:center;">
+Real Decreto 551/2009, de 7 de abril, por el que se dispone el cese de don Bernat Soria Escoms como Ministro de Sanidad y Consumo.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:center;">
+2009-04-07
+</td>
+<td style="text-align:center;">
+<ol start="2" style="list-style-type: upper-roman">
+<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+</td>
+<td style="text-align:center;">
+PRESIDENCIA DEL GOBIERNO
+</td>
+<td style="text-align:center;">
+Nombramientos
+</td>
+<td style="text-align:center;">
+Real Decreto 552/2009, de 7 de abril, por el que se nombra Vicepresidenta Segunda del Gobierno a doña Elena Salgado Méndez.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+13
+</td>
+<td style="text-align:center;">
+2009-04-07
+</td>
+<td style="text-align:center;">
+<ol start="2" style="list-style-type: upper-roman">
+<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+</td>
+<td style="text-align:center;">
+PRESIDENCIA DEL GOBIERNO
+</td>
+<td style="text-align:center;">
+Nombramientos
+</td>
+<td style="text-align:center;">
+Real Decreto 553/2009, de 7 de abril, por el que se nombra Vicepresidente Tercero del Gobierno a don Manuel Chaves González.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+14
+</td>
+<td style="text-align:center;">
+2009-04-07
+</td>
+<td style="text-align:center;">
+<ol start="2" style="list-style-type: upper-roman">
+<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+</td>
+<td style="text-align:center;">
+PRESIDENCIA DEL GOBIERNO
+</td>
+<td style="text-align:center;">
+Nombramientos
+</td>
+<td style="text-align:center;">
+Real Decreto 554/2009, de 7 de abril, por el que se nombra Ministra de Economía y Hacienda a doña Elena Salgado Méndez.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+15
+</td>
+<td style="text-align:center;">
+2009-04-07
+</td>
+<td style="text-align:center;">
+<ol start="2" style="list-style-type: upper-roman">
+<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+</td>
+<td style="text-align:center;">
+PRESIDENCIA DEL GOBIERNO
+</td>
+<td style="text-align:center;">
+Nombramientos
+</td>
+<td style="text-align:center;">
+Real Decreto 555/2009, de 7 de abril, por el que se nombra Ministro de Fomento a don José Blanco López.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+16
+</td>
+<td style="text-align:center;">
+2009-04-07
+</td>
+<td style="text-align:center;">
+<ol start="2" style="list-style-type: upper-roman">
+<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+</td>
+<td style="text-align:center;">
+PRESIDENCIA DEL GOBIERNO
+</td>
+<td style="text-align:center;">
+Nombramientos
+</td>
+<td style="text-align:center;">
+Real Decreto 556/2009, de 7 de abril, por el que se nombra Ministro de Educación a don Ángel Gabilondo Pujol.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+17
+</td>
+<td style="text-align:center;">
+2009-04-07
+</td>
+<td style="text-align:center;">
+<ol start="2" style="list-style-type: upper-roman">
+<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+</td>
+<td style="text-align:center;">
+PRESIDENCIA DEL GOBIERNO
+</td>
+<td style="text-align:center;">
+Nombramientos
+</td>
+<td style="text-align:center;">
+Real Decreto 557/2009, de 7 de abril, por el que se nombra Ministro de Política Territorial a don Manuel Chaves González.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:center;">
+2009-04-07
+</td>
+<td style="text-align:center;">
+<ol start="2" style="list-style-type: upper-roman">
+<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+</td>
+<td style="text-align:center;">
+PRESIDENCIA DEL GOBIERNO
+</td>
+<td style="text-align:center;">
+Nombramientos
+</td>
+<td style="text-align:center;">
+Real Decreto 558/2009, de 7 de abril, por el que se nombra Ministra de Cultura a doña Ángeles González Sinde.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+19
+</td>
+<td style="text-align:center;">
+2009-04-07
+</td>
+<td style="text-align:center;">
+<ol start="2" style="list-style-type: upper-roman">
+<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+</td>
+<td style="text-align:center;">
+PRESIDENCIA DEL GOBIERNO
+</td>
+<td style="text-align:center;">
+Nombramientos
+</td>
+<td style="text-align:center;">
+Real Decreto 559/2009, de 7 de abril, por el que se nombra Ministra de Sanidad y Política Social a doña Trinidad Jiménez García-Herrera.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+20
+</td>
+<td style="text-align:center;">
+2009-07-08
+</td>
+<td style="text-align:center;">
+<ol start="2" style="list-style-type: upper-roman">
+<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+</td>
+<td style="text-align:center;">
+MINISTERIO DE JUSTICIA
+</td>
+<td style="text-align:center;">
+Nombramientos
+</td>
+<td style="text-align:center;">
+Orden JUS/1813/2009, de 8 de julio, por la que se nombran Abogados Fiscales a los alumnos del Centro de Estudios Jurídicos, correspondientes a la convocatoria aprobada por Acuerdo de la Comisión de Selección de Jueces y Fiscales de 5 de marzo de 2007.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+21
+</td>
+<td style="text-align:center;">
+2010-02-05
+</td>
+<td style="text-align:center;">
+I. Disposiciones generales
+</td>
+<td style="text-align:center;">
+JEFATURA DEL ESTADO
+</td>
+<td style="text-align:center;">
+Navegación aérea
+</td>
+<td style="text-align:center;">
+Real Decreto-ley 1/2010, de 5 de febrero, por el que se regula la prestación de servicios de tránsito aéreo, se establecen las obligaciones de los proveedores civiles de dichos servicios y se fijan determinadas condiciones laborales para los controladores civiles de tránsito aéreo.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+22
+</td>
+<td style="text-align:center;">
+2010-04-29
+</td>
+<td style="text-align:center;">
+<ol start="3" style="list-style-type: upper-roman">
+<li>Otras disposiciones
+</td>
+<td style="text-align:center;">
+MINISTERIO DE ECONOMÍA Y HACIENDA
+</td>
+<td style="text-align:center;">
+Servicios mínimos
+</td>
+<td style="text-align:center;">
+Orden EHA/1058/2010, de 29 de abril, por la que se establecen las normas para garantizar el funcionamiento de los servicios mínimos esenciales en la Corporación RTVE, S.A., y en las sociedades mercantiles estatales Televisión Española y Radio Nacional de España.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+23
+</td>
+<td style="text-align:center;">
+2010-05-07
+</td>
+<td style="text-align:center;">
+I. Disposiciones generales
+</td>
+<td style="text-align:center;">
+JEFATURA DEL ESTADO
+</td>
+<td style="text-align:center;">
+Fondo de Apoyo
+</td>
+<td style="text-align:center;">
+Real Decreto-ley 7/2010, de 7 de mayo, por el que se crea el Fondo de Apoyo a la República Helénica y se autoriza un crédito extraordinario por importe de 9.794.387.450 euros para su dotación.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+24
+</td>
+<td style="text-align:center;">
+2010-05-22
+</td>
+<td style="text-align:center;">
+<ol start="3" style="list-style-type: upper-roman">
+<li>Otras disposiciones
+</td>
+<td style="text-align:center;">
+BANCO DE ESPAÑA
+</td>
+<td style="text-align:center;">
+Entidades de crédito
+</td>
+<td style="text-align:center;">
+Resolución de 22 de mayo de 2010, del Fondo de Reestructuración Ordenada Bancaria, por la que se hace público el acuerdo de su Comisión Rectora de la misma fecha en relación con la Caja de Ahorros y Monte de Piedad de Córdoba.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+25
+</td>
+<td style="text-align:center;">
+2010-12-03
+</td>
+<td style="text-align:center;">
+I. Disposiciones generales
+</td>
+<td style="text-align:center;">
+JEFATURA DEL ESTADO
+</td>
+<td style="text-align:center;">
+Empleo. Medidas urgentes
+</td>
+<td style="text-align:center;">
+Real Decreto-ley 13/2010, de 3 de diciembre, de actuaciones en el ámbito fiscal, laboral y liberalizadoras para fomentar la inversión y la creación de empleo.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+26
+</td>
+<td style="text-align:center;">
+2010-12-04
+</td>
+<td style="text-align:center;">
+I. Disposiciones generales
+</td>
+<td style="text-align:center;">
+MINISTERIO DE LA PRESIDENCIA
+</td>
+<td style="text-align:center;">
+Tráfico aéreo. Medidas extraordinarias
+</td>
+<td style="text-align:center;">
+Real Decreto 1673/2010, de 4 de diciembre, por el que se declara el estado de alarma para la normalización del servicio público esencial del transporte aéreo.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+27
+</td>
+<td style="text-align:center;">
+2011-09-27
+</td>
+<td style="text-align:center;">
+I. Disposiciones generales
+</td>
+<td style="text-align:center;">
+JEFATURA DEL ESTADO
+</td>
+<td style="text-align:center;">
+Constitución Española. Reforma
+</td>
+<td style="text-align:center;">
+Reforma del artículo 135 de la Constitución Española, de 27 de septiembre de 2011.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+28
+</td>
+<td style="text-align:center;">
+2011-10-26
+</td>
+<td style="text-align:center;">
+I. Disposiciones generales
+</td>
+<td style="text-align:center;">
+COMUNIDAD AUTÓNOMA DEL PAÍS VASCO
+</td>
+<td style="text-align:center;">
+Bibliotecas
+</td>
+<td style="text-align:center;">
+Ley 11/2007, de 26 de octubre, de Bibliotecas de Euskadi.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+29
+</td>
+<td style="text-align:center;">
+2012-08-31
+</td>
+<td style="text-align:center;">
+I. Disposiciones generales
+</td>
+<td style="text-align:center;">
+JEFATURA DEL ESTADO
+</td>
+<td style="text-align:center;">
+Entidades de crédito
+</td>
+<td style="text-align:center;">
+Real Decreto-ley 24/2012, de 31 de agosto, de reestructuración y resolución de entidades de crédito.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+30
+</td>
+<td style="text-align:center;">
+2014-03-24
+</td>
+<td style="text-align:center;">
+I. Disposiciones generales
+</td>
+<td style="text-align:center;">
+PRESIDENCIA DEL GOBIERNO
+</td>
+<td style="text-align:center;">
+Condecoraciones
+</td>
+<td style="text-align:center;">
+Real Decreto 209/2014, de 24 de marzo, por el que se concede, a título póstumo, el Collar de la Real y Distinguida Orden Española de Carlos III al excelentísimo señor don Adolfo Suárez González, Presidente del Gobierno y duque de Suárez.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+31
+</td>
+<td style="text-align:center;">
+2014-04-28
+</td>
+<td style="text-align:center;">
+<ol start="2" style="list-style-type: upper-roman">
+<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+</td>
+<td style="text-align:center;">
+PRESIDENCIA DEL GOBIERNO
+</td>
+<td style="text-align:center;">
+Ceses
+</td>
+<td style="text-align:center;">
+Real Decreto 302/2014, de 28 de abril, por el que se dispone el cese de don Miguel Arias Cañete como Ministro de Agricultura, Alimentación y Medio Ambiente.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+32
+</td>
+<td style="text-align:center;">
+2014-04-28
+</td>
+<td style="text-align:center;">
+<ol start="2" style="list-style-type: upper-roman">
+<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+</td>
+<td style="text-align:center;">
+PRESIDENCIA DEL GOBIERNO
+</td>
+<td style="text-align:center;">
+Nombramientos
+</td>
+<td style="text-align:center;">
+Real Decreto 303/2014, de 28 de abril, por el que se nombra Ministra de Agricultura, Alimentación y Medio Ambiente a doña Isabel García Tejerina.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+33
+</td>
+<td style="text-align:center;">
+2016-05-03
+</td>
+<td style="text-align:center;">
+I. Disposiciones generales
+</td>
+<td style="text-align:center;">
+JEFATURA DEL ESTADO
+</td>
+<td style="text-align:center;">
+Cortes Generales. Disolución y convocatoria de elecciones
+</td>
+<td style="text-align:center;">
+Real Decreto 184/2016, de 3 de mayo, de disolución del Congreso de los Diputados y del Senado y de convocatoria de elecciones.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+34
+</td>
+<td style="text-align:center;">
+2016-09-30
+</td>
+<td style="text-align:center;">
+I. Disposiciones generales
+</td>
+<td style="text-align:center;">
+JEFATURA DEL ESTADO
+</td>
+<td style="text-align:center;">
+Medidas tributarias
+</td>
+<td style="text-align:center;">
+Real Decreto-ley 2/2016, de 30 de septiembre, por el que se introducen medidas tributarias dirigidas a la reducción del déficit público.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+35
+</td>
+<td style="text-align:center;">
+2016-09-30
+</td>
+<td style="text-align:center;">
+I. Disposiciones generales
+</td>
+<td style="text-align:center;">
+MINISTERIO DE HACIENDA Y ADMINISTRACIONES PÚBLICAS
+</td>
+<td style="text-align:center;">
+Impuesto sobre Sociedades e Impuesto sobre la Renta de no Residentes
+</td>
+<td style="text-align:center;">
+Orden HAP/1552/2016, de 30 de septiembre, por la que se modifica la Orden EHA/1721/2011, de 16 de junio, por la que se aprueba el modelo 222 para efectuar los pagos fraccionados a cuenta del Impuesto sobre Sociedades en régimen de consolidación fiscal estableciéndose las condiciones generales y el procedimiento para su presentación telemática, y la Orden HAP/2055/2012, de 28 de septiembre, por la que se aprueba el modelo 202 para efectuar los pagos fraccionados a cuenta del Impuesto sobre Sociedades y del Impuesto sobre la Renta de no Residentes correspondiente a establecimientos permanentes y entidades en régimen de atribución de rentas constituidas en el extranjero con presencia en territorio español, y se establecen las condiciones generales y el procedimiento para su presentación telemática.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+36
+</td>
+<td style="text-align:center;">
+2017-10-27
+</td>
+<td style="text-align:center;">
+I. Disposiciones generales
+</td>
+<td style="text-align:center;">
+CORTES GENERALES
+</td>
+<td style="text-align:center;">
+Medidas al amparo del artículo 155 de la Constitución
+</td>
+<td style="text-align:center;">
+Resolución de 27 de octubre de 2017, de la Presidencia del Senado, por la que se publica el Acuerdo del Pleno del Senado, por el que se aprueban las medidas requeridas por el Gobierno, al amparo del artículo 155 de la Constitución.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+37
+</td>
+<td style="text-align:center;">
+2017-10-27
+</td>
+<td style="text-align:center;">
+I. Disposiciones generales
+</td>
+<td style="text-align:center;">
+MINISTERIO DE LA PRESIDENCIA Y PARA LAS ADMINISTRACIONES TERRITORIALES
+</td>
+<td style="text-align:center;">
+Medidas al amparo del artículo 155 de la Constitución
+</td>
+<td style="text-align:center;">
+Orden PRA/1034/2017, de 27 de octubre, por la que se publica el Acuerdo del Consejo de Ministros de 21 de octubre de 2017, por el que, en aplicación de lo dispuesto en el artículo 155 de la Constitución, se tiene por no atendido el requerimiento planteado al M. H. Sr. Presidente de la Generalitat de Cataluña, para que la Generalitat de Cataluña proceda al cumplimiento de sus obligaciones constitucionales y a la cesación de sus actuaciones gravemente contrarias al interés general, y se proponen al Senado para su aprobación las medidas necesarias para garantizar el cumplimiento de las obligaciones constitucionales y para la protección del mencionado interés general.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+38
+</td>
+<td style="text-align:center;">
+2017-10-28
+</td>
+<td style="text-align:center;">
+<ol start="2" style="list-style-type: upper-roman">
+<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+</td>
+<td style="text-align:center;">
+MINISTERIO DEL INTERIOR
+</td>
+<td style="text-align:center;">
+Ceses
+</td>
+<td style="text-align:center;">
+Orden INT/1038/2017, de 28 de octubre, por la que se dispone el cese de don Josep Lluís Trapero Álvarez en la plaza de la categoría de Mayor de la Escala Superior del Cuerpo de Mossos d’Esquadra, para la que fue nombrado por Resolución INT/774/2017, de 11 de abril.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+39
+</td>
+<td style="text-align:center;">
+2019-04-04
+</td>
+<td style="text-align:center;">
+<ol start="2" style="list-style-type: upper-roman">
+<li>Autoridades y personal. - B. Oposiciones y concursos
+</td>
+<td style="text-align:center;">
+ADMINISTRACIÓN LOCAL
+</td>
+<td style="text-align:center;">
+Personal funcionario y laboral
+</td>
+<td style="text-align:center;">
+Resolución de 4 de abril de 2019, del Ayuntamiento de Berga (Barcelona), referente a la convocatoria para proveer varias plazas.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+40
+</td>
+<td style="text-align:center;">
+2019-04-04
+</td>
+<td style="text-align:center;">
+<ol start="2" style="list-style-type: upper-roman">
+<li>Autoridades y personal. - B. Oposiciones y concursos
+</td>
+<td style="text-align:center;">
+ADMINISTRACIÓN LOCAL
+</td>
+<td style="text-align:center;">
+Personal funcionario y laboral
+</td>
+<td style="text-align:center;">
+Resolución de 4 de abril de 2019, del Ayuntamiento de Berga (Barcelona), referente a la convocatoria para proveer varias plazas.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+41
+</td>
+<td style="text-align:center;">
+2019-04-16
+</td>
+<td style="text-align:center;">
+<ol start="2" style="list-style-type: upper-roman">
+<li>Autoridades y personal. - B. Oposiciones y concursos
+</td>
+<td style="text-align:center;">
+ADMINISTRACIÓN LOCAL
+</td>
+<td style="text-align:center;">
+Personal funcionario y laboral
+</td>
+<td style="text-align:center;">
+Resolución de 16 de abril de 2019, del Ayuntamiento de Gironella (Barcelona), referente a la convocatoria para proveer una plaza.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+42
+</td>
+<td style="text-align:center;">
+2019-06-28
+</td>
+<td style="text-align:center;">
+I. Disposiciones generales
+</td>
+<td style="text-align:center;">
+TRIBUNAL CONSTITUCIONAL
+</td>
+<td style="text-align:center;">
+Recursos de inconstitucionalidad
+</td>
+<td style="text-align:center;">
+Recurso de inconstitucionalidad n.º 976-2019, contra los artículos 1.1; 1.2; 2.1; 2.2 apartados d) y e) [en este último caso exclusivamente respecto de la mención al “pacto”]; 3; 4; 5.1; 5.2.b); 7.1.c); 9; 10.1; 13; 14 a 22; 25; 26.1, 2 y 3; 27; 32.a); 33.5, Disposiciones adicionales segunda y tercera, y Disposición final tercera de la Ley de las Cortes de Aragón 8/2018, de 28 de junio, de actualización de los derechos históricos de Aragón.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+43
+</td>
+<td style="text-align:center;">
+2019-09-24
+</td>
+<td style="text-align:center;">
+I. Disposiciones generales
+</td>
+<td style="text-align:center;">
+JEFATURA DEL ESTADO
+</td>
+<td style="text-align:center;">
+Cortes Generales. Disolución y convocatoria de elecciones
+</td>
+<td style="text-align:center;">
+Real Decreto 551/2019, de 24 de septiembre, de disolución del Congreso de los Diputados y del Senado y de convocatoria de elecciones.
+</td>
+</tr>
+</tbody>
+</table>
+</div></li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol>
+<p>Si miramos la tendencia general vemos que hay algunos días (generalmente hacia principio de año) que se apruevan cosas de hace casi un año:</p>
+<p><img src="retraso_files/figure-html/retraso_mediano-1.png" width="672" /><img src="retraso_files/figure-html/retraso_mediano-2.png" width="672" /></p>
+<p>Aunque la tendencia es a reducir el tiempo entre aprovación y publicación, como se puede ver en el segundo gráfico sobre las fechas que tienen menos de 100 dias de retraso de mediana.</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

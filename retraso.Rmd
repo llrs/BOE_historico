@@ -1,0 +1,156 @@
+---
+title: "Tiempo entre decreto y publicación"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = TRUE, echo = FALSE, warning = FALSE, message = FALSE)
+```
+
+
+
+```{r setup_BOE}
+suppressPackageStartupMessages(library("data.table", warn.conflicts = FALSE))
+library("dtplyr", warn.conflicts = FALSE)
+library("dplyr", warn.conflicts = FALSE)
+library("lubridate", warn.conflicts = FALSE)
+suppressPackageStartupMessages(library("ggplot2", warn.conflicts = FALSE))
+library("gghighlight", warn.conflicts = FALSE)
+library("forcats", warn.conflicts = FALSE)
+library("stringr", warn.conflicts = FALSE)
+
+dff <- fread("../BOE_sumario/till_20191117.csv", sep = "\t", quote = FALSE)
+dff <- dff %>% 
+    lazy_dt() %>% 
+    mutate(date = as.Date(date, format = "%d/%m/%Y"),
+           weekday = weekdays(date))
+```
+
+# Dias de retraso
+
+Las publicaciones suelen ser efectivas a partir del momento de publicación por eso es importante ver si hay retrasos entre aprovación y publicación. 
+
+```{r pressure, echo=FALSE}
+s <- c("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", 
+       "agosto", "septiembre", "octubre", "noviembre", "diciembre",
+       "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", 
+       "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre")
+months_s <- paste0("(", s,")", collapse = "|")
+
+r <- dff %>% 
+    filter(!is.na(epigraf)) %>% 
+    mutate(Public = str_detect(text, months_s)) %>% 
+    as_tibble()
+
+r2 <- r %>% 
+    filter(Public) %>% 
+    mutate(date_publish = str_extract(text, 
+                                      paste0("[0-9]{1,2}( de)? (", months_s, 
+                                             ")( de [0-9]{4})?")),
+           datep = as.Date(date_publish, format = "%d de %B de %Y")) %>% # Convert to a date those that are full
+    # Convert to a date those that lack the year
+    tidyr::separate(date_publish, c("dayp", "monthp", "yearp"), sep = " (de )?", 
+                    remove = FALSE) %>% 
+    mutate(yearp = if_else(is.na(yearp), as.character(year(date)), yearp),
+           yearp = as.numeric(yearp),
+           yearp = if_else(is.na(yearp) & month(date, label = TRUE, abbr = FALSE) < monthp, yearp -1, yearp)) %>% 
+    tidyr::unite(datep2, dayp, monthp, yearp, remove = FALSE, sep = " ") %>% 
+    # Keep the right date and calcuate the difference
+    mutate(datep2 = as.Date(datep2, "%d %B %Y"),
+           datep = if_else(is.na(datep), datep2, datep),
+           diff_time = datep-date)
+r3 <- r2 %>% 
+    filter(!is.na(diff_time)) %>% 
+    mutate(df = abs(as.double(diff_time, units = "days")))
+r3 %>% 
+  filter(df < 365) %>% 
+  dplyr::select(date, df) %>% 
+  ggplot() +
+  geom_histogram(aes(df)) +
+  labs(x = "Dias de retraso", y = "Publicaciones",
+       caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+  theme_bw()
+r3 %>% 
+  filter(df < 365) %>% 
+  dplyr::select(date, df) %>% 
+  ggplot() +
+  geom_point(aes(date, df)) +
+  scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+  labs(x = element_blank(), y = "Dias de retraso", 
+       caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+  theme_bw()
+
+```
+
+
+Hay algunas fechas que estan escritas en vez de usar números:
+
+```{r sin_fecha}
+r2 %>% 
+    filter(is.na(r2$diff_time)) %>% 
+    select(date, text, date_publish) %>% 
+    pull(text)
+```
+
+Hay una publicación del 30 de marzo de 2010 que por fecha pone "el tres de mayo de dos mil dos"! y otras dos que no se sabe el dia que se tomaron y una con demasiadas fechas como para saber con exactitud que pasó.
+
+También hay publicaciones que han tardado mucho en salir, o que hacen referencia a fechas muy anteriores (más de un año) :
+
+```{r tardones}
+m <- r2 %>% 
+    mutate(as.double(diff_time, units = "days"),
+           diff_time = abs(diff_time)) %>% 
+    filter(diff_time > 365) %>% 
+    select(date, datep, date_publish, yearp, monthp, dayp, text) %>% 
+    pull(text)
+```
+
+Hay unas `r length(m)` publicaciones donde las que la diferencia es de más de un año, algunas porque hay varias fechas (error mío), otras estan bien, se aprueban en 2019 cosas de 2007 o similares.
+
+Sorprendentemente hay publicaciones que se han aprobado el mismo día:
+
+```{r mismo}
+filter(r3, df == 0) %>% 
+    select(date, section_number, department, epigraf, text) %>% 
+    knitr::kable(knitr.kable.NA = '', format = "html", align = "c", 
+                 row.names = TRUE, 
+                 col.names = c("Fecha", "Sección", 
+                               "Departamento", "Epígrafe", "Texto")) %>% 
+  kableExtra::kable_styling() %>%
+  kableExtra::scroll_box(width = "100%", height = "400px")
+```
+
+Si miramos la tendencia general vemos que hay algunos días (generalmente hacia principio de año) que se apruevan cosas de hace casi un año:
+
+```{r retraso_mediano}
+r3 %>% 
+  group_by(date) %>% 
+  summarise(df2 = median(df), max = max(df), min = min(df)) %>% 
+  ungroup() %>% 
+  ggplot() +
+  geom_point(aes(date, df2)) +
+  coord_cartesian(ylim = c(0, 365)) +
+  scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+  scale_y_continuous(expand = c(0, 0)) +
+  labs(x = element_blank(), y = "Dias medios de retraso", 
+       caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+  theme_bw()
+
+r3 %>% 
+  group_by(date) %>% 
+  summarise(df2 = median(df), max = max(df), min = min(df)) %>% 
+  ungroup() %>% 
+  ggplot() +
+  geom_point(aes(date, df2)) +
+  geom_smooth(aes(date, df2)) + 
+  coord_cartesian(ylim = c(0, 100)) +
+  scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+  scale_y_continuous(breaks = c(0, 12, 25, 50, 75, 100), expand = c(0, 0)) +
+  labs(x = element_blank(), y = "Dias medios de retraso", 
+       caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+  theme_bw()
+```
+
+Aunque la tendencia es a reducir el tiempo entre aprovación y publicación, como se puede ver en el segundo gráfico sobre las fechas que tienen menos de 100 dias de retraso de mediana.

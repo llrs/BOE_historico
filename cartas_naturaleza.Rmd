@@ -1,6 +1,8 @@
 ---
 title: "Cartas de naturaleza"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -27,11 +29,11 @@ dff <- dff %>%
 
 
 ```{r buscando}
-cn <- dff %>% 
-    mutate(CN = str_detect(text, "carta de naturaleza"))
-cn <- cn %>% 
-    filter(CN) %>% 
+cn2 <- dff %>% 
+    filter(epigraf == "Nacionalidad española") %>% 
     as_tibble()
+cn <- cn2 %>% 
+    mutate(CN = str_detect(text, "carta de naturaleza"))
 ```
 
 Esta vez repito un poco el análisis de [Cívio](https://civio.es/el-boe-nuestro-de-cada-dia/2013/06/24/espanoles-por-decreto/), pero sólo a partir de 2009 y hasta 2019. Más que nada para confirmar que las cifras cuadren, que efectivamente se da.
@@ -63,5 +65,18 @@ cn %>%
 cn %>% 
     count(Year = format(date, "%Y")) %>%
     knitr::kable(row.names = FALSE, align = "c")
+```
+
+Para terminar con un poquito más de contenido. Los otros epigrafes sobre la "Nacionalidad española" que no son sobre cartas de naturaleza:
+
+
+```{r kable, }
+d <- cn %>% 
+    filter(!CN) %>% 
+    select(date, section, section_number, department, text, publication)
+
+knitr::kable(d, format = "html", row.names = TRUE, align = "c", 
+             col.names = c("Fecha", "Sección", "Texto sección", "Departamento", 
+                       "Texto publicación", "Publicación"))
 ```
 
