@@ -30,7 +30,7 @@ dff <- dff %>%
 
 # Dias de retraso
 
-Las publicaciones suelen ser efectivas a partir del momento de publicación por eso es importante ver si hay retrasos entre aprovación y publicación. 
+Las disposiciones suelen ser efectivas a partir del momento de publicación o al día siguiente por eso es importante ver si hay retrasos entre aprovación y publicación. 
 
 ```{r pressure, echo=FALSE}
 s <- c("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", 
@@ -153,4 +153,19 @@ r3 %>%
   theme_bw()
 ```
 
-Aunque la tendencia es a reducir el tiempo entre aprovación y publicación, como se puede ver en el segundo gráfico sobre las fechas que tienen menos de 100 dias de retraso de mediana.
+Aunque la tendencia es a reducir el tiempo entre aprovación y publicación, hay un retraso entre aprovado y publicado de unos 12 días habitualmente.
+
+En cambio si miramos todas las publicaciones vemos que la tendencia es a reducir pero que la mayoría de publicaciones tienen una tardanza de unos 30 días:
+
+```{r}
+r3 %>% 
+  ggplot() +
+  geom_smooth(aes(date, df)) + 
+  coord_cartesian(ylim = c(0, 100)) +
+  scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+  scale_y_continuous(breaks = c(0, 10, 30, 50, 80, 100), expand = c(0, 0)) +
+  labs(x = element_blank(), y = "Dias medios de retraso", 
+       caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+  theme_bw()
+```
+

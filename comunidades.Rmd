@@ -1,0 +1,60 @@
+---
+title: "Comunidades"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = TRUE, collapse = TRUE, warning = FALSE)
+```
+
+
+```{r cargar, echo=FALSE}
+library("data.table", warn.conflicts = FALSE)
+library("dtplyr", warn.conflicts = FALSE)
+library("dplyr", warn.conflicts = FALSE)
+library("lubridate", warn.conflicts = FALSE)
+library("gghighlight", warn.conflicts = FALSE)
+library("ggplot2", warn.conflicts = FALSE)
+library("forcats", warn.conflicts = FALSE)
+library("tidyr", warn.conflicts = FALSE)
+library("stringr", warn.conflicts = FALSE)
+
+dff <- fread("../BOE_sumario/till_20191117.csv", sep = "\t", quote = FALSE)
+dff <- dff %>% 
+    lazy_dt() %>% 
+    mutate(date = as.Date(date, format = "%d/%m/%Y"),
+           weekday = weekdays(date))
+```
+
+```{r}
+com <- dff %>% 
+    filter(grepl("COMUNI", department)) %>% 
+    mutate(department = trimws(gsub("COMUNI[TD]A[DT] (AUTÓNOMA)?( DEL?)?( LAS?)?", "", department)))
+
+com %>% 
+    count(department, sort = TRUE) %>% 
+    as_tibble() %>% 
+    ggplot() +
+    geom_col(aes(fct_reorder(department, -n), n)) +
+    labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado",
+         x = element_blank(), y = "Publicaciones") +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+com_year <- com %>% 
+    group_by(department, year(date)) %>% 
+    count() %>% 
+    ungroup() %>%
+    mutate("year" = as.character(`year(date)`)) %>%
+    as_tibble()
+
+    ggplot() +
+    geom_point(aes(year, n, col = department, group = department)) +
+    geom_line(aes(year, n, col = department, group = department)) +
+    labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado",
+         x = element_blank(), y = "Publicaciones") +
+    theme_bw()
+    
+```
+

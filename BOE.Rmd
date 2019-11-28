@@ -34,6 +34,7 @@ write.table(dff, "../BOE_sumario/till_20191117.csv", sep = "\t", quote = FALSE, 
 
 Aquí cargo las liberías que me ayudan a visualizar los datos. 
 También cargamos los datos del BOE del 2009/01/01 (fecha a partir de la qual lo que figure en la página web tiene validez legal) hasta el 2019/11/17:
+
 ```{r cargar, echo=FALSE}
 library("data.table", warn.conflicts = FALSE)
 library("dtplyr", warn.conflicts = FALSE)

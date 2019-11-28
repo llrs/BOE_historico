@@ -17,20 +17,12 @@ Esta página web contine el último sumario públicado en `r today`.
 
 ```{r report, echo=FALSE}
 library("BOE")
-sumario_code <- sumario_xml(today) #Code needed to identify it online
-sumario_hoy <- tidy_sumario(get_xml(query_xml(sumario_code)))
-year <- format(today, "%Y")
-month <- format(today, "%m")
-day <- format(today, "%d")
-
+sumario_hoy <- retrieve_sumario(today)
 if (nrow(sumario_hoy) == 0) {
-    sumario_code <- sumario_xml(yesterday) #Code needed to identify it online
-    sumario_hoy <- tidy_sumario(get_xml(query_xml(sumario_code)))
-    year <- format(yesterday, "%Y")
-    month <- format(yesterday, "%m")
-    day <- format(yesterday, "%d")
+   sumario_hoy <- retrieve_sumario(yesterday)
 }
-s <- cbind(sumario_hoy, link = query_pdf(year, month, day, sumario_hoy$publication))
+pubs <- url_publications(sumario_hoy)
+s <- cbind(sumario_hoy, pubs)
 s <- s[, -c(1, 2, 3, 4, 7, 10)]
 colnames(s) <- c("Sección", "Departamento", "Epígrafe", "Texto", "Páginas", "Link")
 knitr::kable(s, row.name = FALSE, knitr.kable.NA = '', format = "html", align = "c", row.names = TRUE)
