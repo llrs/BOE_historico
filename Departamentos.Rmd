@@ -1,0 +1,179 @@
+---
+title: "Departamentos"
+output:
+  html_document:
+    toc: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, cache = TRUE)
+```
+
+
+```{r prep}
+suppressPackageStartupMessages(library("data.table"))
+suppressPackageStartupMessages(library("dtplyr"))
+suppressPackageStartupMessages(library("dplyr"))
+dff <- fread("../BOE_sumario/till_20191117.csv", sep = "\t", quote = FALSE)
+suppressPackageStartupMessages(library("ggplot2"))
+suppressPackageStartupMessages(library("patchwork"))
+df <- dff %>% 
+    lazy_dt() %>% 
+    mutate(date = as.Date(date, format = "%d/%m/%Y"))
+```
+
+Una cosa que me sorprendió mucho al mirar el resumen de 10 años del BOE fue el incremento en publicaciones hacia 2017.
+Posteriormente al mirar los departamentos me sorprendió que hubiera ese incremento en un determinado departamento. En este analysis exploro un poco más los departamentos y sus tendencias.
+
+# Juzgados de lo mercantil
+
+Se puede apreciar un incremento en publicaciones de un departamento alrededor de 2014. 
+Esto es debido a las sentencias de los juzgados de lo mercantil.
+
+```{r deprt, fig.width=10, fig.asp=1}
+deprt <- df %>% 
+    group_by(sumario_code, date) %>% 
+    count(department)
+
+mercantil <- df %>% 
+    filter(department == "JUZGADOS DE LO MERCANTIL") %>% 
+    mutate(text = trimws(toupper(text))) %>% 
+    mutate(text = gsub("\\.$", "", text))
+
+mercantil %>% 
+    mutate(year_s = as.character(year(date))) %>% 
+    count(year_s) %>% 
+    as_tibble() %>% 
+    ggplot() +
+    geom_col(aes(year_s, n)) +
+    theme_bw() 
+```
+
+Nos centraremos entre el 2012 y 2014 por ser los años donde hay más actividad. Dónde creo que se publican anuncios de los litigios y procedimientos iniciados durante la crisis de 2008:
+
+```{r mercantil, fig.width=10, fig.asp=1}
+tops <- mercantil %>%
+    filter(date < as.Date("2014-12-31", format = "%Y-%m-%d") &
+               date > as.Date("2011-12-31", format = "%Y-%m-%d")) %>% 
+    group_by(date, text) %>% 
+    summarise(n = n(), p = sum(pages)) %>% 
+    ungroup() %>% 
+    as_tibble() %>% 
+    count(text, sort = TRUE) %>% 
+    top_n(16, n)
+
+tops %>% 
+    ggplot() +
+    geom_col(aes(forcats::fct_reorder(text, -n), n)) +
+    labs(x = element_blank(), y = "Anuncios", 
+         title = "Juzgados de lo mercantil entre 2012 y 2014",
+         caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+m <- mercantil %>% 
+    group_by(date) %>% 
+    count(text) %>% 
+    ungroup() %>% 
+    as_tibble()
+m %>% 
+    ggplot() +
+    geom_point(aes(date, n)) +
+    geom_smooth(aes(date, n, col = forcats::fct_relevel(text, tops$text)),
+                data = filter(m, text %in% tops$text)) +
+    labs(col = "Juzgados", x = element_blank(), y = "Anuncios",
+         caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    theme_bw()
+```
+
+Cómo podemos ver impactó mayormente en los juzagos localizados en Madrid.
+
+```{r mercantil_tops, fig.width=10, fig.asp=1}
+m %>% 
+    filter(text %in% tops$text) %>% 
+    ggplot() +
+    geom_point(aes(date, n)) +
+    geom_smooth(aes(date, n, col = forcats::fct_relevel(text, tops$text))) +
+    labs(col = "Juzgados", x = element_blank(), y = "Anuncios",
+         caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    theme_bw() +
+    facet_wrap(~ forcats::fct_relevel(text, tops$text))
+```
+
+# Juzgados de primera instancia e instruccion
+
+```{r primera}
+primera <- df %>% 
+    filter(department == "JUZGADOS DE PRIMERA INSTANCIA E INSTRUCCIÓN") %>% 
+    mutate(text = trimws(toupper(text))) %>% 
+    mutate(text = gsub("\\.$", "", text))
+
+primera %>% 
+    mutate(year_s = as.character(year(date))) %>% 
+    count(year_s) %>% 
+    as_tibble() %>% 
+    ggplot() +
+    geom_col(aes(year_s, n)) +
+    labs(x = element_blank(), y = "Anuncios", 
+         caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+    theme_bw() 
+```
+
+Como podemos ver hay un incremento en el 2016 de anuncios.
+
+```{r primeras_2016, fig.width=10, fig.asp=1}
+tops <- primera %>%
+    filter(date > as.Date("2015-12-31", format = "%Y-%m-%d")) %>% 
+    group_by(date, text) %>% 
+    summarise(n = n(), p = sum(pages)) %>% 
+    ungroup() %>% 
+    as_tibble() %>% 
+    count(text, sort = TRUE) %>% 
+    top_n(16, n)
+
+tops %>% 
+    ggplot() +
+    geom_col(aes(forcats::fct_reorder(text, -n), n)) +
+    labs(x = element_blank(), y = "Anuncios", 
+         title = "Juzgados de primera instancia e instrucción a partir de 2016",
+         caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{r primeras, fig.width=10, fig.asp=1}
+m <- primera %>% 
+    group_by(date) %>% 
+    count(text) %>% 
+    ungroup() %>% 
+    as_tibble()
+m %>% 
+    ggplot() +
+    geom_point(aes(date, n)) +
+    geom_smooth(aes(date, n, col = forcats::fct_relevel(text, tops$text)),
+                data = filter(m, text %in% tops$text)) +
+    labs(col = "Juzgados", x = element_blank(), y = "Anuncios",
+         caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    theme_bw()
+```
+
+Podemos ver que en algunos juzgados antes de 2016 no se habían publicado ningún anuncio:
+
+```{r primera_tops, fig.width=10, fig.asp=1}
+m %>% 
+    filter(text %in% tops$text) %>% 
+    ggplot() +
+    geom_point(aes(date, n)) +
+    geom_smooth(aes(date, n, col = forcats::fct_relevel(text, tops$text))) +
+    labs(col = "Juzgados", x = element_blank(), y = "Anuncios",
+         caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    theme_bw() +
+    facet_wrap(~ forcats::fct_relevel(text, tops$text))
+```
+
