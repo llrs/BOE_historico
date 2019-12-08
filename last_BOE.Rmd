@@ -12,15 +12,17 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r dates, include=FALSE}
 today <- Sys.Date()
 yesterday <- today -1
-```
-Esta página web contine el último sumario públicado en `r today`.
-
-```{r report, echo=FALSE}
 library("BOE")
-sumario_hoy <- retrieve_sumario(today)
-if (nrow(sumario_hoy) == 0) {
+sumario_hoy <- try(retrieve_sumario(today), silent = TRUE)
+d <- today
+if (is(sumario_hoy, "try-error")) {
+    d <- yesterday
    sumario_hoy <- retrieve_sumario(yesterday)
 }
+```
+Esta página web contine el último sumario públicado en `r d`.
+
+```{r report, echo=FALSE}
 pubs <- url_publications(sumario_hoy)
 s <- cbind(sumario_hoy, pubs)
 s <- s[, -c(1, 2, 3, 4, 7, 10)]

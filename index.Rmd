@@ -8,3 +8,41 @@ Este sitio explora los datos públicados en el [BOE](https://boe.es), Boletín O
 
 Hace uso de [este programa](https://www.github.com/llrs/BOE) que a partir de los sumarios de cada día del BOE convierte la información en tablas.
 
+
+```{r summary_plots, echo=FALSE, error=FALSE, warning=FALSE, cache=TRUE, fig.width=10, fig.asp=1}
+suppressPackageStartupMessages(library("data.table"))
+suppressPackageStartupMessages(library("dtplyr"))
+suppressPackageStartupMessages(library("dplyr"))
+dff <- fread("../BOE_sumario/till_20191117.csv", sep = "\t", quote = FALSE)
+suppressPackageStartupMessages(library("ggplot2"))
+suppressPackageStartupMessages(library("patchwork"))
+df <- dff %>% 
+    lazy_dt() %>% 
+    group_by(sumario_code) %>% 
+    summarise(ratio = sum(is.na(epigraf))/sum(!is.na(epigraf)),
+              ratio2 = sum(!is.na(epigraf))/sum(is.na(epigraf)),
+              n = n(),
+              date = as.Date(unique(date), format = "%d/%m/%Y")) %>% 
+    select(date, ratio, ratio2, n) %>% 
+    as_tibble()
+    
+g1 <- ggplot(df) +
+    geom_point(aes(date, n, color = ratio)) +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    scale_color_viridis_c() +
+    scale_y_continuous(expand = c(0, 10)) +
+    labs(x = element_blank(), y = "Publicaciones", 
+         color = "Disposición/Anuncio", title = "Disposiciones y Sumarios") +
+    theme_bw()
+g2 <- ggplot(df) +
+    geom_point(aes(date, n, color = ratio2)) +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    scale_color_viridis_c() +
+    scale_y_continuous(expand = c(0, 10)) +
+    labs(x = element_blank(), y = "Publicaciones", 
+         color = "Anuncio/Disposición",
+         caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado\nAutor: Lluís Revilla") +
+    theme_bw()
+g1 / g2
+```
+
