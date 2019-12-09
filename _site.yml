@@ -16,6 +16,8 @@ navbar:
           href: cartas_naturaleza.html
         - text: "Retrasos"
           href: retraso.html
+        - text: "Justicia"
+          href: departamentos.html
   right:
     - icon: fa-twitter
       href: https://twitter.com/intent/tweet?text=Thanks%20%40Lluis_Rev%20for%20your%20work%20on%20analyzing%20the%20BOE

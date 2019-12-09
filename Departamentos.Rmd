@@ -1,5 +1,5 @@
 ---
-title: "Departamentos"
+title: "Justícia"
 output:
   html_document:
     toc: true
@@ -8,7 +8,7 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, cache = TRUE)
+knitr::opts_chunk$set(echo = FALSE, cache = TRUE, message = FALSE, warning = FALSE)
 ```
 
 
@@ -25,7 +25,7 @@ df <- dff %>%
 ```
 
 Una cosa que me sorprendió mucho al mirar el resumen de 10 años del BOE fue el incremento en publicaciones hacia 2017.
-Posteriormente al mirar los departamentos me sorprendió que hubiera ese incremento en un determinado departamento. En este analysis exploro un poco más los departamentos y sus tendencias.
+Posteriormente al mirar los departamentos me sorprendió que hubiera ese incremento en un determinado departamento de Justicia. En este analysis exploro un poco más algunos departamentos de Justícia y sus tendencias.
 
 # Juzgados de lo mercantil
 
@@ -38,7 +38,8 @@ deprt <- df %>%
     count(department)
 
 mercantil <- df %>% 
-    filter(department == "JUZGADOS DE LO MERCANTIL") %>% 
+    filter(section == "4",
+           department == "JUZGADOS DE LO MERCANTIL") %>% 
     mutate(text = trimws(toupper(text))) %>% 
     mutate(text = gsub("\\.$", "", text))
 
@@ -48,6 +49,8 @@ mercantil %>%
     as_tibble() %>% 
     ggplot() +
     geom_col(aes(year_s, n)) +
+    labs(x = element_blank(), y = "Publicaciones",
+         caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
     theme_bw() 
 ```
 
@@ -99,16 +102,21 @@ m %>%
     geom_smooth(aes(date, n, col = forcats::fct_relevel(text, tops$text))) +
     labs(col = "Juzgados", x = element_blank(), y = "Anuncios",
          caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
-    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "2 years") +
     theme_bw() +
-    facet_wrap(~ forcats::fct_relevel(text, tops$text))
+    facet_wrap(~ forcats::fct_relevel(text, tops$text), scales = "free_y") +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
 # Juzgados de primera instancia e instruccion
 
+Uno de los más espectaculares cambios es el incremento en publicaciones a partir de 2016. 
+Esto es debido como veremos a los juzgados de primera instancia:
+
 ```{r primera}
 primera <- df %>% 
-    filter(department == "JUZGADOS DE PRIMERA INSTANCIA E INSTRUCCIÓN") %>% 
+    filter(section == "4",
+           department == "JUZGADOS DE PRIMERA INSTANCIA E INSTRUCCIÓN") %>% 
     mutate(text = trimws(toupper(text))) %>% 
     mutate(text = gsub("\\.$", "", text))
 
@@ -123,7 +131,8 @@ primera %>%
     theme_bw() 
 ```
 
-Como podemos ver hay un incremento en el 2016 de anuncios.
+Como podemos ver hay un incremento espectacular en el 2016 de anuncios. 
+Vamos a ver que juzgados son los que más han publicado:
 
 ```{r primeras_2016, fig.width=10, fig.asp=1}
 tops <- primera %>%
@@ -145,6 +154,8 @@ tops %>%
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
+Podemos ver el incremento de estos juzgados a partir de 2016
+
 ```{r primeras, fig.width=10, fig.asp=1}
 m <- primera %>% 
     group_by(date) %>% 
@@ -159,6 +170,7 @@ m %>%
     labs(col = "Juzgados", x = element_blank(), y = "Anuncios",
          caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
     scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    scale_y_continuous(expand = c(0, 5), limits = c(0, max(m$n) + 5)) +
     theme_bw()
 ```
 
@@ -172,8 +184,85 @@ m %>%
     geom_smooth(aes(date, n, col = forcats::fct_relevel(text, tops$text))) +
     labs(col = "Juzgados", x = element_blank(), y = "Anuncios",
          caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
-    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "2 years") +
+    scale_y_continuous(expand = c(0, 5)) +
     theme_bw() +
-    facet_wrap(~ forcats::fct_relevel(text, tops$text))
+    facet_wrap(~ forcats::fct_relevel(text, tops$text), scales = "free_y") +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
+
+Tal vez esto es debido a alguna ley o mejora de las condiciones de los juzgados
+
+# Militar
+
+Cómo regalo y para comparar aquí van los cambios en publicaciones de la justicia militar.
+
+```{r militia}
+ord <- df %>% 
+    filter(section == "4") %>% 
+    as_tibble()
+militar <- ord %>% 
+    filter(department %in% c("TRIBUNALES MILITARES TERRITORIALES", 
+                             "JUZGADOS TOGADOS MILITARES")) %>% 
+    mutate(text = trimws(toupper(text))) %>% 
+    mutate(text = gsub("\\.$", "", text)) %>% 
+    mutate(text = case_when(
+        text == "ALMERIA" ~ "ALMERÍA",
+        text == "EDICTO" ~ "EDICTOS",
+        text == "MADRD" ~ "MADRID",
+        text == "SEVILLLA" ~ "SEVILLA",
+        text == "TRBUNAL MILITAR TERRITORIAL PRIMERO" ~ "TRIBUNAL MILITAR TERRITORIAL PRIMERO",
+        TRUE ~ text))
+
+militar %>% 
+    mutate(year_s = as.character(year(date))) %>% 
+    group_by(year_s) %>% 
+    count(department) %>% 
+    ungroup() %>% 
+    as_tibble() %>% 
+    ggplot() +
+    geom_col(aes(year_s, n, fill = department)) +
+    labs(x = element_blank(), y = "Anuncios", fill = "Departamento",
+         caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+    theme_bw() 
+```
+
+```{r militia2, fig.width=10, fig.asp=1}
+militar %>% 
+    filter(department == "TRIBUNALES MILITARES TERRITORIALES") %>% 
+    mutate(year_s = as.character(year(date))) %>% 
+    group_by(year_s) %>% 
+    count(text) %>% 
+    ungroup() %>% 
+    as_tibble() %>% 
+    ggplot() +
+    geom_col(aes(year_s, n, fill = text)) +
+    scale_fill_viridis_d(option = "C") +
+    labs(x = element_blank(), y = "Anuncios", fill = "Texto:", 
+         title = "Tribunales militares territoriales",
+         caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+    theme_bw() 
+```
+
+Los tribunales militares territoriales incluyen edictos.
+
+```{r milita3, fig.width=10, fig.asp=1}
+militar %>% 
+    filter(department == "JUZGADOS TOGADOS MILITARES") %>% 
+    mutate(year_s = as.character(year(date))) %>% 
+    group_by(year_s) %>% 
+    count(text) %>% 
+    ungroup() %>% 
+    as_tibble() %>% 
+    ggplot() +
+    geom_col(aes(year_s, n, fill = text)) +
+    labs(x = element_blank(), y = "Anuncios", fill = "Texto:", 
+         title = "Juzgados togados militares",
+         caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+    scale_fill_viridis_d(option = "C") +
+    theme_bw() 
+```
+
+Los juzgados togados militares incluye requisitorias y anulaciones. 
+Y se han  visto relativamente pocas publicaciones en los últimos 10 años.
 

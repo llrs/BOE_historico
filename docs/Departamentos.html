@@ -12,7 +12,7 @@
 
 
 
-<title>Departamentos</title>
+<title>Justícia</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -297,6 +297,9 @@ $(document).ready(function () {
     <li>
       <a href="retraso.html">Retrasos</a>
     </li>
+    <li>
+      <a href="departamentos.html">Justicia</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -322,7 +325,7 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Departamentos</h1>
+<h1 class="title toc-ignore">Justícia</h1>
 
 </div>
 
@@ -330,32 +333,40 @@ $(document).ready(function () {
 <ul>
 <li><a href="#juzgados-de-lo-mercantil">Juzgados de lo mercantil</a></li>
 <li><a href="#juzgados-de-primera-instancia-e-instruccion">Juzgados de primera instancia e instruccion</a></li>
+<li><a href="#militar">Militar</a></li>
 </ul>
 </div>
 
-<p>Una cosa que me sorprendió mucho al mirar el resumen de 10 años del BOE fue el incremento en publicaciones hacia 2017. Posteriormente al mirar los departamentos me sorprendió que hubiera ese incremento en un determinado departamento. En este analysis exploro un poco más los departamentos y sus tendencias.</p>
+<p>Una cosa que me sorprendió mucho al mirar el resumen de 10 años del BOE fue el incremento en publicaciones hacia 2017. Posteriormente al mirar los departamentos me sorprendió que hubiera ese incremento en un determinado departamento de Justicia. En este analysis exploro un poco más algunos departamentos de Justícia y sus tendencias.</p>
 <div id="juzgados-de-lo-mercantil" class="section level1">
 <h1>Juzgados de lo mercantil</h1>
 <p>Se puede apreciar un incremento en publicaciones de un departamento alrededor de 2014. Esto es debido a las sentencias de los juzgados de lo mercantil.</p>
 <p><img src="Departamentos_files/figure-html/deprt-1.png" width="960" /></p>
 <p>Nos centraremos entre el 2012 y 2014 por ser los años donde hay más actividad. Dónde creo que se publican anuncios de los litigios y procedimientos iniciados durante la crisis de 2008:</p>
-<p><img src="Departamentos_files/figure-html/mercantil-1.png" width="960" /></p>
-<pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
-<p><img src="Departamentos_files/figure-html/mercantil-2.png" width="960" /></p>
+<p><img src="Departamentos_files/figure-html/mercantil-1.png" width="960" /><img src="Departamentos_files/figure-html/mercantil-2.png" width="960" /></p>
 <p>Cómo podemos ver impactó mayormente en los juzagos localizados en Madrid.</p>
-<pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
 <p><img src="Departamentos_files/figure-html/mercantil_tops-1.png" width="960" /></p>
 </div>
 <div id="juzgados-de-primera-instancia-e-instruccion" class="section level1">
 <h1>Juzgados de primera instancia e instruccion</h1>
+<p>Uno de los más espectaculares cambios es el incremento en publicaciones a partir de 2016. Esto es debido como veremos a los juzgados de primera instancia:</p>
 <p><img src="Departamentos_files/figure-html/primera-1.png" width="672" /></p>
-<p>Como podemos ver hay un incremento en el 2016 de anuncios.</p>
+<p>Como podemos ver hay un incremento espectacular en el 2016 de anuncios. Vamos a ver que juzgados son los que más han publicado:</p>
 <p><img src="Departamentos_files/figure-html/primeras_2016-1.png" width="960" /></p>
-<pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
+<p>Podemos ver el incremento de estos juzgados a partir de 2016</p>
 <p><img src="Departamentos_files/figure-html/primeras-1.png" width="960" /></p>
 <p>Podemos ver que en algunos juzgados antes de 2016 no se habían publicado ningún anuncio:</p>
-<pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
 <p><img src="Departamentos_files/figure-html/primera_tops-1.png" width="960" /></p>
+<p>Tal vez esto es debido a alguna ley o mejora de las condiciones de los juzgados</p>
+</div>
+<div id="militar" class="section level1">
+<h1>Militar</h1>
+<p>Cómo regalo y para comparar aquí van los cambios en publicaciones de la justicia militar.</p>
+<p><img src="Departamentos_files/figure-html/militia-1.png" width="672" /></p>
+<p><img src="Departamentos_files/figure-html/militia2-1.png" width="960" /></p>
+<p>Los tribunales militares territoriales incluyen edictos.</p>
+<p><img src="Departamentos_files/figure-html/milita3-1.png" width="960" /></p>
+<p>Los juzgados togados militares incluye requisitorias y anulaciones. Y se han visto relativamente pocas publicaciones en los últimos 10 años.</p>
 </div>
 
 

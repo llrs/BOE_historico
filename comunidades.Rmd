@@ -28,7 +28,7 @@ dff <- dff %>%
            weekday = weekdays(date))
 ```
 
-```{r}
+```{r com}
 com <- dff %>% 
     filter(grepl("COMUNI", department)) %>% 
     mutate(department = trimws(gsub("COMUNI[TD]A[DT] (AUTÓNOMA)?( DEL?)?( LAS?)?", "", department)))
@@ -48,13 +48,12 @@ com_year <- com %>%
     ungroup() %>%
     mutate("year" = as.character(`year(date)`)) %>%
     as_tibble()
-
+com_year %>% 
     ggplot() +
     geom_point(aes(year, n, col = department, group = department)) +
     geom_line(aes(year, n, col = department, group = department)) +
     labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado",
          x = element_blank(), y = "Publicaciones") +
     theme_bw()
-    
 ```
 
