@@ -1,5 +1,5 @@
 ---
-title: "Lo último del BOE"
+title: "Lo último del BORME"
 editor_options: 
   chunk_output_type: console
 ---
@@ -13,36 +13,40 @@ knitr::opts_chunk$set(echo = TRUE)
 today <- Sys.Date()
 yesterday <- today -1
 library("BOE")
-sumario_hoy <- try(retrieve_sumario(today), silent = TRUE)
+sumario_hoy <- try(retrieve_sumario(today, journal = "BORME"), silent = TRUE)
 d <- today
 if (is(sumario_hoy, "try-error")) {
     d <- yesterday
-   sumario_hoy <- retrieve_sumario(yesterday)
+   sumario_hoy <- retrieve_sumario(yesterday, journal = "BORME")
 }
 ```
 
-# Resumen grafico
+# Resumen gráfico
 
 Esta página web contine el último sumario públicado en `r d`.
 
 ```{r, echo=FALSE, eval=FALSE}
-library("dplyr")
-group_by(sumario_hoy)
+entropy <- function(x){sum(-prop.table(table(x))*log2(prop.table(table(x))))/(length(unique(x))/2)}
+sumario_hoy$disp <- ifelse(is.na(sumario_hoy$epigraph), "Anuncio", "Disposición")
+e <- apply(sumario_hoy[, c("section", "departament", "disp")], 2, entropy)
+names(e) <- c("Sección", "Departamentos", "Disposiciones")
+sort(e, decreasing = TRUE)
 ```
 
 # Tabla
 
-Aquí està la tabla completa con links:
+Aquí està la tabla completa con links
 
 ```{r report, echo=FALSE}
 pubs <- url_publications(sumario_hoy)
 pubs <- paste0("<a href=", pubs, ">", sumario_hoy$publication, "</a>")
 s <- cbind(sumario_hoy, pubs)
-s <- s[, -c(1, 2, 3, 4, 7, 10)]
-colnames(s) <- c("Sección", "Departamento", "Epígrafe", "Texto", "Páginas", "Link")
+s <- s[, c(5, 6, 8, 10)]
+colnames(s) <- c("Sección", "Emisor", "Texto", "Link")
 DT::datatable(s, filter = 'top', options = list(
   pageLength = 10, autoWidth = TRUE
 ), escape = FALSE)
+
 ```
 
 
