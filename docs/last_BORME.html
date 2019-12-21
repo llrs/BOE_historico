@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Lo último del BORME</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Histórico del BOE</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-newspaper"></span>
+     
+    Último
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="last_BOE.html">BOE</a>
+    </li>
+    <li>
+      <a href="last_BORME.html">BORME</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-eye"></span>
+     
+    Vista de pájaro
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="BOE.html">BOE</a>
+    </li>
+    <li>
+      <a href="BORME.html">BORME</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-chart-bar"></span>
+     
+    Analysis BOE
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="universidades.html">Universidades</a>
+    </li>
+    <li>
+      <a href="cartas_naturaleza.html">Cartas de naturaleza</a>
+    </li>
+    <li>
+      <a href="retraso.html">Retrasos</a>
+    </li>
+    <li>
+      <a href="Departamentos.html">Justicia</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://twitter.com/intent/tweet?text=Thanks%20%40Lluis_Rev%20for%20your%20work%20on%20analyzing%20the%20BOE">
+    <span class="fa fa-twitter"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/llrs/BOE_historico">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Lo último del BORME</h1>
+
+</div>
+
+
+<p>Esta página web contine el último sumario públicado en 2019-12-20.</p>
+<p>Aquí està la tabla completa con links</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+Sección
+</th>
+<th style="text-align:center;">
+Emisor
+</th>
+<th style="text-align:center;">
+Texto
+</th>
+<th style="text-align:center;">
+Link
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+ARABA/ÁLAVA
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-01.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-01.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+ALICANTE
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-03.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-03.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+ALMERÍA
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-04.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-04.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+BADAJOZ
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-06.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-06.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+ILLES BALEARS
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-07.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-07.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+BARCELONA
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-08.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-08.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+CASTELLÓN
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-12.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-12.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+CIUDAD REAL
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-13.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-13.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+A CORUÑA
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-15.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-15.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+GIRONA
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-17.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-17.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+11
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+GRANADA
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-18.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-18.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+HUESCA
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-22.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-22.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+13
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+JAÉN
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-23.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-23.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+14
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+LLEIDA
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-25.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-25.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+15
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+MADRID
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-28.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-28.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+16
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+MÁLAGA
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-29.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-29.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+17
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+NAVARRA
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-31.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-31.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+OURENSE
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-32.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-32.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+19
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+ASTURIAS
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-33.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-33.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+20
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+LAS PALMAS
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-35.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-35.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+21
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+PONTEVEDRA
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-36.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-36.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+22
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+SANTA CRUZ DE TENERIFE
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-38.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-38.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+23
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+TARRAGONA
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-43.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-43.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+24
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+TERUEL
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-44.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-44.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+25
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+TOLEDO
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-45.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-45.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+26
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+VALENCIA
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-46.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-46.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+27
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+VALLADOLID
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-47.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-47.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+28
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+BIZKAIA
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-48.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-48.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+29
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+ZARAGOZA
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-50.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-50.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+30
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Actos inscritos
+</td>
+<td style="text-align:center;">
+ÍNDICE ALFABÉTICO DE SOCIEDADES
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-99.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-A-2019-243-99.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+31
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Otros actos publicados en el Registro Mercantil
+</td>
+<td style="text-align:center;">
+ALICANTE
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-B-2019-243-03.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-B-2019-243-03.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+32
+</td>
+<td style="text-align:center;">
+SECCIÓN PRIMERA. Empresarios
+</td>
+<td style="text-align:center;">
+Otros actos publicados en el Registro Mercantil
+</td>
+<td style="text-align:center;">
+MADRID
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-B-2019-243-28.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-B-2019-243-28.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+33
+</td>
+<td style="text-align:center;">
+SECCIÓN SEGUNDA. Anuncios y avisos legales
+</td>
+<td style="text-align:center;">
+CONVOCATORIAS DE JUNTAS
+</td>
+<td style="text-align:center;">
+AMERICAN INTELLIGENT INVESTMENT GROUP, S.L.
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9275.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9275.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+34
+</td>
+<td style="text-align:center;">
+SECCIÓN SEGUNDA. Anuncios y avisos legales
+</td>
+<td style="text-align:center;">
+CONVOCATORIAS DE JUNTAS
+</td>
+<td style="text-align:center;">
+BEANACA, S.A.
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9276.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9276.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+35
+</td>
+<td style="text-align:center;">
+SECCIÓN SEGUNDA. Anuncios y avisos legales
+</td>
+<td style="text-align:center;">
+CONVOCATORIAS DE JUNTAS
+</td>
+<td style="text-align:center;">
+CONCESIONARIOS ESTACIÓN AUTOBUSES LOGROÑO, S.A.
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9277.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9277.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+36
+</td>
+<td style="text-align:center;">
+SECCIÓN SEGUNDA. Anuncios y avisos legales
+</td>
+<td style="text-align:center;">
+CONVOCATORIAS DE JUNTAS
+</td>
+<td style="text-align:center;">
+FOMENTO DE ENSEÑANZA MEDIA, S.A.
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9278.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9278.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+37
+</td>
+<td style="text-align:center;">
+SECCIÓN SEGUNDA. Anuncios y avisos legales
+</td>
+<td style="text-align:center;">
+CONVOCATORIAS DE JUNTAS
+</td>
+<td style="text-align:center;">
+MEMORIZA COMUNICACIÓN, S.L.
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9279.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9279.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+38
+</td>
+<td style="text-align:center;">
+SECCIÓN SEGUNDA. Anuncios y avisos legales
+</td>
+<td style="text-align:center;">
+CONVOCATORIAS DE JUNTAS
+</td>
+<td style="text-align:center;">
+NEMAC, S.A.
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9280.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9280.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+39
+</td>
+<td style="text-align:center;">
+SECCIÓN SEGUNDA. Anuncios y avisos legales
+</td>
+<td style="text-align:center;">
+CONVOCATORIAS DE JUNTAS
+</td>
+<td style="text-align:center;">
+PATRIMONIO INMOBILIARIO SIGLO XXI, S.A.
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9281.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9281.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+40
+</td>
+<td style="text-align:center;">
+SECCIÓN SEGUNDA. Anuncios y avisos legales
+</td>
+<td style="text-align:center;">
+CONVOCATORIAS DE JUNTAS
+</td>
+<td style="text-align:center;">
+URIBAN, S.A.
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9282.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9282.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+41
+</td>
+<td style="text-align:center;">
+SECCIÓN SEGUNDA. Anuncios y avisos legales
+</td>
+<td style="text-align:center;">
+CONVOCATORIAS DE JUNTAS
+</td>
+<td style="text-align:center;">
+USP INSTITUTO DEXEUS, S.A.
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9283.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9283.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+42
+</td>
+<td style="text-align:center;">
+SECCIÓN SEGUNDA. Anuncios y avisos legales
+</td>
+<td style="text-align:center;">
+FUSIONES Y ABSORCIONES DE EMPRESAS
+</td>
+<td style="text-align:center;">
+BORDA FORTUNY, SOCIEDAD LIMITADA (SOCIEDAD ABSORBENTE) BORI TREPAT, SOCIEDAD LIMITADA (SOCIEDAD ABSORBIDA)
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9284.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9284.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+43
+</td>
+<td style="text-align:center;">
+SECCIÓN SEGUNDA. Anuncios y avisos legales
+</td>
+<td style="text-align:center;">
+FUSIONES Y ABSORCIONES DE EMPRESAS
+</td>
+<td style="text-align:center;">
+FELCA, S.A. (SOCIEDAD ABSORBENTE) FELCA UNITS, S.A.U. (SOCIEDAD ABSORBIDA)
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9285.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9285.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+44
+</td>
+<td style="text-align:center;">
+SECCIÓN SEGUNDA. Anuncios y avisos legales
+</td>
+<td style="text-align:center;">
+FUSIONES Y ABSORCIONES DE EMPRESAS
+</td>
+<td style="text-align:center;">
+FROXÁ, SOCIEDAD ANÓNIMA (SOCIEDAD ABSORBENTE) ABEL FERNÁNDEZ, SOCIEDAD ANÓNIMA FERNÁNDEZ RODRÍGUEZ, SOCIEDAD ANÓNIMA (SOCIEDADES ABSORBIDAS)
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9286.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9286.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+45
+</td>
+<td style="text-align:center;">
+SECCIÓN SEGUNDA. Anuncios y avisos legales
+</td>
+<td style="text-align:center;">
+FUSIONES Y ABSORCIONES DE EMPRESAS
+</td>
+<td style="text-align:center;">
+INDIGO CAPITAL, SOCIEDAD LIMITADA (SOCIEDAD ABSORBENTE) MANSUKH, SOCIEDAD LIMITADA NINO INTERNACIONAL, SOCIEDAD ANÓNIMA (SOCIEDADES ABSORBIDAS)
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9287.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9287.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+46
+</td>
+<td style="text-align:center;">
+SECCIÓN SEGUNDA. Anuncios y avisos legales
+</td>
+<td style="text-align:center;">
+FUSIONES Y ABSORCIONES DE EMPRESAS
+</td>
+<td style="text-align:center;">
+SALJOAR, S.A. UNIPERSONAL (SOCIEDAD ABSORBENTE) INDUSTRIA TÉCNICA DE AUTOMOCIÓN POLUX, S.A. UNIPERSONAL TECNOLOGÍA, MAQUINARIA E INNOVACIÓN, S.A. UNIPERSONAL (SOCIEDADES ABSORBIDAS)
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9288.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9288.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+47
+</td>
+<td style="text-align:center;">
+SECCIÓN SEGUNDA. Anuncios y avisos legales
+</td>
+<td style="text-align:center;">
+FUSIONES Y ABSORCIONES DE EMPRESAS
+</td>
+<td style="text-align:center;">
+SM PUBLISHING (IBERIA), S.R.L. (SOCIEDAD ABSORBENTE) EMI MUSIC PUBLISHING HOLDING IBERIA, S.L.U. (SOCIEDAD ABSORBIDA)
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9289.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9289.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+48
+</td>
+<td style="text-align:center;">
+SECCIÓN SEGUNDA. Anuncios y avisos legales
+</td>
+<td style="text-align:center;">
+FUSIONES Y ABSORCIONES DE EMPRESAS
+</td>
+<td style="text-align:center;">
+SOCIEDAD ESPAÑOLA DE RADIODIFUSIÓN, SOCIEDAD LIMITADA UNIPERSONAL (SOCIEDAD ABSORBENTE) INICIATIVAS RADIOFÓNICAS, SOCIEDAD LIMITADA (SOCIEDAD ABSORBIDA)
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9290.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9290.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+49
+</td>
+<td style="text-align:center;">
+SECCIÓN SEGUNDA. Anuncios y avisos legales
+</td>
+<td style="text-align:center;">
+ESCISIÓN DE EMPRESAS
+</td>
+<td style="text-align:center;">
+LEAST COST ROUTING TELECOM, SOCIEDAD LIMITADA (SOCIEDAD ESCINDIDA) ONMÓVIL DIVISIÓN TELEFONÍA MÓVIL TYSONCARRASCO INVERSIONES, SOCIEDAD LIMITADA (SOCIEDAD BENEFICIARIA)
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9291.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9291.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+50
+</td>
+<td style="text-align:center;">
+SECCIÓN SEGUNDA. Anuncios y avisos legales
+</td>
+<td style="text-align:center;">
+TRANSFORMACIÓN DE EMPRESAS
+</td>
+<td style="text-align:center;">
+AVANT TRADING BUSSINES, S.L.
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9292.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9292.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+51
+</td>
+<td style="text-align:center;">
+SECCIÓN SEGUNDA. Anuncios y avisos legales
+</td>
+<td style="text-align:center;">
+TRANSFORMACIÓN DE EMPRESAS
+</td>
+<td style="text-align:center;">
+QUILIUM PROMOTORES INMOBILIARIOS, S.A.U.
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9293.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9293.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+52
+</td>
+<td style="text-align:center;">
+SECCIÓN SEGUNDA. Anuncios y avisos legales
+</td>
+<td style="text-align:center;">
+REDUCCIÓN DE CAPITAL
+</td>
+<td style="text-align:center;">
+ARAFRE, S.A.
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9294.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9294.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+53
+</td>
+<td style="text-align:center;">
+SECCIÓN SEGUNDA. Anuncios y avisos legales
+</td>
+<td style="text-align:center;">
+REDUCCIÓN DE CAPITAL
+</td>
+<td style="text-align:center;">
+FRIGORÍFICOS MARBAMAR, SOCIEDAD ANÓNIMA
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9295.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9295.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+54
+</td>
+<td style="text-align:center;">
+SECCIÓN SEGUNDA. Anuncios y avisos legales
+</td>
+<td style="text-align:center;">
+REDUCCIÓN DE CAPITAL
+</td>
+<td style="text-align:center;">
+HASTINIK, S.A.
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9296.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9296.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+55
+</td>
+<td style="text-align:center;">
+SECCIÓN SEGUNDA. Anuncios y avisos legales
+</td>
+<td style="text-align:center;">
+REDUCCIÓN DE CAPITAL
+</td>
+<td style="text-align:center;">
+LAR ESPAÑA REAL ESTATE SOCIMI, S.A.
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9297.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9297.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+56
+</td>
+<td style="text-align:center;">
+SECCIÓN SEGUNDA. Anuncios y avisos legales
+</td>
+<td style="text-align:center;">
+REDUCCIÓN DE CAPITAL
+</td>
+<td style="text-align:center;">
+TANATORIOS IRACHE, SOCIEDAD ANÓNIMA
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9298.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9298.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+57
+</td>
+<td style="text-align:center;">
+SECCIÓN SEGUNDA. Anuncios y avisos legales
+</td>
+<td style="text-align:center;">
+REDUCCIÓN DE CAPITAL
+</td>
+<td style="text-align:center;">
+TINYCAR, S.A.
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9299.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9299.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:center;">
+SECCIÓN SEGUNDA. Anuncios y avisos legales
+</td>
+<td style="text-align:center;">
+OTROS ANUNCIOS Y AVISOS LEGALES
+</td>
+<td style="text-align:center;">
+AZUCARERAS REUNIDAS DE JAÉN, S.A.
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9300.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9300.pdf</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+59
+</td>
+<td style="text-align:center;">
+SECCIÓN SEGUNDA. Anuncios y avisos legales
+</td>
+<td style="text-align:center;">
+OTROS ANUNCIOS Y AVISOS LEGALES
+</td>
+<td style="text-align:center;">
+CARTERA VILADECANS, SOCIEDAD ANÓNIMA
+</td>
+<td style="text-align:center;">
+<a href="https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9301.pdf" class="uri">https://boe.es/borme/dias/2019/12/20/pdfs/BORME-C-2019-9301.pdf</a>
+</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

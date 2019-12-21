@@ -3,11 +3,21 @@ output_dir: docs
 navbar:
   title: "Histórico del BOE"
   left:
-    - text: "Último BOE"
-      href: last_BOE.html
+    - text: "Último"
+      icon: fa-newspaper
+      menu:
+      - text: "BOE"
+        href: last_BOE.html
+      - text: "BORME"
+        href: last_BORME.html
     - text: "Vista de pájaro"
-      href: BOE.html
-    - text: "Analysis"
+      icon: fa-eye
+      menu:
+      - text: "BOE"
+        href: BOE.html
+      - text: "BORME"
+        href: BORME.html
+    - text: "Analysis BOE"
       icon: fa-chart-bar
       menu:
         - text: "Universidades"
