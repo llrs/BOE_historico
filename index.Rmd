@@ -9,7 +9,7 @@ Este sitio explora los datos públicados en el [BOE](https://boe.es), Boletín O
 Hace uso de [este programa](https://www.github.com/llrs/BOE) que a partir de los sumarios de cada día del BOE convierte la información en tablas.
 
 
-```{r summary_plots, echo=FALSE, error=FALSE, warning=FALSE, cache=TRUE, fig.width=10, fig.asp=1}
+```{r BOE, echo=FALSE, error=FALSE, warning=FALSE, cache=TRUE, fig.width=10, fig.asp=1}
 suppressPackageStartupMessages(library("data.table"))
 suppressPackageStartupMessages(library("dtplyr"))
 suppressPackageStartupMessages(library("dplyr"))
@@ -32,7 +32,7 @@ g1 <- ggplot(df) +
     scale_color_viridis_c() +
     scale_y_continuous(expand = c(0, 10)) +
     labs(x = element_blank(), y = "Publicaciones", 
-         color = "Disposición/Anuncio", title = "Disposiciones y Sumarios") +
+         color = "Disposición/Anuncio", title = "Disposiciones y Sumarios en el BOE") +
     theme_bw()
 g2 <- ggplot(df) +
     geom_point(aes(date, n, color = ratio2)) +
@@ -46,3 +46,30 @@ g2 <- ggplot(df) +
 g1 / g2
 ```
 
+
+
+
+```{r BORME, echo=FALSE, error=FALSE, warning=FALSE, cache=TRUE}
+dff <- fread("../BORME/till_20191221.csv", sep = "\t")
+dff <- dff %>% 
+    lazy_dt() %>% 
+    mutate(date = as.Date(date, format = "%Y-%m-%d"),
+           weekday = weekdays(date))
+df <- dff %>% 
+  lazy_dt() %>% 
+  group_by(date) %>% 
+  count() %>% 
+  ungroup() %>% 
+  mutate(date = as.Date(date, "%d/%m/%Y")) %>% 
+  as_tibble()
+    
+ggplot(df) +
+    geom_point(aes(date, n)) +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    scale_color_viridis_c() +
+    scale_y_continuous(expand = c(0, 10)) +
+    labs(x = element_blank(), y = "Publicaciones", 
+         title = "Publicaciones en el BORME",
+         caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado\nAutor: Lluís Revilla") +
+    theme_bw()
+```

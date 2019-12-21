@@ -11,7 +11,7 @@
 
 
 
-<title>Explorando el BOE</title>
+<title>El BORME a vista de pájaro</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -353,15 +353,48 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Explorando el BOE</h1>
+<h1 class="title toc-ignore">El BORME a vista de pájaro</h1>
 
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#preparación">Preparación</a></li>
+<li><a href="#sección">Sección</a></li>
+<li><a href="#emisor">Emisor</a></li>
+<li><a href="#texto">Texto</a></li>
+<li><a href="#número-de-páginas">Número de páginas</a></li>
+</ul>
+</div>
 
-<p>Este sitio explora los datos públicados en el <a href="https://boe.es">BOE</a>, Boletín Oficial del Estado.</p>
-<p>Hace uso de <a href="https://www.github.com/llrs/BOE">este programa</a> que a partir de los sumarios de cada día del BOE convierte la información en tablas.</p>
-<p><img src="index_files/figure-html/BOE-1.png" width="960" /></p>
-<p><img src="index_files/figure-html/BORME-1.png" width="672" /></p>
+<div id="preparación" class="section level1">
+<h1>Preparación</h1>
+<p>Aquí cargo las liberías que me ayudan a visualizar los datos. También cargamos los datos del BORME del 2009/01/01 (fecha a partir de la qual lo que figure en la página web tiene validez legal) hasta el 2019/12/21:</p>
+<pre><code>## Loading required package: ggplot2</code></pre>
+<p>Por último le añadimos el día de la semana.</p>
+</div>
+<div id="sección" class="section level1">
+<h1>Sección</h1>
+<p>Sin mucho detalle (por el momento) solo algunas graficas sobre que se publica.</p>
+<p><img src="BORME_files/figure-html/seccion-1.png" width="672" /><img src="BORME_files/figure-html/seccion-2.png" width="672" /><img src="BORME_files/figure-html/seccion-3.png" width="672" /></p>
+</div>
+<div id="emisor" class="section level1">
+<h1>Emisor</h1>
+<p>El emisor es el segundo desglose de la publicación.</p>
+<p><img src="BORME_files/figure-html/departamento-1.png" width="672" /><img src="BORME_files/figure-html/departamento-2.png" width="672" /><img src="BORME_files/figure-html/departamento-3.png" width="672" /><img src="BORME_files/figure-html/departamento-4.png" width="672" /></p>
+<p>Aquí podemos ver que se informa más a menudo en el BORME:</p>
+<p><img src="BORME_files/figure-html/barplot-1.png" width="672" /></p>
+</div>
+<div id="texto" class="section level1">
+<h1>Texto</h1>
+<p>Podemos buscar algunas palabras del breve resumen:</p>
+<pre><code>## Selecting by n</code></pre>
+<p><img src="BORME_files/figure-html/texto-1.png" width="672" /></p>
+</div>
+<div id="número-de-páginas" class="section level1">
+<h1>Número de páginas</h1>
+<p>Segun el manual de los arxivos debería figurar el número de páginas de cada publicación pero no está. Por lo que no podemos mirar si hay alguna tendencia o un resumen.</p>
+</div>
 
 
 
