@@ -25,19 +25,36 @@ if (is(sumario_hoy, "try-error")) {
 
 Esta página web contine el último sumario públicado en `r d`.
 
-```{r, echo=FALSE, eval=FALSE}
-entropy <- function(x){sum(-prop.table(table(x))*log2(prop.table(table(x))))/(length(unique(x))/2)}
-sumario_hoy$disp <- ifelse(is.na(sumario_hoy$epigraph), "Anuncio", "Disposición")
-e <- apply(sumario_hoy[, c("section", "departament", "disp")], 2, entropy)
-names(e) <- c("Sección", "Departamentos", "Disposiciones")
-sort(e, decreasing = TRUE)
+```{r, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
+library("dplyr")
+library("forcats")
+library("ggalluvial")
+sumario_hoy %>% 
+    group_by(section_number, emisor) %>% 
+    count(name = "Freq", sort = TRUE) %>% 
+    ungroup() %>% 
+    mutate(section_number = gsub("SECCIÓN .*\\. ", "", section_number),
+           emisor = tolower(emisor)) %>% 
+    arrange(section_number, emisor, Freq) %>% 
+    mutate(emisor = as.factor(emisor),
+           section_number = as.factor(section_number),
+           emisor = fct_inorder(emisor),
+           section_number = fct_inorder(section_number)) %>% 
+    ggplot(aes(y = Freq, axis1 = section_number, axis2 = emisor)) +
+    geom_alluvium(aes(fill = as.factor(emisor))) +
+    geom_stratum(fill = "white", color = "black") +
+    geom_text(stat = "stratum", infer.label = TRUE) +
+    guides(fill = FALSE) +
+    scale_x_discrete(limits = c("section_number", "emisor")) +
+    theme_void() +
+    labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado")
 ```
 
 # Tabla
 
 Aquí està la tabla completa con links
 
-```{r report, echo=FALSE}
+```{r report, echo = FALSE}
 pubs <- url_publications(sumario_hoy)
 pubs <- paste0("<a href=", pubs, ">", sumario_hoy$publication, "</a>")
 s <- cbind(sumario_hoy, pubs)

@@ -25,9 +25,39 @@ if (is(sumario_hoy, "try-error")) {
 
 Esta página web contine el último sumario públicado en `r d`.
 
-```{r, echo=FALSE, eval=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
 library("dplyr")
-group_by(sumario_hoy)
+library("ggalluvial")
+library("forcats")
+library("patchwork")
+freqs <- sumario_hoy %>% 
+    mutate(Type = ifelse(is.na(epigraph), "Anuncio", "Disposición")) %>% 
+    group_by(section, departament, Type, epigraph) %>% 
+    count(name = "Freq", sort = TRUE) %>% 
+    ungroup() %>% 
+    arrange(section, departament) %>% 
+    mutate(section = fct_inorder(as.factor(section)),
+           departament = fct_inorder(as.factor(tolower(departament))),
+           epigraph = fct_inorder(as.factor(epigraph)))
+p1 <- freqs %>% 
+    filter(Type == "Anuncio") %>% 
+    ggplot(aes(y = Freq, axis1 = section, axis2 = departament)) +
+    geom_alluvium() +
+    geom_stratum(fill = "white", color = "black") +
+    geom_text(stat = "stratum", infer.label = TRUE) +
+    guides(fill = FALSE) +
+    theme_void() +
+    labs(title = "Anuncios", caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado")
+p2 <- freqs %>% 
+    filter(Type != "Anuncio") %>% 
+    ggplot(aes(y = Freq, axis1 = section, axis2 = departament, axis3 = epigraph)) +
+    geom_alluvium() +
+    geom_stratum(fill = "white", color = "black") +
+    geom_text(stat = "stratum", infer.label = TRUE) +
+    guides(fill = FALSE) +
+    theme_void() +
+    labs(title = "Disposiciones")
+p2 + p1
 ```
 
 # Tabla
