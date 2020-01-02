@@ -1,0 +1,120 @@
+---
+title: "Insolvencia"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = TRUE, echo = FALSE)
+```
+
+
+```{r cargar, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
+library("data.table", warn.conflicts = FALSE)
+library("dtplyr", warn.conflicts = FALSE)
+library("dplyr", warn.conflicts = FALSE)
+library("lubridate", warn.conflicts = FALSE)
+library("gghighlight", warn.conflicts = FALSE)
+library("ggplot2", warn.conflicts = FALSE)
+library("forcats", warn.conflicts = FALSE)
+library("tidyr", warn.conflicts = FALSE)
+library("stringr", warn.conflicts = FALSE)
+
+dff <- fread("../BORME/till_20191221.csv", sep = "\t")
+dff <- dff %>% 
+    lazy_dt() %>% 
+    mutate(date = as.Date(date, format = "%Y-%m-%d"),
+           weekday = weekdays(date))
+```
+
+Mirando el BORME me sorprendieron las insolvencias.
+
+Si mirasmos cuando son las insolvencias vemos un pico alrededor de 2011:
+
+```{r plot}
+insolvencia <- dff %>% 
+    filter(emisor == "DECLARACIONES DE INSOLVENCIA") %>% 
+    as_tibble() %>% 
+    mutate(
+        text = gsub("\\s+", " ", text),
+        text = gsub("\\s+SOCIEDAD LIMITADA$", ", S.L.", text),
+        text = gsub("\\s+SOCIEDAD ANÓNIMA$", ", S.A.", text),
+        text = gsub("&quot;", "", text),
+        text = gsub(",,", ",", text),
+        text = gsub(", SOCIEDAD LIMITADA UNIPERSONAL$", ", S.L.U.", text),
+        text = gsub(", SOCIEDAD ANÓNIMA LABORAL$", ", S.A.L.", text),
+        text = gsub("JUZGADO SOCIAL", "JUZGADO DE LO SOCIAL", text),
+        text = gsub("Nº|N\\.º|NÚM |NÚM\\.|NUMERO", "NÚMERO", text),
+        text = gsub("NUMERORO", "NÚMERO", text),
+        text = gsub("JUZGADO DE LOS SOCIAL", "JUZGADO DE LO SOCIAL ", text),
+        text = gsub("^JUZGADO DE LO SOCIAL ", "JUZGADO DE LO SOCIAL NÚMERO ", text),
+        text = gsub("NÚMERO\\s+NÚMERO", "NÚMERO ", text),
+        text = gsub("\\s+", " ", text),
+        )
+insolvencia %>% 
+    count(date) %>% 
+    ggplot() +
+    geom_point(aes(date, n)) +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    scale_y_continuous(expand = c(0, 10)) +
+    labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado",
+         x = element_blank(), y = "Publicaciones", fill = "Sección") +
+    theme_bw()
+```
+
+Sorprendentemente esta información ya no figura en el BORME, quizá han pasado a un nuevo emisario o nomenclatura.
+
+Hay textos con diversos registros de insolvencia:
+
+```{r warning=FALSE}
+counts <- insolvencia %>% 
+    count(text, sort = TRUE)
+counts %>% 
+    filter(n > 2) %>% 
+    as.data.frame() %>% 
+    DT::datatable(filter = 'top', options = list(
+        pageLength = 10, autoWidth = TRUE
+    ), escape = FALSE)
+```
+
+Esto nos permite ver el tiempo des de el primer anuncio de insolvencia al último: 
+
+```{r tiempo}
+companies <- counts %>% 
+    filter(n >= 2 & !grepl("JUZGADO", text)) %>% 
+    pull(text)
+
+between_insolvencias <- insolvencia %>% 
+    filter(text %in% companies) %>% 
+    group_by(text) %>% 
+    filter_at(vars(date), ~ min(.) != max(.)) %>% 
+    summarise(between = difftime(max(date), min(date), units = "days")) %>% 
+    ungroup()
+    
+between_insolvencias %>% 
+    mutate(companies = "Companies") %>% 
+    ggplot() +
+    geom_violin(aes(x = companies, y = between)) +
+    scale_y_continuous(breaks = 365*1:4) +
+    labs(x = element_blank(), y = "Días", title = "Tiempo entre primer notificación de insolvencia y el último") +
+    theme_bw()
+```
+
+Podemos ver que los juzgados también han publicado más (y ver una vez más como de standarizadas son las publicaciones; hay juzgados escritos en números y en letras)
+
+```{r}
+juzgados <- counts %>% 
+    filter(grepl("JUZGADO", text))
+juzgados %>% 
+    mutate(text = gsub("JUZGADO DE LO SOCIAL NÚMERO", "", text)) %>% 
+    top_n(15, n) %>% 
+    ggplot() +
+    geom_col(aes(forcats::fct_reorder(text, n), n)) +
+    coord_flip() +
+    theme_bw() +
+    labs(y = "Publicaciones", x = "Juzgados de lo social")
+
+```
+
+

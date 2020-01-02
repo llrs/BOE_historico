@@ -1,0 +1,212 @@
+---
+title: "El BORME a vista de pájaro"
+output:
+  html_document:
+    toc: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = TRUE, collapse = TRUE, warning = FALSE)
+```
+
+# Preparación
+
+Aquí cargo las liberías que me ayudan a visualizar los datos. 
+También cargamos los datos del BORME del 2009/01/01 (fecha a partir de la qual lo que figure en la página web tiene validez legal) hasta el 2019/12/21:
+
+```{r cargar, echo=FALSE}
+library("data.table", warn.conflicts = FALSE)
+library("dtplyr", warn.conflicts = FALSE)
+library("dplyr", warn.conflicts = FALSE)
+library("lubridate", warn.conflicts = FALSE)
+library("gghighlight", warn.conflicts = FALSE)
+library("ggplot2", warn.conflicts = FALSE)
+library("forcats", warn.conflicts = FALSE)
+library("tidyr", warn.conflicts = FALSE)
+library("stringr", warn.conflicts = FALSE)
+
+dff <- fread("../BORME/till_20191221.csv", sep = "\t")
+dff <- dff %>% 
+    lazy_dt() %>% 
+    mutate(date = as.Date(date, format = "%Y-%m-%d"),
+           weekday = weekdays(date))
+```
+
+Por último le añadimos el día de la semana.
+
+# Sección
+
+Sin mucho detalle (por el momento) solo algunas graficas sobre que se publica.
+
+```{r seccion, echo=FALSE}
+df2 <- dff %>% 
+    group_by(date) %>% 
+    count(section) %>% 
+    ungroup()
+
+df2 %>%
+    as_tibble() %>% 
+    ggplot() +
+    geom_point(aes(date, n, col = section)) +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    scale_y_continuous(expand = c(0, 10)) +
+    labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado",
+         x = element_blank(), y = "Publicaciones", fill = "Sección") +
+    theme_bw()
+
+# The section with higher prevalence
+dff %>% 
+    group_by(date, section) %>% 
+    summarise(n = n()) %>% 
+    mutate(publications = sum(n), ratio = n/publications) %>% 
+    ungroup() %>% 
+    group_by(date) %>% 
+    filter(ratio == max(ratio)) %>% 
+    ungroup() %>% 
+    as_tibble() %>% 
+    ggplot() +
+    geom_point(aes(date, publications, col = section, alpha = ratio)) +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    scale_y_continuous(expand = c(0, 10)) +
+    labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado",
+         x = element_blank(), y = "Publicaciones", 
+         title = "Main publication per day") +
+    theme_bw()
+
+# An increase of a predominant section
+dff %>% 
+    group_by(date, section) %>% 
+    summarise(n = n()) %>% 
+    mutate(publications = sum(n), ratio = n/publications) %>% 
+    ungroup() %>% 
+    as_tibble() %>% 
+    ggplot() +
+    geom_point(aes(date, ratio, col = section)) +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    scale_y_continuous(expand = c(0, 0)) +
+    labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado",
+         x = element_blank()) +
+    theme_bw()
+```
+ 
+
+# Emisor
+
+El emisor es el segundo desglose de la publicación. 
+
+```{r departamento, echo=FALSE}
+df3 <- dff %>% 
+    group_by(date) %>% 
+    count(emisor) %>% 
+    ungroup()
+
+
+df3 %>%
+    as_tibble() %>% 
+    ggplot() +
+    geom_point(aes(date, n, col = emisor), alpha = 0.2) +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    scale_y_continuous(expand = c(0, 10)) +
+    labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado",
+         x = element_blank(), y = "Emisor") +
+    guides(col = FALSE) +
+    scale_color_viridis_d() +
+    theme_bw()
+
+# From what section are the dates with more publications?
+# Juzgados de primera instancia e instruccion
+df3 %>%
+    as_tibble() %>% 
+    ggplot() +
+    geom_point(aes(date, n, col = emisor), alpha = 0.7) +
+    gghighlight(n > 150, use_direct_label = FALSE) +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    scale_y_continuous(expand = c(0, 10)) +
+    # guides(col = FALSE) +
+    scale_color_viridis_d() +
+    labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado",
+         x = element_blank(), y = "Emisor") +
+    theme_bw()
+
+# The section with higher prevalence
+dff %>% 
+    group_by(date, emisor) %>% 
+    summarise(n = n()) %>% 
+    mutate(publications = sum(n), ratio = n/publications) %>% 
+    ungroup() %>% 
+    group_by(date) %>% 
+    filter(ratio == max(ratio)) %>% 
+    as_tibble() %>% 
+    ggplot() +
+    geom_point(aes(date, publications, col = emisor, alpha = ratio)) +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    scale_y_continuous(expand = c(0, 10)) +
+    scale_color_viridis_d() +
+    labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado",
+         x = element_blank()) +
+    theme_bw()
+
+# An increase of a predominant department on 2013
+dff %>% 
+    group_by(date, emisor) %>% 
+    summarise(n = n()) %>% 
+    mutate(publications = sum(n), ratio = n/publications) %>% 
+    ungroup() %>% 
+    as_tibble() %>% 
+    ggplot() +
+    geom_point(aes(date, ratio, col = emisor)) +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
+    scale_y_continuous(expand = c(0, 0)) +
+    guides(col = FALSE) +
+    scale_color_viridis_d() +
+    labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado",
+         x = element_blank()) +
+    theme_bw()
+```
+ 
+Aquí podemos ver que se informa más a menudo en el BORME:
+ 
+```{r barplot, echo=FALSE}
+dff %>% 
+    mutate(department = tolower(emisor)) %>% 
+    group_by(department) %>% 
+    count(sort = TRUE) %>% 
+    as_tibble() %>% 
+    ggplot() +
+    geom_col(aes(y= log10(n), x = fct_reorder(department, n), fill = log10(n))) +
+    scale_y_continuous(expand = c(0, 0)) +
+    coord_flip() +
+    guides(fill = FALSE) +
+    labs(x = "Departamento", y= "log10(Publicaciones)") +
+    scale_fill_viridis_c(option = "A", direction = -1) +
+    labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+    theme_bw() +
+    theme(text = element_text(size = 20))
+```
+
+# Texto
+
+Podemos buscar algunas palabras del breve resumen:
+
+```{r texto, echo=FALSE}
+text_search <- dff %>% 
+    group_by(text) %>% 
+    count(sort = TRUE) %>% 
+    ungroup() %>% 
+    as_tibble()
+text_search %>%
+    filter(text != "ÍNDICE ALFABÉTICO DE SOCIEDADES") %>% 
+    top_n(52) %>% 
+    ggplot() +
+    geom_col(aes(x = fct_reorder(text, n), y = n)) +
+    labs(x = "Publications") +
+    coord_flip() +
+    theme_bw()
+```
+
+
+# Número de páginas
+
+Segun el manual de los arxivos debería figurar el número de páginas de cada publicación pero no está. Por lo que no podemos mirar si hay alguna tendencia o un resumen. 
