@@ -1,0 +1,122 @@
+---
+title: "Crisis"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = TRUE, echo = FALSE, error = FALSE, 
+                      warning = FALSE, message = FALSE)
+```
+
+Mucho se ha escrito de la crisis de 2008-2015?. 
+Pero ¿qué impacto ha tenido en España? 
+
+```{r cargar, echo=FALSE}
+library("data.table", warn.conflicts = FALSE)
+library("dtplyr", warn.conflicts = FALSE)
+library("dplyr", warn.conflicts = FALSE)
+library("lubridate", warn.conflicts = FALSE)
+library("gghighlight", warn.conflicts = FALSE)
+library("ggplot2", warn.conflicts = FALSE)
+library("forcats", warn.conflicts = FALSE)
+library("tidyr", warn.conflicts = FALSE)
+library("stringr", warn.conflicts = FALSE)
+
+borme <- fread("../BORME/till_20191221.csv", sep = "\t") %>% 
+    lazy_dt() %>% 
+    mutate(date = as.Date(date, format = "%Y-%m-%d"),
+           weekday = weekdays(date))
+    
+    
+boe <- fread("../BOE_sumario/till_20191117.csv", sep = "\t", quote = FALSE) %>% 
+    lazy_dt() %>% 
+    mutate(date = as.Date(date, format = "%d/%m/%Y"),
+           weekday = weekdays(date))
+
+```
+
+
+```{r borme_insolvencia}
+borme <- borme %>% 
+    as_tibble() %>% 
+    mutate(
+        text = gsub("\\s+", " ", text),
+        text = gsub("\\s+SOCIEDAD LIMITADA$", ", S.L.", text),
+        text = gsub("\\s+SOCIEDAD ANÓNIMA$", ", S.A.", text),
+        text = gsub("&quot;", "", text),
+        text = gsub(",,", ",", text),
+        text = gsub(", SOCIEDAD LIMITADA UNIPERSONAL$", ", S.L.U.", text),
+        text = gsub(", SOCIEDAD ANÓNIMA LABORAL$", ", S.A.L.", text),
+        text = gsub("JUZGADO SOCIAL", "JUZGADO DE LO SOCIAL", text),
+        text = gsub("Nº|N\\.º|NÚM |NÚM\\.|NUMERO", "NÚMERO", text),
+        text = gsub("NUMERORO", "NÚMERO", text),
+        text = gsub("JUZGADO DE LOS SOCIAL", "JUZGADO DE LO SOCIAL ", text),
+        text = gsub("^JUZGADO DE LO SOCIAL ", "JUZGADO DE LO SOCIAL NÚMERO ", text),
+        text = gsub("NÚMERO\\s+NÚMERO", "NÚMERO ", text),
+        text = gsub("\\s+", " ", text),
+    )
+insolvencia <- borme %>% 
+    filter(emisor == "DECLARACIONES DE INSOLVENCIA")
+ins <- insolvencia %>% 
+    group_by(month = floor_date(date, unit = "month")) %>% 
+    select(month, text) %>% 
+    distinct(text) %>% 
+    count(name = "Insolvencia")
+
+disolucion <- borme %>% 
+    filter(emisor == "DISOLUCIÓN DE EMPRESAS") %>% 
+    group_by(month = floor_date(date, unit = "month")) %>% 
+    select(month, text) %>% 
+    distinct(text) %>% 
+    count(name = "Disolucion")
+reduccion <- borme %>% 
+    filter(emisor == "REDUCCIÓN DE CAPITAL") %>% 
+    group_by(month = floor_date(date, unit = "month")) %>% 
+    select(month, text) %>% 
+    distinct(text) %>% 
+    count(name = "Reduccion")
+```
+
+```{r plot}
+mercantil <- boe %>% 
+    as_tibble() %>% 
+    filter(section == "4",
+           department == "JUZGADOS DE LO MERCANTIL") %>% 
+    mutate(text = trimws(toupper(text))) %>% 
+    mutate(text = gsub("\\.$", "", text))
+
+m <- mercantil %>% 
+    group_by(month = floor_date(date, unit = "month")) %>% 
+    count(month, name = "BOE")
+mm <- merge(m, ins, all = TRUE)
+mm <- merge(mm, disolucion, all = TRUE)
+mm <- merge(mm, reduccion, all = TRUE)
+f <- function(x){x/max(x, na.rm = TRUE)}
+mm %>% 
+    mutate_if(is.numeric, f) %>% 
+    ggplot() +
+    geom_point(aes(month, BOE)) +
+    geom_smooth(aes(month, BOE), col = "black", se = FALSE) +
+    geom_point(aes(month, Insolvencia), col = "orange") +
+    geom_smooth(aes(month, Insolvencia), col = "orange", se = FALSE) +
+    geom_point(aes(month, Disolucion), col = "red") +
+    geom_smooth(aes(month, Disolucion), col = "red", se = FALSE) +
+    scale_y_continuous(expand = expand_scale(add = 0.01), labels = scales::label_percent(scale = 100)) +
+    scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year", expand = expand_scale(mult = 0.01)) +
+    geom_text(data = data.frame(x = as.Date("2009/10/01"), y = 0.8), 
+              aes(x, y, label = "Insolvencia"), col = "orange") +
+    geom_text(data = data.frame(x = as.Date("2010/06/05"), y = 0.1), 
+              aes(x, y, label = "Disolución"), col = "red") +
+    geom_text(data = data.frame(x = as.Date("2017/01/05"), y = 0.65), 
+              aes(x, y, label = "Juzgados de lo mercantil"), col = "black") +
+    labs(x = element_blank(), y = "% sobre el máximo publicado",
+         caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado\r
+         Autor: @Lluis_Rev") +
+    theme_minimal()
+```
+
+Basandonos en el BOE y el BORME podemos ver que las disoluciones de las empresas siguieron hasta el 2013. 
+Pero los juzgados de lo mercantil siguieron atareados hasta finales de 2015.
+En 2016 ya se vio una reducción de la actividad de los juzgados de lo mercantil, pero no han recuperado el nivel de 2009.

@@ -11,7 +11,7 @@
 
 
 
-<title>Comunidades</title>
+<title>Crisis</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -359,40 +359,14 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Comunidades</h1>
+<h1 class="title toc-ignore">Crisis</h1>
 
 </div>
 
 
-<pre><code>## Loading required package: ggplot2</code></pre>
-<pre class="r"><code>com &lt;- dff %&gt;% 
-    filter(grepl(&quot;COMUNI&quot;, department)) %&gt;% 
-    mutate(department = trimws(gsub(&quot;COMUNI[TD]A[DT] (AUTÓNOMA)?( DEL?)?( LAS?)?&quot;, &quot;&quot;, department)))
-
-com %&gt;% 
-    count(department, sort = TRUE) %&gt;% 
-    as_tibble() %&gt;% 
-    ggplot() +
-    geom_col(aes(fct_reorder(department, -n), n)) +
-    labs(caption = &quot;Fuente: Agencia Estatal del Boletín Oficial del Estado&quot;,
-         x = element_blank(), y = &quot;Publicaciones&quot;) +
-    theme_bw() +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1))</code></pre>
-<p><img src="comunidades_files/figure-html/com-1.png" width="672" /></p>
-<pre class="r"><code>com_year &lt;- com %&gt;% 
-    group_by(department, year(date)) %&gt;% 
-    count() %&gt;% 
-    ungroup() %&gt;%
-    mutate(&quot;year&quot; = as.character(`year(date)`)) %&gt;%
-    as_tibble()
-com_year %&gt;% 
-    ggplot() +
-    geom_point(aes(year, n, col = department, group = department)) +
-    geom_line(aes(year, n, col = department, group = department)) +
-    labs(caption = &quot;Fuente: Agencia Estatal del Boletín Oficial del Estado&quot;,
-         x = element_blank(), y = &quot;Publicaciones&quot;) +
-    theme_bw()</code></pre>
-<p><img src="comunidades_files/figure-html/com-2.png" width="672" /></p>
+<p>Mucho se ha escrito de la crisis de 2008-2015?. Pero ¿qué impacto ha tenido en España?</p>
+<p><img src="crisis_files/figure-html/plot-1.png" width="672" /></p>
+<p>Basandonos en el BOE y el BORME podemos ver que las disoluciones de las empresas siguieron hasta el 2013. Pero los juzgados de lo mercantil siguieron atareados hasta finales de 2015. En 2016 ya se vio una reducción de la actividad de los juzgados de lo mercantil, pero no han recuperado el nivel de 2009.</p>
 
 
 
