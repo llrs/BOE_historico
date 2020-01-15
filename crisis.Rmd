@@ -10,8 +10,9 @@ knitr::opts_chunk$set(cache = TRUE, echo = FALSE, error = FALSE,
                       warning = FALSE, message = FALSE)
 ```
 
-Mucho se ha escrito de la crisis de 2008-2015?. 
-Pero ¿qué impacto ha tenido en España? 
+Después de mirar las [insolvencias](insolvencia.html) y sobre los [juzgados mercantiles](Departamentos.html#juzgados-de-lo-mercantil) me quedé con la duda de cómo impactó la crisis de 2008 a 2014 en España visto desde los boletines oficiales.
+
+Así que me puse a buscar cómo podia visualizarlo y he aquí el resultado:
 
 ```{r cargar, echo=FALSE}
 library("data.table", warn.conflicts = FALSE)
@@ -97,11 +98,11 @@ f <- function(x){x/max(x, na.rm = TRUE)}
 mm %>% 
     mutate_if(is.numeric, f) %>% 
     ggplot() +
-    geom_point(aes(month, BOE)) +
+    geom_point(aes(month, BOE), alpha = 0.5) +
     geom_smooth(aes(month, BOE), col = "black", se = FALSE) +
-    geom_point(aes(month, Insolvencia), col = "orange") +
+    geom_point(aes(month, Insolvencia), col = "orange", alpha = 0.5) +
     geom_smooth(aes(month, Insolvencia), col = "orange", se = FALSE) +
-    geom_point(aes(month, Disolucion), col = "red") +
+    geom_point(aes(month, Disolucion), col = "red", alpha = 0.5) +
     geom_smooth(aes(month, Disolucion), col = "red", se = FALSE) +
     scale_y_continuous(expand = expand_scale(add = 0.01), labels = scales::label_percent(scale = 100)) +
     scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year", expand = expand_scale(mult = 0.01)) +
@@ -109,7 +110,7 @@ mm %>%
               aes(x, y, label = "Insolvencia"), col = "orange") +
     geom_text(data = data.frame(x = as.Date("2010/06/05"), y = 0.1), 
               aes(x, y, label = "Disolución"), col = "red") +
-    geom_text(data = data.frame(x = as.Date("2017/01/05"), y = 0.65), 
+    geom_text(data = data.frame(x = as.Date("2013/11/1"), y = 0.5), 
               aes(x, y, label = "Juzgados de lo mercantil"), col = "black") +
     labs(x = element_blank(), y = "% sobre el máximo publicado",
          caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado\r
@@ -117,6 +118,6 @@ mm %>%
     theme_minimal()
 ```
 
-Basandonos en el BOE y el BORME podemos ver que las disoluciones de las empresas siguieron hasta el 2013. 
-Pero los juzgados de lo mercantil siguieron atareados hasta finales de 2015.
+En primer lugar destaca que el pico de insolvencias es posterior al aparente pico de disoluciones (hacia mayo de 2011). Y el pico de los juzgados de lo mercantil es dos años más tarde. 
+A partir de 2013 no se publica en el BORME ni una sola insolvencia más, así que no podemos decir cómo están los niveles ahora.
 En 2016 ya se vio una reducción de la actividad de los juzgados de lo mercantil, pero no han recuperado el nivel de 2009.
