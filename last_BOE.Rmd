@@ -1,5 +1,6 @@
 ---
 title: "Lo último del BOE"
+output_dir: docs
 editor_options: 
   chunk_output_type: console
 ---
@@ -25,7 +26,7 @@ if (is(sumario_hoy, "try-error")) {
 
 Esta página web contine el último sumario públicado en `r d`.
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
+```{r graphics, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE, fig.width=20, fig.asp=1}
 library("dplyr")
 library("ggalluvial")
 library("forcats")
