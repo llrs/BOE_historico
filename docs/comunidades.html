@@ -364,7 +364,6 @@ $(document).ready(function () {
 </div>
 
 
-<pre><code>## Loading required package: ggplot2</code></pre>
 <pre class="r"><code>com &lt;- dff %&gt;% 
     filter(grepl(&quot;COMUNI&quot;, department)) %&gt;% 
     mutate(department = trimws(gsub(&quot;COMUNI[TD]A[DT] (AUTÓNOMA)?( DEL?)?( LAS?)?&quot;, &quot;&quot;, department)))
