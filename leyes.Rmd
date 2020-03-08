@@ -1,0 +1,74 @@
+---
+title: "Tipo de leyes"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = FALSE, echo = FALSE, error = FALSE, 
+                      warning = FALSE, message = FALSE)
+```
+
+No conozco mucho las diferencias entre tipos de leyes pero los diferentes tipos tienen recorridos distintos y controles diferentes, así que ver los diferentes tipos de publicaciones es relevante.
+
+```{r cargar, echo=FALSE}
+library("data.table", warn.conflicts = FALSE)
+library("dtplyr", warn.conflicts = FALSE)
+library("dplyr", warn.conflicts = FALSE)
+library("lubridate", warn.conflicts = FALSE)
+library("gghighlight", warn.conflicts = FALSE)
+library("ggplot2", warn.conflicts = FALSE)
+library("forcats", warn.conflicts = FALSE)
+library("tidyr", warn.conflicts = FALSE)
+library("stringr", warn.conflicts = FALSE)
+
+    
+boe <- fread("../BOE_sumario/till_20191117.csv", sep = "\t", quote = FALSE) %>% 
+    lazy_dt() %>% 
+    mutate(date = as.Date(date, format = "%d/%m/%Y"),
+           weekday = weekdays(date))
+
+```
+
+
+Ignorando Acuerdos internacionales	
+```{r}
+leyes <- boe %>% 
+    filter(!section  %in% c("4", "5A", "2A", "2B") & 
+               !is.na(epigraf) &
+               section != "T") %>% 
+    as_tibble()
+
+l <- leyes %>% 
+    filter(str_detect(text, "^Sentencia", negate = TRUE) &
+               str_detect(text, "^Resolución", negate = TRUE) &
+               str_detect(text, "^Recurso", negate = TRUE) &
+               str_detect(text, "^Conflicto", negate = TRUE) & 
+               str_detect(text, "^Circular", negate = TRUE) & 
+               !epigraf  %in% c("Cuestiones de inconstitucionalidad", "Acuerdos internacionales", 
+                                "Premios", "Fiscalizaciones")) %>% 
+    mutate(tipo = case_when(
+        str_detect(text, "Decreto(-| )?ley") ~ "Decreto ley",
+        str_detect(text, "orgánica") ~ "Ley orgánica",
+        str_detect(text, "decreto legislativo") ~ "Ley orgánica",
+        str_detect(text, "Real Decreto") ~ "Real Decreto",
+        str_detect(text, "Decreto Legislativo ") ~ "Decreto Legislativo",
+        str_detect(text, "Decreto ") ~ "Decreto",
+        str_detect(text, "Orden") ~ "Orden",
+        str_detect(text, "Ley") ~ "Ley",
+        str_detect(text, "Resolución") ~ "Resolución",
+        str_detect(text, "Acuerdo") ~ "Acuerdo",
+        str_detect(text, "Instrucción") ~ "Instrucción",
+        TRUE ~ "?"),
+        correccion = str_detect(text, "Corrección")) %>% 
+    group_by(month = floor_date(date, unit = "month"), tipo) %>% 
+    count()
+
+l %>% 
+    ggplot(aes(month, tipo, size = n)) +
+    geom_point() +
+    theme_bw()
+
+```
+
