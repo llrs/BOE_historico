@@ -24,7 +24,7 @@ if (is(sumario_hoy, "try-error")) {
 
 # Resumen grafico
 
-Esta página web contine el último sumario públicado en `r d`.
+Esta página web contine el último sumario del BOE publicado el `r d` con `r nrow(sumario_hoy)` publicaciones.
 
 ```{r graphics, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE, fig.width=20, fig.asp=1}
 library("dplyr")
