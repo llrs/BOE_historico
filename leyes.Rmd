@@ -35,40 +35,67 @@ boe <- fread("../BOE_sumario/till_20191117.csv", sep = "\t", quote = FALSE) %>%
 Ignorando Acuerdos internacionales	
 ```{r}
 leyes <- boe %>% 
-    filter(!section  %in% c("4", "5A", "2A", "2B") & 
-               !is.na(epigraf) &
-               section != "T") %>% 
-    as_tibble()
+  filter(!section  %in% c("4", "5A", "2A", "2B") & 
+           !is.na(epigraf) &
+           section != "T") %>% 
+  filter(str_detect(text, "^Sentencia", negate = TRUE) &
+           str_detect(text, "^Resolución", negate = TRUE) &
+           str_detect(text, "^Recurso", negate = TRUE) &
+           str_detect(text, "^Conflicto", negate = TRUE) & 
+           str_detect(text, "^Circular", negate = TRUE) & 
+           !epigraf  %in% c("Cuestiones de inconstitucionalidad", "Acuerdos internacionales", 
+                            "Premios", "Fiscalizaciones")) %>% 
+  mutate(tipo = case_when(
+    str_detect(text, "Decreto(-| )?ley") ~ "Decreto ley",
+    str_detect(text, "orgánica") ~ "Ley orgánica",
+    str_detect(text, "decreto legislativo") ~ "Ley orgánica",
+    str_detect(text, "Real Decreto") ~ "Real Decreto",
+    str_detect(text, "Decreto Legislativo ") ~ "Decreto Legislativo",
+    str_detect(text, "Decreto ") ~ "Decreto",
+    str_detect(text, "Orden") ~ "Orden",
+    str_detect(text, "Ley") ~ "Ley",
+    str_detect(text, "Resolución") ~ "Resolución",
+    str_detect(text, "Acuerdo") ~ "Acuerdo",
+    str_detect(text, "Instrucción") ~ "Instrucción",
+    str_detect(text, "directivas") ~ "Instrucción",
+    TRUE ~ "?"),
+    correccion = str_detect(text, "Corrección")) %>% 
+  as_tibble()
+theme_set(theme_minimal())
 
-l <- leyes %>% 
-    filter(str_detect(text, "^Sentencia", negate = TRUE) &
-               str_detect(text, "^Resolución", negate = TRUE) &
-               str_detect(text, "^Recurso", negate = TRUE) &
-               str_detect(text, "^Conflicto", negate = TRUE) & 
-               str_detect(text, "^Circular", negate = TRUE) & 
-               !epigraf  %in% c("Cuestiones de inconstitucionalidad", "Acuerdos internacionales", 
-                                "Premios", "Fiscalizaciones")) %>% 
-    mutate(tipo = case_when(
-        str_detect(text, "Decreto(-| )?ley") ~ "Decreto ley",
-        str_detect(text, "orgánica") ~ "Ley orgánica",
-        str_detect(text, "decreto legislativo") ~ "Ley orgánica",
-        str_detect(text, "Real Decreto") ~ "Real Decreto",
-        str_detect(text, "Decreto Legislativo ") ~ "Decreto Legislativo",
-        str_detect(text, "Decreto ") ~ "Decreto",
-        str_detect(text, "Orden") ~ "Orden",
-        str_detect(text, "Ley") ~ "Ley",
-        str_detect(text, "Resolución") ~ "Resolución",
-        str_detect(text, "Acuerdo") ~ "Acuerdo",
-        str_detect(text, "Instrucción") ~ "Instrucción",
-        TRUE ~ "?"),
-        correccion = str_detect(text, "Corrección")) %>% 
-    group_by(month = floor_date(date, unit = "month"), tipo) %>% 
-    count()
+leyes %>% 
+  group_by(month = floor_date(date, unit = "month"), tipo) %>% 
+  count(sort = TRUE) %>% 
+  ungroup() %>% 
+  count(tipo, sort = TRUE)
+leyes %>% 
+  count(correccion, sort = TRUE)
 
-l %>% 
-    ggplot(aes(month, tipo, size = n)) +
-    geom_point() +
-    theme_bw()
+leyes %>% 
+  group_by(tipo) %>% 
+  count(correccion) %>% 
+  mutate(ratio = n/sum(n)) %>% 
+  ungroup() %>% 
+  filter(correccion) %>% 
+  arrange(-ratio)
+leyes %>% 
+  group_by(month = floor_date(date, unit = "month"), tipo, correccion) %>% 
+  count(sort = TRUE) %>% 
+  ungroup() %>% 
+  ggplot(aes(month, tipo, size = n)) +
+  geom_point()
 
+leyes %>% 
+  count(tipo, sort = TRUE) %>% 
+  pull(tipo) %>% 
+  paste0(., collapse = ", ")
+leyes %>% 
+  group_by(month = floor_date(date, unit = "month"), tipo, correccion) %>% 
+  count(sort = TRUE) %>% 
+  ungroup() %>% 
+  ggplot() +
+  geom_col(aes(month, n, fill = correccion)) +
+  labs(x = element_blank(), y = "Leyes", 
+       title = "Legislación aprobada o modificada")
 ```
 
