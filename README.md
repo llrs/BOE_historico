@@ -1,6 +1,7 @@
 # Histórico del BOE
 
 <!-- badges: start -->
+[![R build status](https://github.com/llrs/BOE_historico/workflows/R-CMD-check/badge.svg)](https://github.com/llrs/BOE_historico/actions)
 <!-- badges: end -->
 
 El repositorio genera la web [Histórico del BOE](https://llrs.github.io/BOE_historico).
