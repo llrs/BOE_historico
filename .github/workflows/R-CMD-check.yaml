@@ -4,7 +4,7 @@
 
 on:
   schedule:
-    - cron:  '0 40 7 * * ' # Every day at 7:40 Spain time
+    - cron:  '40 7 * * * ' # Every day at 7:40 Spain time
 
 name: update-latest-journal
 
