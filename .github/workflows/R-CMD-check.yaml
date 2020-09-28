@@ -20,7 +20,7 @@ jobs:
           remotes::install_github("rOpenSpain/BOE")
         shell: Rscript {0}
       - name: Update
-        shell: Rscript last
+        run: Rscript last
       - name: git config
         run: |
           git config --global user.email "actions@github.com"
