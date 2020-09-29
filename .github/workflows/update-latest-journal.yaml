@@ -3,8 +3,12 @@
 
 
 on:
+  push:
+    branches:
+      - master
   schedule:
-    - cron:  '40 9 * * *' # Every day at 7:40 Spain time, be aware of time changes
+    # Desired timezone: "Europe/Madrid" # In case it is used, from https://unix.stackexchange.com/a/504044/260613
+    - cron:  '40 5 * * *' # Every day at 7:40 Spain time, be aware of time changes
 
 name: update-latest-journal
 
@@ -15,7 +19,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: r-lib/actions/setup-r@master
       - name: Install dependencies
-        run: Rscript -e "install.packages(c('remotes'); remotes::install_github('rOpenSpain/BOE')"
+        run: Rscript -e "install.packages(c('remotes')); remotes::install_github('rOpenSpain/BOE')"
       - name: Update
         run: Rscript last
       - name: git config
