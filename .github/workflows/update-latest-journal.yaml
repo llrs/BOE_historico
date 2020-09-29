@@ -19,8 +19,6 @@ jobs:
       - uses: actions/checkout@v2
       - uses: r-lib/actions/setup-r@master
       - uses: r-lib/actions/setup-pandoc@v1
-        with:
-          pandoc-version: '2.7.3'
       - name: Install dependencies
         run: Rscript -e "install.packages(c('remotes')); remotes::install_github('rOpenSpain/BOE'); install.packages('rmarkdown');install.packages('dplyr');install.packages('ggalluvial');install.packages('forcats');install.packages('patchwork');install.packages('DT')"
       - name: Update
@@ -33,5 +31,8 @@ jobs:
         run: |
           git add .
           git commit -m 'Automatic commit to update last BOE and BORME'
-          git push https://${{github.actor}}:${{secrets.APPTOKEN}}@github.com/${{github.repository}}.git HEAD:history --force
+      - name: Push changes 
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.APPTOKEN }}
 
