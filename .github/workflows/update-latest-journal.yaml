@@ -4,7 +4,7 @@
 
 on:
   schedule:
-    - cron:  '40 7 * * * ' # Every day at 7:40 Spain time
+    - cron:  '40 9 * * *' # Every day at 7:40 Spain time, be aware of time changes
 
 name: update-latest-journal
 
@@ -15,16 +15,13 @@ jobs:
       - uses: actions/checkout@v2
       - uses: r-lib/actions/setup-r@master
       - name: Install dependencies
-        run: |
-          install.packages(c("remotes")
-          remotes::install_github("rOpenSpain/BOE")
-        shell: Rscript {0}
+        run: Rscript -e "install.packages(c('remotes'); remotes::install_github('rOpenSpain/BOE')"
       - name: Update
         run: Rscript last
       - name: git config
         run: |
-          git config --global user.email "actions@github.com"
-          git config --global user.name "gh-pages committer"
+          git config --global user.email 'actions@github.com'
+          git config --global user.name 'gh-pages committer'
       - name: Commit results
         run: |
           git add .
