@@ -20,13 +20,14 @@ if (is(sumario_hoy, "try-error")) {
     d <- yesterday
    sumario_hoy <- retrieve_sumario(yesterday)
 }
+ts <- table(gsub(pattern = "BOE-([AB])-.*", replacement = "\\1", sumario_hoy$publication))
 ```
 
 # Resumen grafico
 
-Esta página web contine el último sumario del BOE publicado el `r d` con `r nrow(sumario_hoy)` publicaciones.
+Esta página web contine el último sumario del BOE publicado el `r d` con `r nrow(sumario_hoy)` publicaciones, de las cuales `r ts[["A"]]` son disposiciones.
 
-```{r graphics, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE, fig.width=20, fig.asp=1}
+```{r graphics, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE, fig.width=40}
 library("dplyr")
 library("ggalluvial")
 library("forcats")
