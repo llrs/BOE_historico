@@ -1,6 +1,18 @@
 ---
 title: "Lo último del BOE"
+description: "Resumen de lo publicado hoy en el BOE"
+base_url: https:llrs.github.io/BOE_historico/
+preview: boe-01.png
+repository_url: https://github.com/llrs/BOE_historico
 output_dir: docs
+template:
+  opengraph:
+    image:
+      src: boe-01.png
+      alt: "Resumen en formato tabla del último sumario del BOE"
+    twitter:
+      creator: "@Lluís_Rev"
+      card: summary
 editor_options: 
   chunk_output_type: console
 ---
@@ -27,7 +39,7 @@ ts <- table(gsub(pattern = "BOE-([AB])-.*", replacement = "\\1", sumario_hoy$pub
 
 Esta página web contine el último sumario del BOE publicado el `r d` con `r nrow(sumario_hoy)` publicaciones, de las cuales `r ts[["A"]]` son disposiciones.
 
-```{r graphics, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE, fig.width=40}
+```{r graphics, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE, fig.width=40, fig.asp=1}
 library("dplyr")
 library("ggalluvial")
 library("forcats")
@@ -45,8 +57,8 @@ p1 <- freqs %>%
     filter(Type == "Anuncio") %>% 
     ggplot(aes(y = Freq, axis1 = section, axis2 = departament)) +
     geom_alluvium() +
-    geom_stratum(fill = "white", color = "black") +
-    geom_text(stat = "stratum", infer.label = TRUE) +
+    geom_stratum(fill = "white", color = "darkgrey") +
+    geom_text(stat = "stratum", aes(label = after_stat(stratum))) +
     guides(fill = FALSE) +
     theme_void() +
     labs(title = "Anuncios", caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado")
@@ -54,8 +66,8 @@ p2 <- freqs %>%
     filter(Type != "Anuncio") %>% 
     ggplot(aes(y = Freq, axis1 = section, axis2 = departament, axis3 = epigraph)) +
     geom_alluvium() +
-    geom_stratum(fill = "white", color = "black") +
-    geom_text(stat = "stratum", infer.label = TRUE) +
+    geom_stratum(fill = "white", color = "darkgrey") +
+    geom_text(stat = "stratum", aes(label = after_stat(stratum))) +
     guides(fill = FALSE) +
     theme_void() +
     labs(title = "Disposiciones")
@@ -64,7 +76,7 @@ p2 + p1
 
 # Tabla
 
-Aquí està la tabla completa con links:
+Aquí está la tabla completa con links:
 
 ```{r report, echo=FALSE}
 pubs <- url_publications(sumario_hoy)
@@ -78,4 +90,24 @@ DT::datatable(s, filter = 'top', options = list(
 ```
 
 
+```{r twitter, include=FALSE}
+library("rtweet")
+nacionalizaciones <- sum(grepl(x = sumario_hoy$text, 
+            pattern = "concede la nacionalidad española"))
+extravios <- sum(grepl(x = sumario_hoy$text, 
+                               pattern = "extrav[íi]o del? (un )?t[íi]tulo"))
+disposiciones <- ts[["A"]]
+anuncios <- ts[["B"]]
+link <- "Lo podeis consultar fácilmente en https://llrs.github.io/BOE_historico/last_BOE.html"
+status <- paste("En el último BOE hay", disposiciones, "disoposiciones y",
+                anuncios, "anuncios.\n")
+if (extravios > 0) {
+  status <- paste0(status, "Hoy hay ", extravios, 
+         " extravíos de títulos universitarios.\n")
+}
+if (nacionalizaciones > 0) {
+  status <- paste0(status, "Hoy hay ", nacionalizaciones, 
+         " cartas de naturaleza.\n")
+}
+```
 
