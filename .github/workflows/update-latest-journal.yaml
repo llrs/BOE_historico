@@ -3,9 +3,6 @@
 
 
 on:
-  push:
-    branches:
-      - master
   schedule:
     # Desired timezone: "Europe/Madrid" # In case it is used, from https://unix.stackexchange.com/a/504044/260613
     - cron:  '40 5 * * *' # Every day at 7:40 Spain time, be aware of time changes
@@ -20,7 +17,7 @@ jobs:
       - uses: r-lib/actions/setup-r@master
       - uses: r-lib/actions/setup-pandoc@v1
       - name: Install dependencies
-        run: Rscript -e "install.packages(c('remotes')); remotes::install_github('rOpenSpain/BOE'); install.packages('rmarkdown');install.packages('dplyr');install.packages('ggalluvial');install.packages('forcats');install.packages('patchwork');install.packages('DT')"
+        run: Rscript -e "install.packages(c('remotes')); remotes::install_github('rOpenSpain/BOE'); install.packages('rmarkdown');install.packages('dplyr');install.packages('ggalluvial');install.packages('forcats');install.packages('patchwork');install.packages('DT');install.packages('rtweet')"
       - name: Update
         run: Rscript last
       - name: git config
@@ -31,7 +28,7 @@ jobs:
         run: |
           git add .
           git commit -m 'Automatic commit to update last BOE and BORME'
-      - name: Push changes 
+      - name: Push changes
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.APPTOKEN }}
