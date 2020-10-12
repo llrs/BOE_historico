@@ -1,6 +1,18 @@
 ---
 title: "Lo último del BORME"
+description: "Resumen de lo publicado hoy en el BORME"
+base_url: https:llrs.github.io/BOE_historico/
+preview: borme-01.png
+repository_url: https://github.com/llrs/BOE_historico
 output_dir: docs
+template:
+  opengraph:
+    image:
+      src: borme-01.png
+      alt: "Resumen en formato tabla del último sumario del BORME"
+    twitter:
+      creator: "@Lluís_Rev"
+      card: summary
 editor_options: 
   chunk_output_type: console
 ---
