@@ -1,18 +1,12 @@
 ---
 title: "Lo último del BORME"
-description: "Resumen de lo publicado hoy en el BORME"
-base_url: https:llrs.github.io/BOE_historico/
+description: "Resumen de lo publicado hoy en el BORME."
 preview: borme-01.png
-repository_url: https://github.com/llrs/BOE_historico
-output_dir: docs
 template:
   opengraph:
     image:
       src: borme-01.png
-      alt: "Resumen en formato tabla del último sumario del BORME"
-    twitter:
-      creator: "@Lluís_Rev"
-      card: summary
+      alt: "Resumen en formato tabla del último sumario del BORME."
 editor_options: 
   chunk_output_type: console
 ---
@@ -38,7 +32,7 @@ if (is(sumario_hoy, "try-error")) {
 
 Esta página web contine el último sumario del BORME publicado el `r d` con `r nrow(sumario_hoy)` publicaciones.
 
-```{r graphics, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE, fig.width=15, fig.asp=1}
+```{r graphics, layout="l-body-outset", echo=FALSE, message=FALSE, warning=FALSE, error=FALSE, fig.width=15, fig.asp=1}
 library("dplyr")
 library("forcats")
 library("ggalluvial")
@@ -55,8 +49,8 @@ sumario_hoy %>%
            section_number = fct_inorder(section_number)) %>% 
     ggplot(aes(y = Freq, axis1 = section_number, axis2 = emisor)) +
     geom_alluvium(aes(fill = as.factor(emisor))) +
-    geom_stratum(fill = "white", color = "black") +
-    geom_text(stat = "stratum", infer.label = TRUE) +
+    geom_stratum(fill = "white", color = "darkgrey") +
+    geom_text(stat = "stratum", aes(label = after_stat(stratum))) +
     guides(fill = FALSE) +
     scale_x_discrete(limits = c("section_number", "emisor")) +
     theme_void() +
@@ -65,9 +59,9 @@ sumario_hoy %>%
 
 # Tabla
 
-Aquí està la tabla completa con links
+Aquí está la tabla completa con links
 
-```{r report, echo = FALSE}
+```{r report, echo = FALSE, layout="l-body-outset"}
 pubs <- url_publications(sumario_hoy)
 pubs <- paste0("<a href=", pubs, ">", sumario_hoy$publication, "</a>")
 s <- cbind(sumario_hoy, pubs)
