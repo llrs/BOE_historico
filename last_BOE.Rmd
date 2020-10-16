@@ -36,7 +36,7 @@ ts <- table(gsub(pattern = "BOE-([AB])-.*", replacement = "\\1", sumario_hoy$pub
 
 Esta página web contine el último sumario del BOE publicado el `r d` con `r nrow(sumario_hoy)` publicaciones, de las cuales `r ts[["A"]]` son disposiciones.
 
-```{r graphics, layout="l-body-outset", echo=FALSE, message=FALSE, warning=FALSE, error=FALSE, fig.width=40, fig.asp=1}
+```{r graphics, layout="l-body-outset", echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
 library("dplyr")
 library("ggalluvial")
 library("forcats")

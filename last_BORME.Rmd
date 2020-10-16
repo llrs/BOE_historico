@@ -32,7 +32,7 @@ if (is(sumario_hoy, "try-error")) {
 
 Esta página web contine el último sumario del BORME publicado el `r d` con `r nrow(sumario_hoy)` publicaciones.
 
-```{r graphics, layout="l-body-outset", echo=FALSE, message=FALSE, warning=FALSE, error=FALSE, fig.width=15, fig.asp=1}
+```{r graphics, layout="l-body-outset", echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
 library("dplyr")
 library("forcats")
 library("ggalluvial")
