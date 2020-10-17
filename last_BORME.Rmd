@@ -1,7 +1,12 @@
 ---
 title: "Lo último del BORME"
 description: "Resumen de lo publicado hoy en el BORME."
+base_url: https:llrs.github.io/BOE_historico/
+repository_url: https://github.com/llrs/BOE_historico
 preview: borme-01.png
+twitterImg: borme-01.png
+output_dir: docs
+self_contained: false
 template:
   opengraph:
     image:
