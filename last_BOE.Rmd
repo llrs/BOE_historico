@@ -2,9 +2,11 @@
 title: "Lo último del BOE"
 description: "Resumen de lo publicado hoy en el BOE."
 base_url: https:llrs.github.io/BOE_historico/
-preview: boe-01.png
 repository_url: https://github.com/llrs/BOE_historico
+preview: boe-01.png
+twitterImg: boe-01.png
 output_dir: docs
+self_contained: false
 template:
   opengraph:
     image:
@@ -93,18 +95,36 @@ nacionalizaciones <- sum(grepl(x = sumario_hoy$text,
             pattern = "concede la nacionalidad española"))
 extravios <- sum(grepl(x = sumario_hoy$text, 
                                pattern = "extrav[íi]o del? (un )?t[íi]tulo"))
+medallas <- sum(sumario_hoy$epigraph == "Condecoraciones", na.rm = TRUE)
 disposiciones <- ts[["A"]]
 anuncios <- ts[["B"]]
-link <- "Lo podeis consultar fácilmente en https://llrs.github.io/BOE_historico/last_BOE.html"
-status <- paste("En el último BOE hay", disposiciones, "disoposiciones y",
-                anuncios, "anuncios.\n")
+link0 <- "https://llrs.github.io/BOE_historico/last_BOE.html"
+links <- c("Lo podeis consultar fácilmente en ", 
+           "Mirad el resumen de lo publicado hoy en ",
+           "Todo lo publicado en ")
+link <- paste0(sample(links, 1), link0)
+status <- paste("Hoy hay", disposiciones, "disoposiciones y",
+                anuncios, "anuncios nuevos en el #BOE.\n")
 if (extravios > 0) {
-  status <- paste0(status, "Hoy hay ", extravios, 
+  status <- paste0(status, "De ellos", extravios, 
          " extravíos de títulos universitarios.\n")
 }
 if (nacionalizaciones > 0) {
-  status <- paste0(status, "Hoy hay ", nacionalizaciones, 
+  status <- paste0(status, "También", nacionalizaciones, 
          " cartas de naturaleza.\n")
 }
+if (medallas > 0) {
+  status <- paste0(status, "Otorgadas", medallas, 
+         " condecoraciones.\n")
+}
+
+status <- paste0(status, link)
+
+if (nchar(status) > 280) {
+  status <- paste0("Hoy el #BOE va muy cargado...\n.", link)
+}
+
+post_tweet(status = status, 
+           media = "docs/last_BOE_files/figure-html/graphics-1.png")
 ```
 
