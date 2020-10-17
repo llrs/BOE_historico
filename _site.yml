@@ -2,6 +2,7 @@ name: "Histórico del BOE"
 output_dir: docs
 base_url: https:llrs.github.io/BOE_historico/
 self_contained: false
+google_analytics: "UA-57101844-6"
 twitter:
   creator: "@Lluís_Rev"
   card: summary_large_image
