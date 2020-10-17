@@ -10,8 +10,13 @@ on:
 name: update-latest-journal
 
 jobs:
-  R-CMD-check:
+  update:
     runs-on: macOS-latest
+    env:
+      TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
+      TWITTER_API_SECRET_KEY: ${{ secrets.TWITTER_API_SECRET_KEY }}
+      TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+      TWITTER_ACCESS_SECRET_TOKEN: ${{ secrets.TWITTER_ACCESS_SECRET_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - uses: r-lib/actions/setup-r@master
@@ -29,7 +34,7 @@ jobs:
           git add -A .
           git commit -m 'Automatic commit to update last BOE and BORME'
       - name: Push changes
-        uses: ad-m/github-push-action@master
+        uses: ad-m/github-push-action@v0.6.0
         with:
           github_token: ${{ secrets.APPTOKEN }}
 
