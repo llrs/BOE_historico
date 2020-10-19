@@ -11,6 +11,7 @@ while (TRUE) {
     file <- paste0("../BOE_xml/", code, ".xml")
     if (file.exists(file)) {
         number <- number + 1
+        next
     }
     x <- tryCatch(get_xml(query_xml(code)),
              error = function(x){
