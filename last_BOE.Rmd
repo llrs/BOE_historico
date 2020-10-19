@@ -124,7 +124,7 @@ if (nchar(status) > 280) {
   status <- paste0("Hoy el #BOE va muy cargado...\n.", link)
 }
 
-post_tweet(status = status, 
-           media = "docs/last_BOE_files/figure-html/graphics-1.png")
+# post_tweet(status = status, 
+#            media = "docs/last_BOE_files/figure-html/graphics-1.png")
 ```
 
