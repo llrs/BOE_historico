@@ -3,6 +3,9 @@
 
 
 on:
+  push:
+    branches:
+      - main
   schedule:
     # Desired timezone: "Europe/Madrid" # In case it is used, from https://unix.stackexchange.com/a/504044/260613
     - cron:  '40 5 * * *' # Every day at 7:40 Spain time, be aware of time changes
