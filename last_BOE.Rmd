@@ -106,7 +106,7 @@ link <- paste0(sample(links, 1), link0)
 status <- paste("Hoy hay", disposiciones, "disoposiciones y",
                 anuncios, "anuncios nuevos en el #BOE.\n")
 if (extravios > 0) {
-  status <- paste0(status, "De ellos", extravios, 
+  status <- paste0(status, "De ellos ", extravios, 
          " extravíos de títulos universitarios.\n")
 }
 if (nacionalizaciones > 0) {
@@ -124,7 +124,7 @@ if (nchar(status) > 280) {
   status <- paste0("Hoy el #BOE va muy cargado...\n.", link)
 }
 
-# post_tweet(status = status, 
-#            media = "docs/last_BOE_files/figure-html/graphics-1.png")
+post_tweet(status = status,
+           media = "docs/last_BOE_files/figure-html/graphics-1.png")
 ```
 
