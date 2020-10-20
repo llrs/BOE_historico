@@ -17,7 +17,8 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, include = FALSE, layout = "l-body-outset", 
+                      message = FALSE, warning = FALSE, error = FALSE)
 ```
 
 
@@ -38,7 +39,7 @@ ts <- table(gsub(pattern = "BOE-([AB])-.*", replacement = "\\1", sumario_hoy$pub
 
 Esta página web contine el último sumario del BOE publicado el `r d` con `r nrow(sumario_hoy)` publicaciones, de las cuales `r ts[["A"]]` son disposiciones.
 
-```{r graphics, layout="l-body-outset", echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
+```{r graphics, layout="l-body-outset"}
 library("dplyr")
 library("ggalluvial")
 library("forcats")
@@ -70,14 +71,14 @@ p2 <- freqs %>%
     guides(fill = FALSE) +
     theme_void() +
     labs(title = "Disposiciones")
-p2 + p1
+p2
 ```
 
 # Tabla
 
 Aquí está la tabla completa con links:
 
-```{r report, echo=FALSE, layout="l-body-outset"}
+```{r report, layout="l-body-outset"}
 pubs <- url_publications(sumario_hoy)
 pubs <- paste0("<a href=", pubs, ">", sumario_hoy$publication, "</a>")
 s <- cbind(sumario_hoy, pubs)
@@ -88,8 +89,11 @@ DT::datatable(s, filter = 'top', options = list(
 ), escape = FALSE)
 ```
 
+```{r anuncios, layout="l-body-outset"}
+p1
+```
 
-```{r twitter, include=FALSE}
+```{r twitter}
 library("rtweet")
 nacionalizaciones <- sum(grepl(x = sumario_hoy$text, 
             pattern = "concede la nacionalidad española"))
@@ -106,25 +110,32 @@ link <- paste0(sample(links, 1), link0)
 status <- paste("Hoy hay", disposiciones, "disoposiciones y",
                 anuncios, "anuncios nuevos en el #BOE.\n")
 if (extravios > 0) {
-  status <- paste0(status, "De ellos ", extravios, 
+  status <- c(status, "De ellos ", extravios, 
          " extravíos de títulos universitarios.\n")
 }
 if (nacionalizaciones > 0) {
-  status <- paste0(status, "También", nacionalizaciones, 
+  status <- c(status, "También", nacionalizaciones, 
          " cartas de naturaleza.\n")
 }
 if (medallas > 0) {
-  status <- paste0(status, "Otorgadas", medallas, 
+  status <- c(status, "Otorgadas", medallas, 
          " condecoraciones.\n")
 }
 
-status <- paste0(status, link)
+status <- c(status, link)
 
-if (nchar(status) > 280) {
+if (sum(nchar(status)) > 280) {
   status <- paste0("Hoy el #BOE va muy cargado...\n.", link)
 }
 
-post_tweet(status = status,
+id_tweet <- function(x) {
+  httr::content(x)$id_str
+}
+
+r <- post_tweet(status = paste0(status),
            media = "docs/last_BOE_files/figure-html/graphics-1.png")
+# r2 <- post_tweet(status, in_reply_to_status_id = id_tweet(r), 
+#            auto_populate_reply_metadata = TRUE)
 ```
+
 
