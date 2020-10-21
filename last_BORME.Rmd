@@ -17,11 +17,10 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, include = FALSE, message=FALSE, warning=FALSE, error=FALSE)
 ```
 
-
-```{r dates, include=FALSE}
+```{r dates}
 today <- Sys.Date()
 yesterday <- today -1
 library("BOE")
@@ -37,7 +36,7 @@ if (is(sumario_hoy, "try-error")) {
 
 Esta página web contine el último sumario del BORME publicado el `r d` con `r nrow(sumario_hoy)` publicaciones.
 
-```{r graphics, layout="l-body-outset", echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
+```{r graphics, layout="l-body-outset"}
 library("dplyr")
 library("forcats")
 library("ggalluvial")
@@ -77,6 +76,3 @@ DT::datatable(s, filter = 'top', options = list(
 ), escape = FALSE)
 
 ```
-
-
-

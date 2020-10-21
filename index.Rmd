@@ -6,8 +6,7 @@ editor_options:
 
 Este sitio explora los datos públicados en el [BOE](https://boe.es), Boletín Oficial del Estado.
 
-Hace uso de [este programa](https://www.github.com/llrs/BOE) que a partir de los sumarios de cada día del BOE convierte la información en tablas.
-
+Hace uso de [este programa](https://www.github.com/llrs/BOE) que a partir de los sumarios de cada día del BOE convierte la información en tablas fáciles de usar.
 
 ```{r BOE, echo=FALSE, error=FALSE, warning=FALSE, cache=TRUE, fig.width=10, fig.asp=1}
 suppressPackageStartupMessages(library("data.table"))
@@ -45,9 +44,6 @@ g2 <- ggplot(df) +
     theme_bw()
 g1 / g2
 ```
-
-
-
 
 ```{r BORME, echo=FALSE, error=FALSE, warning=FALSE, cache=TRUE}
 dff <- fread("../BORME/till_20191221.csv", sep = "\t")
