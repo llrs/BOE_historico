@@ -375,43 +375,6 @@ $(document).ready(function () {
 
 
 <p>No conozco mucho las diferencias entre tipos de leyes pero los diferentes tipos tienen recorridos distintos y controles diferentes, así que ver los diferentes tipos de publicaciones es relevante.</p>
-<p>Ignorando Acuerdos internacionales</p>
-<pre><code>## # A tibble: 11 x 2
-##    tipo                    n
-##    &lt;chr&gt;               &lt;int&gt;
-##  1 Orden                 131
-##  2 Real Decreto          131
-##  3 Acuerdo               130
-##  4 Ley                   130
-##  5 Resolución            129
-##  6 Decreto               120
-##  7 Decreto ley           118
-##  8 Ley orgánica           85
-##  9 ?                      70
-## 10 Instrucción            59
-## 11 Decreto Legislativo    36</code></pre>
-<pre><code>## # A tibble: 2 x 2
-##   correccion     n
-##   &lt;lgl&gt;      &lt;int&gt;
-## 1 FALSE      24773
-## 2 TRUE        2113</code></pre>
-<pre><code>## # A tibble: 11 x 4
-##    tipo                correccion     n  ratio
-##    &lt;chr&gt;               &lt;lgl&gt;      &lt;int&gt;  &lt;dbl&gt;
-##  1 Resolución          TRUE         775 0.984 
-##  2 ?                   TRUE          35 0.297 
-##  3 Ley orgánica        TRUE          31 0.163 
-##  4 Decreto ley         TRUE          56 0.134 
-##  5 Ley                 TRUE         305 0.100 
-##  6 Decreto Legislativo TRUE           3 0.0638
-##  7 Real Decreto        TRUE         399 0.0489
-##  8 Orden               TRUE         479 0.0387
-##  9 Acuerdo             TRUE          20 0.0182
-## 10 Decreto             TRUE           9 0.0165
-## 11 Instrucción         TRUE           1 0.0123</code></pre>
-<p><img src="leyes_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
-<pre><code>## [1] &quot;Orden, Real Decreto, Ley, Acuerdo, Resolución, Decreto, Decreto ley, Ley orgánica, ?, Instrucción, Decreto Legislativo&quot;</code></pre>
-<p><img src="leyes_files/figure-html/unnamed-chunk-1-2.png" width="672" /></p>
 
 
 

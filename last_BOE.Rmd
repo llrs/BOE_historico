@@ -17,7 +17,7 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, include = FALSE, layout = "l-body-outset", 
+knitr::opts_chunk$set(echo = TRUE, layout = "l-body-outset", 
                       message = FALSE, warning = FALSE, error = FALSE)
 ```
 
@@ -64,7 +64,7 @@ p1 <- freqs %>%
     labs(title = "Anuncios", caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado")
 p2 <- freqs %>% 
     filter(Type != "Anuncio") %>% 
-    ggplot(aes(y = Freq, axis1 = section, axis2 = departament, axis3 = epigraph)) +
+    ggplot(aes(y = Freq, axis1 = departament, axis2 = epigraph)) +
     geom_alluvium(fill = "grey") +
     geom_stratum(fill = "white", color = "darkgrey") +
     geom_text(stat = "stratum", aes(label = after_stat(stratum))) +
@@ -137,5 +137,3 @@ r <- post_tweet(status = paste0(status),
 # r2 <- post_tweet(status, in_reply_to_status_id = id_tweet(r), 
 #            auto_populate_reply_metadata = TRUE)
 ```
-
-
