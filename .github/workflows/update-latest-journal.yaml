@@ -5,7 +5,6 @@
 on:
   push:
     branches:
-      - main
       - master
   schedule:
     # Desired timezone: "Europe/Madrid" # In case it is used, from https://unix.stackexchange.com/a/504044/260613
