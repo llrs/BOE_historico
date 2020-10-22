@@ -154,7 +154,7 @@ id_tweet <- function(x) {
   httr::content(x)$id_str
 }
 
-r <- post_tweet(status = paste0(status),
+r <- post_tweet(status = paste0(status, collapse = ""),
            media = "docs/last_BOE_files/figure-html/graphics-1.png")
 # r2 <- post_tweet(status, in_reply_to_status_id = id_tweet(r), 
 #            auto_populate_reply_metadata = TRUE)
