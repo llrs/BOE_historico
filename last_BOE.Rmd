@@ -87,7 +87,7 @@ p2
 
 # Tabla
 
-Aquí está la tabla completa con links:
+Aquí está la tabla completa con section, epígrafe, número de páginas y enlace:
 
 ```{r report}
 pubs <- url_publications(sumario_hoy)
