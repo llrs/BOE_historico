@@ -123,25 +123,39 @@ links <- c("Lo podeis consultar fácilmente en ",
 link <- paste0(sample(links, 1), link0)
 status <- paste("Hoy hay", disposiciones, "disoposiciones y",
                 anuncios, "anuncios nuevos en el #BOE.\n")
+
+pluralize <- function(n, msg1, msg2) {
+  sprintf(ngettext(n, msg1 = msg1, msg2 = msg2), n)
+}
 if (extravios > 0) {
-  status <- c(status, "De ellos ", extravios, 
-         " extravíos de títulos universitarios.\n")
+  msg <- pluralize(extravios, 
+                   "De ellos %d extravío de título universitario.\n", 
+                   "De ellos %d extravíos de títulos universitarios.\n")
+  status <- c(status, msg)
 }
 if (nacionalizaciones > 0) {
-  status <- c(status, "También", nacionalizaciones, 
-         " cartas de naturaleza.\n")
+  msg <- pluralize(nacionalizaciones,
+                   "También %d carta de naturaleza.\n",
+                   "También %d cartas de naturaleza.\n")
+  status <- c(status, msg)
 }
 if (medallas > 0) {
-  status <- c(status, "Otorgadas", medallas, 
-         " condecoraciones.\n")
+  msg <- pluralize(medallas,
+                   "Otorgadas %d condecoración.\n",
+                   "Otorgadas %d condecoraciones.\n")
+  status <- c(status, msg)
 }
 if (subvenciones > 0) {
-  status <- c(status, "Otorgadas", subvenciones, 
-         " subvenciones.\n")
+  msg <- pluralize(subvenciones,
+                   "Otorgada %d subvención.\n",
+                   "Otorgadas %d subvenciones.\n")
+  status <- c(status, msg)
 }
 if (anuncios_particulares > 0) {
-  status <- c(status, "Importante: ", anuncios_particulares, 
-         " anuncios particulares.\n")
+  msg <- pluralize(anuncions_particulares,
+                   "Importante: %d anuncio particular.\n",
+                   "Importante: %d anuncios particulares.\n")
+  status <- c(status, msg)
 }
 
 status <- c(status, link)
