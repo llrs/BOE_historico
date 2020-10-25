@@ -21,7 +21,6 @@ knitr::opts_chunk$set(echo = TRUE, include = FALSE,
                       message = FALSE, warning = FALSE, error = FALSE)
 ```
 
-
 ```{r dates, include=FALSE}
 today <- Sys.Date()
 yesterday <- today -1
@@ -35,9 +34,9 @@ if (is(sumario_hoy, "try-error")) {
 ts <- table(gsub(pattern = "BOE-([AB])-.*", replacement = "\\1", sumario_hoy$publication))
 ```
 
-# Resumen grafico
-
 Esta página web contine el último sumario del BOE publicado el `r d` con `r nrow(sumario_hoy)` publicaciones, de las cuales `r ts[["A"]]` son disposiciones.
+
+# Resumen gráfico de las disposiciones
 
 ```{r graphics}
 library("dplyr")
@@ -90,7 +89,7 @@ p2
 
 Aquí está la tabla completa con links:
 
-```{r report, layout="l-body-outset"}
+```{r report}
 pubs <- url_publications(sumario_hoy)
 pubs <- paste0("<a href=", pubs, ">", sumario_hoy$publication, "</a>")
 s <- cbind(sumario_hoy, pubs)
@@ -101,11 +100,13 @@ DT::datatable(s, filter = 'top', options = list(
 ), escape = FALSE)
 ```
 
-```{r anuncios, layout="l-body-outset"}
+# Resumen gráfico de las disposiciones
+
+```{r anuncios}
 p1
 ```
 
-```{r twitter}
+```{r twitter, include=FALSE}
 library("rtweet")
 nacionalizaciones <- sum(grepl(x = sumario_hoy$text, 
             pattern = "concede la nacionalidad española"))
