@@ -13,8 +13,8 @@ on:
 name: update-latest-journal
 
 jobs:
-  if: "! contains(github.event.commits.*.message, 'skip ci')"
   update:
+    if: "! contains(github.event.commits.*.message, 'skip ci')"
     runs-on: macOS-latest
     env:
       TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
