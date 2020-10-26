@@ -17,11 +17,10 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, include = FALSE,
-                      message = FALSE, warning = FALSE, error = FALSE)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, error = FALSE, include = TRUE)
 ```
 
-```{r dates, include=FALSE}
+```{r dates}
 today <- Sys.Date()
 yesterday <- today -1
 library("BOE")
