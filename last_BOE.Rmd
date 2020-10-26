@@ -153,7 +153,7 @@ if (subvenciones > 0) {
   status <- c(status, msg)
 }
 if (anuncios_particulares > 0) {
-  msg <- pluralize(anuncions_particulares,
+  msg <- pluralize(anuncios_particulares,
                    "Importante: %d anuncio particular.\n",
                    "Importante: %d anuncios particulares.\n")
   status <- c(status, msg)
