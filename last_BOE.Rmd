@@ -33,7 +33,7 @@ if (is(sumario_hoy, "try-error")) {
 ts <- table(gsub(pattern = "BOE-([AB])-.*", replacement = "\\1", sumario_hoy$publication))
 ```
 
-Esta página web contine el último sumario del BOE publicado el `r d` con `r nrow(sumario_hoy)` publicaciones, de las cuales `r ts[["A"]]` son disposiciones.
+Esta página web contiene el último sumario del BOE publicado el `r d` con `r nrow(sumario_hoy)` publicaciones, de las cuales `r ts[["A"]]` son disposiciones.
 
 # Resumen gráfico de las disposiciones
 
@@ -86,7 +86,7 @@ p2
 
 # Tabla
 
-Aquí está la tabla completa con section, epígrafe, número de páginas y enlace:
+Aquí está la tabla completa con sección, departamento, epígrafe, resumen, número de páginas y enlace:
 
 ```{r report}
 pubs <- url_publications(sumario_hoy)
@@ -105,7 +105,7 @@ DT::datatable(s, filter = 'top', options = list(
 p1
 ```
 
-```{r twitter, include=FALSE}
+```{r twitter}
 library("rtweet")
 nacionalizaciones <- sum(grepl(x = sumario_hoy$text, 
             pattern = "concede la nacionalidad española"))
@@ -169,8 +169,8 @@ id_tweet <- function(x) {
 }
 
 r <- post_tweet(status = paste0(status, collapse = ""),
-           media = c("docs/last_BOE_files/figure-html/graphics-1.png",
-                     "docs/last_BOE_files/figure-html/anuncios-1.png"))
+           media = c("last_BOE_files/figure-html/graphics-1.png",
+                     "last_BOE_files/figure-html/anuncios-1.png"))
 # r2 <- post_tweet(status, in_reply_to_status_id = id_tweet(r), 
 #            auto_populate_reply_metadata = TRUE)
 ```
