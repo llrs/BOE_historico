@@ -83,11 +83,13 @@ p2 <- freqs %>%
 p2
 ```
 
+# Resumen gráfico de los anuncios
+
 ```{r anuncios}
 p1
 ```
 
-# Tabla
+# Tabla de publicaciones:
 
 Aquí está la tabla completa con sección, departamento, epígrafe, resumen, número de páginas y enlace:
 
@@ -101,8 +103,6 @@ DT::datatable(s, filter = 'top', options = list(
   pageLength = 10, autoWidth = TRUE
 ), escape = FALSE)
 ```
-
-# Resumen gráfico de las disposiciones
 
 ```{r twitter}
 library("rtweet")
