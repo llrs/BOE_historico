@@ -26,7 +26,7 @@ jobs:
       - uses: r-lib/actions/setup-r@master
       - uses: r-lib/actions/setup-pandoc@v1
       - name: Install dependencies
-        run: Rscript -e "install.packages(c('remotes')); remotes::install_github('rOpenSpain/BOE'); install.packages('rmarkdown');install.packages('dplyr');install.packages('ggalluvial');install.packages('forcats');install.packages('patchwork');install.packages('DT');install.packages('rtweet');install.packages('ggfittext')"
+        run: Rscript -e "install.packages(c('remotes')); remotes::install_github('rOpenSpain/BOE'); install.packages('rmarkdown');install.packages('dplyr');install.packages('ggalluvial');install.packages('forcats');install.packages('DT');install.packages('rtweet');install.packages('ggfittext')"
       - name: Update
         run: Rscript last
       - name: git config
