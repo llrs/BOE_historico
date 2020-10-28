@@ -41,7 +41,6 @@ Esta página web contiene el último sumario del BOE publicado el `r d` con `r n
 library("dplyr")
 library("ggalluvial")
 library("forcats")
-library("patchwork")
 freqs <- sumario_hoy %>% 
   mutate(Type = ifelse(is.na(epigraph), "Anuncio", "Disposición")) %>% 
   group_by(section_number, departament, Type, epigraph) %>% 
@@ -63,7 +62,7 @@ p1 <- freqs %>%
                            stat = "stratum", min.size = 1) +
   guides(fill = FALSE) +
   theme_void() +
-  labs(title = paste("Anuncios publicadas el", today),
+  labs(title = paste("Anuncios publicados el", today),
          caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado\nAutor: @Lluis_Rev")
 
 p2 <- freqs %>% 
@@ -84,6 +83,10 @@ p2 <- freqs %>%
 p2
 ```
 
+```{r anuncios}
+p1
+```
+
 # Tabla
 
 Aquí está la tabla completa con sección, departamento, epígrafe, resumen, número de páginas y enlace:
@@ -100,10 +103,6 @@ DT::datatable(s, filter = 'top', options = list(
 ```
 
 # Resumen gráfico de las disposiciones
-
-```{r anuncios}
-p1
-```
 
 ```{r twitter}
 library("rtweet")
@@ -168,9 +167,10 @@ id_tweet <- function(x) {
   httr::content(x)$id_str
 }
 
+files2 <- c("docs/last_BOE_files/figure-html/graphics-1.png",
+                     "docs/last_BOE_files/figure-html/anuncios-1.png")
 r <- post_tweet(status = paste0(status, collapse = ""),
-           media = c("last_BOE_files/figure-html/graphics-1.png",
-                     "last_BOE_files/figure-html/anuncios-1.png"))
+           media = files2)
 # r2 <- post_tweet(status, in_reply_to_status_id = id_tweet(r), 
 #            auto_populate_reply_metadata = TRUE)
 ```
