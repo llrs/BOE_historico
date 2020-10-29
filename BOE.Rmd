@@ -371,5 +371,5 @@ coding %>%
 
 # Conclusiones
 
-Mirar las publicaciones del BOE es una fuente interesante de notícias.
+Mirar las publicaciones del BOE es una fuente interesante de noticias.
  

@@ -34,7 +34,7 @@ if (is(sumario_hoy, "try-error")) {
 
 # Resumen gráfico
 
-Esta página web contine el último sumario del BORME publicado el `r d` con `r nrow(sumario_hoy)` publicaciones.
+Esta página web contiene el último sumario del BORME publicado el `r d` con `r nrow(sumario_hoy)` publicaciones.
 
 ```{r graphics, layout="l-body-outset"}
 library("dplyr")

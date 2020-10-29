@@ -30,7 +30,7 @@ dff <- dff %>%
 
 # Dias de retraso
 
-Las disposiciones suelen ser efectivas a partir del momento de publicación o al día siguiente por eso es importante ver si hay retrasos entre aprovación y publicación. 
+Las disposiciones suelen ser efectivas a partir del momento de publicación o al día siguiente por eso es importante ver si hay retrasos entre aprobación y publicación. 
 
 ```{r pressure, echo=FALSE}
 s <- c("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", 
@@ -153,7 +153,7 @@ r3 %>%
   theme_bw()
 ```
 
-Aunque la tendencia es a reducir el tiempo entre aprovación y publicación, hay un retraso entre aprovado y publicado de unos 12 días habitualmente.
+Aunque la tendencia es a reducir el tiempo entre aprobación y publicación, hay un retraso entre aprobado y publicado de unos 12 días habitualmente.
 
 En cambio si miramos todas las publicaciones vemos que la tendencia es a reducir pero que la mayoría de publicaciones tienen una tardanza de unos 30 días:
 
