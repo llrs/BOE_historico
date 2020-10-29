@@ -39,6 +39,7 @@ jobs:
           install.packages('ggfittext')"
       - name: Cache R packages # From https://github.com/r-lib/actions/blob/master/.github/workflows/check-standard.yaml#L50-L56
         if: runner.os != 'Windows'
+        uses: actions/cache@v2
         with:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
