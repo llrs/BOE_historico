@@ -32,8 +32,8 @@ write.table(dff, "../BOE_sumario/till_20191117.csv", sep = "\t", quote = FALSE, 
 
 # Preparación
 
-Aquí cargo las liberías que me ayudan a visualizar los datos. 
-También cargamos los datos del BOE del 2009/01/01 (fecha a partir de la qual lo que figure en la página web tiene validez legal) hasta el 2019/11/17:
+Aquí cargo las librerías que me ayudan a visualizar los datos. 
+También cargamos los datos del BOE del 2009/01/01 (fecha a partir de la cual lo que figure en la página web tiene validez legal) hasta el 2019/11/17:
 
 ```{r cargar, echo=FALSE}
 library("data.table", warn.conflicts = FALSE)
@@ -71,7 +71,7 @@ Primeros datos: la sección a la que pertenece cada publicación. Tal y como exp
     - 5C. Anuncios particulares
  - T. Tribunal constitucional
 
-Sin mucho detalle (por el momento) solo algunas graficas sobre que se publica, empezando por cuando hay publicaciones del tribunal consitucional:
+Sin mucho detalle (por el momento) solo algunas graficas sobre que se publica, empezando por cuando hay publicaciones del tribunal constitucional:
 
 ```{r seccion, echo=FALSE}
 df2 <- dff %>% 
@@ -202,7 +202,7 @@ dff %>%
     theme_bw()
 ```
  
-Aquí podemos ver que las universidades són el tercer departamento que más publicaciones ha generado (en el BOE) que científicas estamos en la primera línea mundial:
+Aquí podemos ver que las universidades son el tercer departamento que más publicaciones ha generado (en el BOE) que científicas estamos en la primera línea mundial:
  
 ```{r barplot, echo=FALSE, fig.height=50, fig.width=40}
 dff %>% 
@@ -223,9 +223,9 @@ dff %>%
 ```
 
 
-# Epigrafe
+# Epígrafe
 
-Los epígrafes solo los tienen las disposiciones, pero no especifíca que [nivel](https://dudaslegislativas.com/tipos-de-leyes-y-jerarquia-normativa/) tienen las disposiciones.
+Los epígrafes solo los tienen las disposiciones, pero no especifica que [nivel](https://dudaslegislativas.com/tipos-de-leyes-y-jerarquia-normativa/) tienen las disposiciones.
 
 ```{r epigrafe, echo=FALSE}
 df4 <- dff %>% 
@@ -338,11 +338,11 @@ dff %>%
   theme_bw()
 ```
 
-En el último gráfico la línia indica la relación 1 página por publicación.
+En el último gráfico la línea indica la relación 1 página por publicación.
 
 # Relación entre boletines y códigos publicaciones
 
-Cada publicación tiene un código que va incrementandose según el tipo de publicación que sea.
+Cada publicación tiene un código que va incrementando según el tipo de publicación que sea.
 
 ```{r nbo, echo=FALSE}
 coding <- dff %>% 

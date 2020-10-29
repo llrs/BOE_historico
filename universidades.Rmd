@@ -62,7 +62,7 @@ unis %>%
 
 # Anuncios
 
-Cómo no hay epigrafe empezamos directamente por sección y luego el texto:
+Cómo no hay epígrafe empezamos directamente por sección y luego el texto:
 
 ```{r anuncios}
 unis %>% 
@@ -123,4 +123,4 @@ extr %>%
          caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado")
 ```
 
-Record de extravíos en el 43% de publicaciones fueron por títulos extraviados.
+Récord de extravíos en el 43% de publicaciones fueron por títulos extraviados.

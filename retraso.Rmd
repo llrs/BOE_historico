@@ -28,7 +28,7 @@ dff <- dff %>%
            weekday = weekdays(date))
 ```
 
-# Dias de retraso
+# Días de retraso
 
 Las disposiciones suelen ser efectivas a partir del momento de publicación o al día siguiente por eso es importante ver si hay retrasos entre aprobación y publicación. 
 
@@ -69,7 +69,7 @@ r3 %>%
   dplyr::select(date, df) %>% 
   ggplot() +
   geom_histogram(aes(df)) +
-  labs(x = "Dias de retraso", y = "Publicaciones",
+  labs(x = "Díasde retraso", y = "Publicaciones",
        caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
   theme_bw()
 r3 %>% 
@@ -78,14 +78,14 @@ r3 %>%
   ggplot() +
   geom_point(aes(date, df)) +
   scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
-  labs(x = element_blank(), y = "Dias de retraso", 
+  labs(x = element_blank(), y = "Días de retraso", 
        caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
   theme_bw()
 
 ```
 
 
-Hay algunas fechas que estan escritas en vez de usar números:
+Hay algunas fechas que están escritas en vez de usar números:
 
 ```{r sin_fecha}
 r2 %>% 
@@ -94,7 +94,7 @@ r2 %>%
     pull(text)
 ```
 
-Hay una publicación del 30 de marzo de 2010 que por fecha pone "el tres de mayo de dos mil dos"! y otras dos que no se sabe el dia que se tomaron y una con demasiadas fechas como para saber con exactitud que pasó.
+Hay una publicación del 30 de marzo de 2010 que por fecha pone "el tres de mayo de dos mil dos"! y otras dos que no se sabe el día que se tomaron y una con demasiadas fechas como para saber con exactitud que pasó.
 
 También hay publicaciones que han tardado mucho en salir, o que hacen referencia a fechas muy anteriores (más de un año) :
 
@@ -107,7 +107,7 @@ m <- r2 %>%
     pull(text)
 ```
 
-Hay unas `r length(m)` publicaciones donde las que la diferencia es de más de un año, algunas porque hay varias fechas (error mío), otras estan bien, se aprueban en 2019 cosas de 2007 o similares.
+Hay unas `r length(m)` publicaciones donde las que la diferencia es de más de un año, algunas porque hay varias fechas (error mío), otras están bien, se aprueban en 2019 cosas de 2007 o similares.
 
 Sorprendentemente hay publicaciones que se han aprobado el mismo día:
 
@@ -122,7 +122,7 @@ filter(r3, df == 0) %>%
   kableExtra::scroll_box(width = "100%", height = "400px")
 ```
 
-Si miramos la tendencia general vemos que hay algunos días (generalmente hacia principio de año) que se apruevan cosas de hace casi un año:
+Si miramos la tendencia general vemos que hay algunos días (generalmente hacia principio de año) que se aprueban cosas de hace casi un año:
 
 ```{r retraso_mediano}
 r3 %>% 
@@ -134,7 +134,7 @@ r3 %>%
   coord_cartesian(ylim = c(0, 365)) +
   scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
   scale_y_continuous(expand = c(0, 0)) +
-  labs(x = element_blank(), y = "Dias medios de retraso", 
+  labs(x = element_blank(), y = "Días medios de retraso", 
        caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
   theme_bw()
 
@@ -148,7 +148,7 @@ r3 %>%
   coord_cartesian(ylim = c(0, 100)) +
   scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
   scale_y_continuous(breaks = c(0, 12, 25, 50, 75, 100), expand = c(0, 0)) +
-  labs(x = element_blank(), y = "Dias medios de retraso", 
+  labs(x = element_blank(), y = "Días medios de retraso", 
        caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
   theme_bw()
 ```
@@ -164,7 +164,7 @@ r3 %>%
   coord_cartesian(ylim = c(0, 100)) +
   scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
   scale_y_continuous(breaks = c(0, 10, 30, 50, 80, 100), expand = c(0, 0)) +
-  labs(x = element_blank(), y = "Dias medios de retraso", 
+  labs(x = element_blank(), y = "Días medios de retraso", 
        caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
   theme_bw()
 ```

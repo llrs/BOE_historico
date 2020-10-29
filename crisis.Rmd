@@ -12,7 +12,7 @@ knitr::opts_chunk$set(cache = TRUE, echo = FALSE, error = FALSE,
 
 Después de mirar las [insolvencias](insolvencia.html) y sobre los [juzgados mercantiles](Departamentos.html#juzgados-de-lo-mercantil) me quedé con la duda de cómo impactó la crisis de 2008 a 2014 en España visto desde los boletines oficiales.
 
-Así que me puse a buscar cómo podia visualizarlo y he aquí el resultado:
+Así que me puse a buscar cómo podía visualizarlo y he aquí el resultado:
 
 ```{r cargar, echo=FALSE}
 library("data.table", warn.conflicts = FALSE)

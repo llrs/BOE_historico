@@ -67,7 +67,7 @@ cn %>%
     knitr::kable(row.names = FALSE, align = "c")
 ```
 
-Para terminar con un poquito más de contenido. Los otros epigrafes sobre la "Nacionalidad española" que no son sobre cartas de naturaleza:
+Para terminar con un poquito más de contenido. Los otros epígrafes sobre la "Nacionalidad española" que no son sobre cartas de naturaleza:
 
 
 ```{r kable, }

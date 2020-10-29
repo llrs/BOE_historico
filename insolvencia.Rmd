@@ -30,7 +30,7 @@ dff <- dff %>%
 
 Mirando el BORME me sorprendieron las insolvencias.
 
-Si mirasmos cuando son las insolvencias vemos un pico alrededor de 2011:
+Si miramos cuando son las insolvencias vemos un pico alrededor de 2011:
 
 ```{r plot}
 insolvencia <- dff %>% 
@@ -101,7 +101,7 @@ between_insolvencias %>%
     theme_bw()
 ```
 
-Podemos ver que los juzgados también han publicado más (y ver una vez más como de standarizadas son las publicaciones; hay juzgados escritos en números y en letras)
+Podemos ver que los juzgados también han publicado más (y ver una vez más como de estandarizadas son las publicaciones; hay juzgados escritos en números y en letras)
 
 ```{r}
 juzgados <- counts %>% 

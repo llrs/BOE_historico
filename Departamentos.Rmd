@@ -1,5 +1,5 @@
 ---
-title: "Justícia"
+title: "Justicia"
 output:
   html_document:
     toc: true
@@ -25,7 +25,7 @@ df <- dff %>%
 ```
 
 Una cosa que me sorprendió mucho al mirar el resumen de 10 años del BOE fue el incremento en publicaciones hacia 2017.
-Posteriormente al mirar los departamentos me sorprendió que hubiera ese incremento en un determinado departamento de Justicia. En este analysis exploro un poco más algunos departamentos de Justícia y sus tendencias.
+Posteriormente al mirar los departamentos me sorprendió que hubiera ese incremento en un determinado departamento de Justicia. En este análisis exploro un poco más algunos departamentos de Justicia y sus tendencias.
 
 # Juzgados de lo mercantil
 
@@ -92,7 +92,7 @@ m %>%
     theme_bw()
 ```
 
-Cómo podemos ver impactó mayormente en los juzagos localizados en Madrid.
+Cómo podemos ver impactó mayormente en los juzgados localizados en Madrid.
 
 ```{r mercantil_tops, fig.width=10, fig.asp=1}
 m %>% 
@@ -108,7 +108,7 @@ m %>%
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-# Juzgados de primera instancia e instruccion
+# Juzgados de primera instancia e instrucción
 
 Uno de los más espectaculares cambios es el incremento en publicaciones a partir de 2016. 
 Esto es debido como veremos a los juzgados de primera instancia:

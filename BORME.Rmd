@@ -13,8 +13,8 @@ knitr::opts_chunk$set(cache = TRUE, collapse = TRUE, warning = FALSE)
 
 # Preparación
 
-Aquí cargo las liberías que me ayudan a visualizar los datos. 
-También cargamos los datos del BORME del 2009/01/01 (fecha a partir de la qual lo que figure en la página web tiene validez legal) hasta el 2019/12/21:
+Aquí cargo las librerías que me ayudan a visualizar los datos. 
+También cargamos los datos del BORME del 2009/01/01 (fecha a partir de la cual lo que figure en la página web tiene validez legal) hasta el 2019/12/21:
 
 ```{r cargar, echo=FALSE}
 library("data.table", warn.conflicts = FALSE)

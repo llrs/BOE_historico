@@ -1,8 +1,8 @@
 ---
 title: "Lo último del BOE"
 description: "Resumen de lo publicado hoy en el BOE."
-base_url: https:llrs.github.io/BOE_historico/
-repository_url: https://github.com/llrs/BOE_historico
+base_url: https:llrs.github.io/BOE_histórico/
+repository_url: https://github.com/llrs/BOE_histórico
 preview: boe-01.png
 twitterImg: boe-01.png
 output_dir: docs
