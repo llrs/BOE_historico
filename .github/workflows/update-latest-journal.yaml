@@ -5,6 +5,7 @@
 on:
   push:
     branches:
+      - main
       - master
   schedule:
     # Desired timezone: "Europe/Madrid" # In case it is used, from https://unix.stackexchange.com/a/504044/260613
@@ -26,7 +27,22 @@ jobs:
       - uses: r-lib/actions/setup-r@master
       - uses: r-lib/actions/setup-pandoc@v1
       - name: Install dependencies
-        run: Rscript -e "install.packages(c('remotes')); remotes::install_github('rOpenSpain/BOE'); install.packages('rmarkdown');install.packages('dplyr');install.packages('ggalluvial');install.packages('forcats');install.packages('DT');install.packages('rtweet');install.packages('ggfittext')"
+        run: |
+          Rscript -e "install.packages(c('remotes'));
+          remotes::install_github('rOpenSpain/BOE');
+          install.packages('rmarkdown');
+          install.packages('dplyr');
+          install.packages('ggalluvial');
+          install.packages('forcats');
+          install.packages('DT');
+          install.packages('rtweet');
+          install.packages('ggfittext')"
+      - name: Cache R packages # From https://github.com/r-lib/actions/blob/master/.github/workflows/check-standard.yaml#L50-L56
+        if: runner.os != 'Windows'
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
       - name: Update
         run: Rscript last
       - name: git config
