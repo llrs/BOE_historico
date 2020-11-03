@@ -14,7 +14,7 @@ on:
 name: update-latest-journal
 
 jobs:
-  update:
+  setup:
     if: "! contains(github.event.commits.*.message, 'skip ci')"
     runs-on: macOS-latest
     env:
@@ -44,16 +44,29 @@ jobs:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
           restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
-      - name: Update
-        run: Rscript last
       - name: git config
         run: |
           git config --global user.email 'actions@github.com'
           git config --global user.name 'gh-pages committer'
+  update-boe:
+    needs: setup
+      - name: Update
+        run: Rscript last_BOE
       - name: Commit results
         run: |
           git add -A .
-          git commit -m 'Automatic commit to update last BOE and BORME'
+          git commit -m 'Automatic commit to update last BOE'
+  update-borme:
+    needs: setup
+      -name: Update
+        run: Rscript last_BORME.R
+      - name: Commit results
+        run: |
+          git add -A .
+          git commit -m 'Automatic commit to update last BORME'
+  push:
+    needs: [update-boe, update-borme]
+    if: always()
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
         with:

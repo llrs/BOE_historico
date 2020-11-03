@@ -6,5 +6,5 @@ token <- rtweet::create_token(
     access_token =    Sys.getenv("TWITTER_ACCESS_TOKEN"),
     access_secret =   Sys.getenv("TWITTER_ACCESS_SECRET_TOKEN")
 )
-rmarkdown::render("last_BOE.Rmd",
+rmarkdown::render("last_BORME.Rmd",
                   quiet = TRUE, output_dir = "docs", clean = TRUE)
