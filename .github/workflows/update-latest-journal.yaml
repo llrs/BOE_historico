@@ -52,21 +52,57 @@ jobs:
     needs: setup
       - name: Update
         run: Rscript last_BOE
-      - name: Commit results
-        run: |
-          git add -A .
-          git commit -m 'Automatic commit to update last BOE'
+      - name: Upload images
+        uses: actions/upload-artifact@v2
+        with:
+          name: BOE-graphics
+          path: docs/last_BOE_files/figure-html/
+      - name: Upload web
+        uses: actions/upload-artifact@v2
+        with:
+          name: BOE-web
+          path: docs/last_BOE.html
+
   update-borme:
     needs: setup
       -name: Update
         run: Rscript last_BORME.R
-      - name: Commit results
-        run: |
-          git add -A .
-          git commit -m 'Automatic commit to update last BORME'
+      - name: Upload images
+        uses: actions/upload-artifact@v2
+        with:
+          name: BORME-images
+          path: docs/last_BORME_files/figure-html/
+      - name: Upload artifacts 2
+        uses: actions/upload-artifact@v2
+        with:
+          name: BORME-web
+          path: docs/last_BORME.html
   push:
     needs: [update-boe, update-borme]
     if: always()
+      - name: Download BOE images
+        uses: actions/download-artifact@v2
+        with:
+          name: BOE-graphics
+          path: docs/last_BOE_files/figure-html/
+      - name: Download BOE webpage
+        uses: actions/download-artifact@v2
+        with:
+          name: BOE-web
+          path: docs/last_BOE.html
+      - name: Download BORME images
+        uses: actions/download-artifact@v2
+        with:
+          name: BORME-images
+          path: docs/last_BORME_files/figure-html/
+      - name: Download BORME webpage
+        uses: actions/download-artifact@v2
+          name: BORME-web
+          path: docs/last_BORME.html
+      - name: Commit results
+        run: |
+          git add -A .
+          git commit -m 'Automatic commit to update last BOE and/or BORME'
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
         with:
