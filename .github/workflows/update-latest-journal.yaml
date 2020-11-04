@@ -67,7 +67,7 @@ jobs:
   update-borme:
     needs: setup
     steps:
-      -name: Update
+      - name: Update
         run: Rscript last_BORME.R
       - name: Upload images
         uses: actions/upload-artifact@v2
