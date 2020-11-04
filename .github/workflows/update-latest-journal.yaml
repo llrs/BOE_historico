@@ -50,64 +50,10 @@ jobs:
         run: |
           git config --global user.email 'actions@github.com'
           git config --global user.name 'gh-pages committer'
-  update-boe:
-    runs-on: ubuntu-latest
-    needs: setup
-    steps:
-    - name: Update
-      run: Rscript last_BOE
-    - name: Upload images
-      uses: actions/upload-artifact@v2
-      with:
-        name: BOE-graphics
-        path: docs/last_BOE_files/figure-html/
-    - name: Upload web
-      uses: actions/upload-artifact@v2
-      with:
-        name: BOE-web
-        path: docs/last_BOE.html
-
-  update-borme:
-    runs-on: ubuntu-latest
-    needs: setup
-    steps:
-      - name: Update
+      - name: Update BOE
+        run: Rscript last
+      - name: Update BORME
         run: Rscript last_BORME.R
-      - name: Upload images
-        uses: actions/upload-artifact@v2
-        with:
-          name: BORME-images
-          path: docs/last_BORME_files/figure-html/
-      - name: Upload artifacts 2
-        uses: actions/upload-artifact@v2
-        with:
-          name: BORME-web
-          path: docs/last_BORME.html
-  push:
-    runs-on: ubuntu-latest
-    needs: [update-boe, update-borme]
-    if: always()
-    steps:
-      - name: Download BOE images
-        uses: actions/download-artifact@v2
-        with:
-          name: BOE-graphics
-          path: docs/last_BOE_files/figure-html/
-      - name: Download BOE webpage
-        uses: actions/download-artifact@v2
-        with:
-          name: BOE-web
-          path: docs/last_BOE.html
-      - name: Download BORME images
-        uses: actions/download-artifact@v2
-        with:
-          name: BORME-images
-          path: docs/last_BORME_files/figure-html/
-      - name: Download BORME webpage
-        uses: actions/download-artifact@v2
-        with:
-          name: BORME-web
-          path: docs/last_BORME.html
       - name: Commit results
         run: |
           git add -A .
@@ -116,4 +62,3 @@ jobs:
         uses: ad-m/github-push-action@v0.6.0
         with:
           github_token: ${{ secrets.APPTOKEN }}
-
