@@ -50,21 +50,23 @@ jobs:
           git config --global user.name 'gh-pages committer'
   update-boe:
     needs: setup
-      - name: Update
-        run: Rscript last_BOE
-      - name: Upload images
-        uses: actions/upload-artifact@v2
-        with:
-          name: BOE-graphics
-          path: docs/last_BOE_files/figure-html/
-      - name: Upload web
-        uses: actions/upload-artifact@v2
-        with:
-          name: BOE-web
-          path: docs/last_BOE.html
+    steps:
+    - name: Update
+      run: Rscript last_BOE
+    - name: Upload images
+      uses: actions/upload-artifact@v2
+      with:
+        name: BOE-graphics
+        path: docs/last_BOE_files/figure-html/
+    - name: Upload web
+      uses: actions/upload-artifact@v2
+      with:
+        name: BOE-web
+        path: docs/last_BOE.html
 
   update-borme:
     needs: setup
+    steps:
       -name: Update
         run: Rscript last_BORME.R
       - name: Upload images
@@ -80,6 +82,7 @@ jobs:
   push:
     needs: [update-boe, update-borme]
     if: always()
+    steps:
       - name: Download BOE images
         uses: actions/download-artifact@v2
         with:
