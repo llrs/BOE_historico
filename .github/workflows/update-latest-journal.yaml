@@ -14,21 +14,22 @@ on:
 name: update-latest-journal
 
 jobs:
-  setup:
-    if: "! contains(github.event.commits.*.message, 'skip ci')"
+  env:
+    TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
+    TWITTER_API_SECRET_KEY: ${{ secrets.TWITTER_API_SECRET_KEY }}
+    TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+    TWITTER_ACCESS_SECRET_TOKEN: ${{ secrets.TWITTER_ACCESS_SECRET_TOKEN }}
+  BOE:
+    if: "! contains(toJSON(github.event.commits.*.message), 'skip ci')"
     runs-on: ubuntu-latest
-    env:
-      TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
-      TWITTER_API_SECRET_KEY: ${{ secrets.TWITTER_API_SECRET_KEY }}
-      TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
-      TWITTER_ACCESS_SECRET_TOKEN: ${{ secrets.TWITTER_ACCESS_SECRET_TOKEN }}
     steps:
       - uses: actions/checkout@v2
-      - uses: r-lib/actions/setup-r@master
+      - uses: r-lib/actions/setup-r@v1
       - uses: r-lib/actions/setup-pandoc@v1
       - name: Install system dependencies
         run:  sudo apt-get install libcurl4-openssl-dev
       - name: Install dependencies
+        if: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1- != 'true'
         run: |
           Rscript -e "install.packages(c('remotes'));
           remotes::install_github('rOpenSpain/BOE');
@@ -52,12 +53,52 @@ jobs:
           git config --global user.name 'gh-pages committer'
       - name: Update BOE
         run: Rscript last
+      - name: Commit results
+        run: |
+          git add -A .
+          git commit -m 'Automatic commit to update last BOE'
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.APPTOKEN }}
+  BORME:
+    if: "! contains(toJSON(github.event.commits.*.message), 'skip ci')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: r-lib/actions/setup-r@v1
+      - uses: r-lib/actions/setup-pandoc@v1
+      - name: Install system dependencies
+        run:  sudo apt-get install libcurl4-openssl-dev
+      - name: Install dependencies
+        if: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1- != 'true'
+        run: |
+          Rscript -e "install.packages(c('remotes'));
+          remotes::install_github('rOpenSpain/BOE');
+          install.packages('rmarkdown');
+          install.packages('dplyr');
+          install.packages('ggalluvial');
+          install.packages('forcats');
+          install.packages('DT');
+          install.packages('rtweet');
+          install.packages('ggfittext')"
+      - name: Cache R packages # From https://github.com/r-lib/actions/blob/master/.github/workflows/check-standard.yaml#L50-L56
+        if: runner.os != 'Windows'
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+      - name: git config
+        run: |
+          git config --global user.email 'actions@github.com'
+          git config --global user.name 'gh-pages committer'
       - name: Update BORME
         run: Rscript last_BORME.R
       - name: Commit results
         run: |
           git add -A .
-          git commit -m 'Automatic commit to update last BOE and/or BORME'
+          git commit -m 'Automatic commit to update last BORME'
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
         with:
