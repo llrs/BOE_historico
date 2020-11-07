@@ -7,7 +7,7 @@ on:
     # Desired timezone: "Europe/Madrid" # In case it is used, from https://unix.stackexchange.com/a/504044/260613
     - cron:  '0 8-22 * * 1-6' # Every hour between 8 and 23 from Monday to Saturday
 
-name: update-latest-journal
+name: twitter-hourly
 env:
   TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
   TWITTER_API_SECRET_KEY: ${{ secrets.TWITTER_API_SECRET_KEY }}

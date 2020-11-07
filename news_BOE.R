@@ -17,7 +17,7 @@ limit_text_message <- message_length - link_hashtag
 unis <- disposiciones$departament == "UNIVERSIDADES"[]
 resolucion <- grepl("resolución", x = disposiciones$text, ignore.case = TRUE)
 convocatoria <- grepl("convocatoria", x = disposiciones$text, ignore.case = TRUE)
-weights <- rep(0.1, seq_len(nrow(disposiciones)))
+weights <- rep(0.1, length.out = nrow(disposiciones))
 weights[unis] <- weights[unis] + 0.1
 weights[convocatoria] <- weights[convocatoria] + 0.1
 
