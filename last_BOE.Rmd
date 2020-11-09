@@ -112,8 +112,8 @@ extravios <- sum(grepl(x = sumario_hoy$text,
                                pattern = "extrav[íi]o del? (un )?t[íi]tulo"))
 medallas <- sum(sumario_hoy$epigraph == "Condecoraciones", na.rm = TRUE)
 subvenciones <- sum(sumario_hoy$epigraph == "Subvenciones", na.rm = TRUE)
-disposiciones <- ts[["A"]]
-anuncios <- ts[["B"]]
+disposiciones <- ifelse("A" %in% names(ts), ts[["A"]], 0)
+anuncios <- ifelse("B" %in% names(ts), ts[["B"]], 0)
 anuncios_particulares <- sum(sumario_hoy$section == "5C", na.rm = TRUE)
 link0 <- "https://llrs.github.io/BOE_historico/last_BOE.html"
 links <- c("Lo podeis consultar fácilmente en ", 

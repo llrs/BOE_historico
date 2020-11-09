@@ -5,7 +5,7 @@
 on:
   schedule:
     # Desired timezone: "Europe/Madrid" # In case it is used, from https://unix.stackexchange.com/a/504044/260613
-    - cron:  '0 8-22 * * 1-6' # Every hour between 8 and 23 from Monday to Saturday
+    - cron:  '0 7-22 * * 1-6' # Every hour between 8 and 23 from Monday to Saturday
 
 name: twitter-hourly
 env:

@@ -3,10 +3,10 @@
 
 
 on:
-  # push:
-  #   branches:
-  #     - main
-  #     - master
+  push:
+    branches:
+      - main
+      - master
   schedule:
     # Desired timezone: "Europe/Madrid" # In case it is used, from https://unix.stackexchange.com/a/504044/260613
     - cron:  '40 6 * * *' # Every day at 7:40 Spain time, be aware of time changes
@@ -52,7 +52,7 @@ jobs:
           git config --global user.email 'actions@github.com'
           git config --global user.name 'gh-pages committer'
       - name: Update BOE
-        run: Rscript last
+        run: Rscript last_BOE.R
       - name: Commit results
         run: |
           git add -A .
