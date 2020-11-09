@@ -51,21 +51,8 @@ freqs <- sumario_hoy %>%
          departament = fct_inorder(as.factor(tolower(departament))),
          epigraph = fct_inorder(as.factor(epigraph))) %>% 
   mutate(section = gsub("(.* -)? ?.+\\. ", "", section))
-p1 <- freqs %>% 
-  filter(Type == "Anuncio") %>% 
-  ggplot(aes(y = Freq, 
-             axis1 = forcats::fct_reorder(section, -Freq, .fun = sum), 
-             axis2 = forcats::fct_reorder(departament, -Freq, .fun = sum))) +
-  geom_alluvium() +
-  geom_stratum(fill = "white", color = "darkgrey") +
-  ggfittext::geom_fit_text(mapping = aes(label = after_stat(stratum)), 
-                           stat = "stratum", min.size = 1) +
-  guides(fill = FALSE) +
-  theme_void() +
-  labs(title = paste("Anuncios publicados el", today),
-         caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado\nAutor: @Lluis_Rev")
 
-p2 <- freqs %>% 
+freqs %>% 
   filter(Type != "Anuncio") %>% 
   ggplot(aes(y = Freq, 
              axis1 = forcats::fct_reorder(section, -Freq, .fun = sum), 
@@ -80,13 +67,24 @@ p2 <- freqs %>%
   theme_void() +
   labs(title = paste("Disposiciones publicadas el", today),
        caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado\nAutor: @Lluis_Rev")
-p2
 ```
 
 # Resumen gráfico de los anuncios
 
 ```{r anuncios}
-p1
+freqs %>% 
+  filter(Type == "Anuncio") %>% 
+  ggplot(aes(y = Freq, 
+             axis1 = forcats::fct_reorder(section, -Freq, .fun = sum), 
+             axis2 = forcats::fct_reorder(departament, -Freq, .fun = sum))) +
+  geom_alluvium() +
+  geom_stratum(fill = "white", color = "darkgrey") +
+  ggfittext::geom_fit_text(mapping = aes(label = after_stat(stratum)), 
+                           stat = "stratum", min.size = 1) +
+  guides(fill = FALSE) +
+  theme_void() +
+  labs(title = paste("Anuncios publicados el", today),
+         caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado\nAutor: @Lluis_Rev")
 ```
 
 # Tabla de publicaciones:
@@ -169,6 +167,8 @@ id_tweet <- function(x) {
 
 files2 <- c("docs/last_BOE_files/figure-html/graphics-1.png",
                      "docs/last_BOE_files/figure-html/anuncios-1.png")
+fe <- file.exists(files2)
+files2 <- files2[fe]
 r <- post_tweet(status = paste0(status, collapse = ""),
            media = files2)
 # r2 <- post_tweet(status, in_reply_to_status_id = id_tweet(r), 
