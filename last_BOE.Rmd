@@ -67,6 +67,7 @@ freqs %>%
   theme_void() +
   labs(title = paste("Disposiciones publicadas el", today),
        caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado\nAutor: @Lluis_Rev")
+ggsave(filename = "docs/last_BOE_files/figure-html/graphics-1.png")
 ```
 
 # Resumen gráfico de los anuncios
@@ -85,6 +86,7 @@ freqs %>%
   theme_void() +
   labs(title = paste("Anuncios publicados el", today),
          caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado\nAutor: @Lluis_Rev")
+ggsave(filename = "docs/last_BOE_files/figure-html/anuncios-1.png")
 ```
 
 # Tabla de publicaciones:
