@@ -5,7 +5,7 @@ base_url: https:llrs.github.io/BOE_historico/
 repository_url: https://github.com/llrs/BOE_historico
 preview: borme-01.png
 twitter:
-  creator: "@Lluís_Rev"
+  creator: "@Lluís_Revilla"
   card: summary_large_image
 twitterImg: borme-01.png
 output_dir: docs
@@ -25,7 +25,7 @@ knitr::opts_chunk$set(echo = FALSE, include = TRUE, message=FALSE, warning=FALSE
 
 ```{r dates}
 today <- Sys.Date()
-yesterday <- today -1
+yesterday <- today -2
 library("BOE")
 sumario_hoy <- try(retrieve_sumario(today, journal = "BORME"), silent = TRUE)
 d <- today
@@ -65,7 +65,7 @@ sumario_hoy %>%
     guides(fill = FALSE) +
     scale_x_discrete(limits = c("section_number", "emisor")) +
     theme_void() +
-    labs(title = paste0("Anuncios del BORME publicados el ", today),
+    labs(title = paste0("Anuncios del BORME publicados el ", d),
          caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado\nAutor: @Lluis_Rev")
 ```
 
@@ -90,7 +90,7 @@ library("rtweet")
 
 files2 <- "docs/last_BORME_files/figure-html/graphics-1.png"
 status <- "Resumen del #BORME de hoy en: https:llrs/github.io/BOE_historico/last_BORME.html"
-r <- post_tweet(status = paste0(status, collapse = ""),
-           media = files2)
+# r <- post_tweet(status = paste0(status, collapse = ""),
+#            media = files2)
 ```
 
