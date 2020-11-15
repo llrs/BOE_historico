@@ -4,6 +4,9 @@ description: "Resumen de lo publicado hoy en el BOE."
 base_url: https:llrs.github.io/BOE_histórico/
 repository_url: https://github.com/llrs/BOE_histórico
 preview: boe-01.png
+twitter:
+  creator: "@Lluís_Rev"
+  card: summary_large_image
 twitterImg: boe-01.png
 output_dir: docs
 self_contained: false
@@ -30,14 +33,16 @@ if (is(sumario_hoy, "try-error")) {
     d <- yesterday
    sumario_hoy <- retrieve_sumario(yesterday)
 }
-ts <- table(gsub(pattern = "BOE-([AB])-.*", replacement = "\\1", sumario_hoy$publication))
+ts <- table(gsub(pattern = "BOE-([AB])-.*", 
+                 replacement = "\\1", sumario_hoy$publication))
+anuncios <- ifelse("B" %in% names(ts), ts[["B"]], 0)
 ```
 
 Esta página web contiene el último sumario del BOE publicado el `r d` con `r nrow(sumario_hoy)` publicaciones, de las cuales `r ts[["A"]]` son disposiciones.
 
 # Resumen gráfico de las disposiciones
 
-```{r graphics}
+```{r graphics, fig.align="center"}
 library("dplyr")
 library("ggalluvial")
 library("forcats")
@@ -65,14 +70,15 @@ freqs %>%
                            stat = "stratum", min.size = 1) +
   guides(fill = FALSE) +
   theme_void() +
-  labs(title = paste("Disposiciones publicadas el", today),
+  labs(title = paste("Disposiciones publicadas el", d),
        caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado\nAutor: @Lluis_Rev")
-ggsave(filename = "docs/last_BOE_files/figure-html/graphics-1.png")
+unlink("docs/last_BOE_files/figure-html/graphics-1.png")
+ggsave(filename = "graphics-1.png", path = "docs/last_BOE_files/figure-html/")
 ```
 
 # Resumen gráfico de los anuncios
 
-```{r anuncios}
+```{r anuncios, eval=anuncios!=0,fig.align="center"}
 freqs %>% 
   filter(Type == "Anuncio") %>% 
   ggplot(aes(y = Freq, 
@@ -84,10 +90,13 @@ freqs %>%
                            stat = "stratum", min.size = 1) +
   guides(fill = FALSE) +
   theme_void() +
-  labs(title = paste("Anuncios publicados el", today),
+  labs(title = paste("Anuncios publicados el", d),
          caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado\nAutor: @Lluis_Rev")
-ggsave(filename = "docs/last_BOE_files/figure-html/anuncios-1.png")
+unlink("docs/last_BOE_files/figure-html/anuncios-1.png")
+ggsave(filename = "anuncios-1.png", path = "docs/last_BOE_files/figure-html/")
 ```
+
+`r if(anuncios == 0){"No hay anuncios."}`
 
 # Tabla de publicaciones:
 
@@ -113,15 +122,20 @@ extravios <- sum(grepl(x = sumario_hoy$text,
 medallas <- sum(sumario_hoy$epigraph == "Condecoraciones", na.rm = TRUE)
 subvenciones <- sum(sumario_hoy$epigraph == "Subvenciones", na.rm = TRUE)
 disposiciones <- ifelse("A" %in% names(ts), ts[["A"]], 0)
-anuncios <- ifelse("B" %in% names(ts), ts[["B"]], 0)
 anuncios_particulares <- sum(sumario_hoy$section == "5C", na.rm = TRUE)
 link0 <- "https://llrs.github.io/BOE_historico/last_BOE.html"
 links <- c("Lo podeis consultar fácilmente en ", 
            "Mirad el resumen de lo publicado hoy en ",
            "Todo lo publicado en ")
 link <- paste0(sample(links, 1), link0)
-status <- paste("Hoy hay", disposiciones, "disoposiciones y",
-                anuncios, "anuncios nuevos en el #BOE.\n")
+
+if (anuncios == 0) {
+  status <- paste("Hoy hay", disposiciones, 
+                  "disposiciones nuevas en el #BOE.\n")
+} else {
+  status <- paste("Hoy hay", disposiciones, "disposiciones y",
+                  anuncios, "anuncios nuevos en el #BOE.\n")
+}
 
 pluralize <- function(n, msg1, msg2) {
   sprintf(ngettext(n, msg1 = msg1, msg2 = msg2), n)
@@ -169,10 +183,12 @@ id_tweet <- function(x) {
 
 files2 <- c("docs/last_BOE_files/figure-html/graphics-1.png",
                      "docs/last_BOE_files/figure-html/anuncios-1.png")
-fe <- file.exists(files2)
-files2 <- files2[fe]
+files2 <- files2[c(TRUE, anuncios != 0)]
 r <- post_tweet(status = paste0(status, collapse = ""),
            media = files2)
-# r2 <- post_tweet(status, in_reply_to_status_id = id_tweet(r), 
-#            auto_populate_reply_metadata = TRUE)
+# Reply to boegob
+gt <- get_timeline("boegob", n = 1) # Last publication:
+r2 <- post_tweet(status = paste0(status, collapse = ""), media = files2,
+           in_reply_to_status_id = gt$status_id[1],
+           auto_populate_reply_metadata = TRUE)
 ```
