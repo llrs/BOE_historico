@@ -8,7 +8,6 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE, echo = FALSE)
 ```
 
-
 ```{r setup_BOE}
 suppressPackageStartupMessages(library("data.table", warn.conflicts = FALSE))
 library("dtplyr", warn.conflicts = FALSE)
@@ -26,14 +25,14 @@ dff <- dff %>%
            weekday = weekdays(date))
 ```
 
-
 ```{r universities}
 unis <- dff %>% 
     filter(department == "UNIVERSIDADES") %>% 
     as_tibble()
 ```
 
-Trabajamos solo con las universidades. ¿Por qué publican tanto en el BOE?
+Trabajamos solo con las universidades.
+¿Por qué publican tanto en el BOE?
 
 # Disposiciones
 
