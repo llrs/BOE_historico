@@ -3,18 +3,12 @@ title: "Lo último del BOE"
 description: "Resumen de lo publicado hoy en el BOE."
 base_url: https:llrs.github.io/BOE_histórico/
 repository_url: https://github.com/llrs/BOE_histórico
-preview: boe-01.png
-twitter:
-  creator: "@Lluís_Revilla"
-  card: summary_large_image
-twitterImg: boe-01.png
+output:
+  html_document:
+    includes:
+      in_header: twitter_BOE.html
 output_dir: docs
 self_contained: false
-template:
-  opengraph:
-    image:
-      src: boe-01.png
-      alt: "Resumen en formato tabla del último sumario del BOE."
 editor_options: 
   chunk_output_type: console
 ---
@@ -25,7 +19,7 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, error = FA
 
 ```{r dates}
 today <- Sys.Date()
-yesterday <- today -1
+yesterday <- today - 1
 library("BOE")
 sumario_hoy <- try(retrieve_sumario(today), silent = TRUE)
 d <- today
@@ -184,11 +178,11 @@ id_tweet <- function(x) {
 files2 <- c("docs/last_BOE_files/figure-html/graphics-1.png",
                      "docs/last_BOE_files/figure-html/anuncios-1.png")
 files2 <- files2[c(TRUE, anuncios != 0)]
-# r <- post_tweet(status = paste0(status, collapse = ""),
-#                 media = files2)
+r <- post_tweet(status = paste0(status, collapse = ""),
+                media = files2)
 # Reply to boegob
 gt <- get_timeline("boegob", n = 1) # Last publication:
-# r2 <- post_tweet(status = paste0(status, collapse = ""), media = files2,
-#                  in_reply_to_status_id = gt$status_id[1],
-#                  auto_populate_reply_metadata = TRUE)
+r2 <- post_tweet(status = paste0(status, collapse = ""), media = files2,
+                 in_reply_to_status_id = gt$status_id[1],
+                 auto_populate_reply_metadata = TRUE)
 ```

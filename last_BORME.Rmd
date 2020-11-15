@@ -3,18 +3,12 @@ title: "Lo último del BORME"
 description: "Resumen de lo publicado hoy en el BORME."
 base_url: https:llrs.github.io/BOE_historico/
 repository_url: https://github.com/llrs/BOE_historico
-preview: borme-01.png
-twitter:
-  creator: "@Lluís_Revilla"
-  card: summary_large_image
-twitterImg: borme-01.png
+output:
+  html_document:
+    includes:
+      in_header: twitter_BORME.html
 output_dir: docs
 self_contained: false
-template:
-  opengraph:
-    image:
-      src: borme-01.png
-      alt: "Resumen en formato tabla del último sumario del BORME."
 editor_options: 
   chunk_output_type: console
 ---
@@ -25,7 +19,7 @@ knitr::opts_chunk$set(echo = FALSE, include = TRUE, message=FALSE, warning=FALSE
 
 ```{r dates}
 today <- Sys.Date()
-yesterday <- today -2
+yesterday <- today - 1
 library("BOE")
 sumario_hoy <- try(retrieve_sumario(today, journal = "BORME"), silent = TRUE)
 d <- today
@@ -90,7 +84,7 @@ library("rtweet")
 
 files2 <- "docs/last_BORME_files/figure-html/graphics-1.png"
 status <- "Resumen del #BORME de hoy en: https:llrs/github.io/BOE_historico/last_BORME.html"
-# r <- post_tweet(status = paste0(status, collapse = ""),
-#            media = files2)
+r <- post_tweet(status = paste0(status, collapse = ""),
+           media = files2)
 ```
 
