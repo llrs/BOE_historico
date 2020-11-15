@@ -34,6 +34,16 @@ jobs:
         run: |
           Rscript -e "install.packages(c('remotes'));
           remotes::install_github('rOpenSpain/BOE');
-          install.packages('rtweet');"
+          install.packages('rtweet');
+          install.packages('poorman')"
+      - name: Check available
+        uses: actions/download-artifact@v2
+        with:
+          name: update
       - name: run BOE
         run: Rscript news_BOE.R
+      - name: Save remaining
+        uses: actions/download-artifact@v2
+        with:
+          name: update
+          path: boe-hoy.RDS
