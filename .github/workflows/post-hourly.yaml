@@ -44,7 +44,7 @@ jobs:
       - name: run BOE
         run: Rscript news_BOE.R
       - name: Save remaining
-        uses: actions/download-artifact@v2
+        uses: actions/upload-artifact@v2
         with:
           name: update
           path: boe-hoy.RDS
