@@ -38,6 +38,7 @@ jobs:
           install.packages('poorman')"
       - name: Check available
         uses: actions/download-artifact@v2
+        continue-on-error: true # Just needed for the first time
         with:
           name: update
       - name: run BOE
