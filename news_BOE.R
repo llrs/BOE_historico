@@ -28,14 +28,12 @@ departaments <- boe %>%
     .[1]
 
 # Remove it from future tweets:
-boe <- filter(boe, !departament %in% departaments & !is.na(epigraph))
-saveRDS(boe,  "boe-hoy.RDS")
+boe2 <- filter(boe, !departament %in% departaments & !is.na(epigraph))
+saveRDS(boe2,  "boe-hoy.RDS")
 
 pre_message <- boe %>%
-    filter(!is.na(epigraph) & departament %in% departaments) %>%
-    group_by(section_number, epigraph) %>%
-    count(sort = TRUE) %>%
-    ungroup() %>%
+    filter(!is.na(epigraph), departaments %in% departament) %>%
+    count(section_number, epigraph, sort = TRUE) %>%
     mutate(section_number = gsub("[IV].*\\. ", "", section_number)) %>%
     mutate(epigraph = case_when(
         section_number == "Oposiciones y concursos" ~ paste(section_number, "a", tolower(epigraph)),
