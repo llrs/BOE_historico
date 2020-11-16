@@ -8,11 +8,14 @@ token <- rtweet::create_token(
     access_token =    Sys.getenv("TWITTER_ACCESS_TOKEN"),
     access_secret =   Sys.getenv("TWITTER_ACCESS_SECRET_TOKEN")
 )
+
 today <- Sys.Date()
 if (file.exists("boe-hoy.RDS")) {
     boe <- readRDS("boe-hoy.RDS")
+} else {
     boe <- retrieve_sumario(today)
 }
+
 if (boe$date[1] != today) {
     boe <- retrieve_sumario(today)
     boe <- boe[!is.na(boe$epigraph), ]
