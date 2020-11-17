@@ -61,6 +61,7 @@ sumario_hoy %>%
     theme_void() +
     labs(title = paste0("Anuncios del BORME publicados el ", d),
          caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado\nAutor: @Lluis_Rev")
+ggsave("docs/last_BORME_files/figure-html/graphics-1.png")
 ```
 
 # Tabla de publicaciones
