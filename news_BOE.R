@@ -30,7 +30,9 @@ departaments <- boe %>%
 
 message(departaments)
 # Remove it from future tweets:
+print(boe)
 boe2 <- filter(boe, !departament %in% departaments & !is.na(epigraph))
+print(boe2)
 saveRDS(boe2,  "boe-hoy.RDS")
 
 pre_message <- boe %>%
