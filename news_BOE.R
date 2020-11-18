@@ -11,6 +11,7 @@ token <- rtweet::create_token(
 
 today <- Sys.Date()
 if (file.exists("boe-hoy.RDS")) {
+    message("Artifact downloaded and found.")
     boe <- readRDS("boe-hoy.RDS")
 } else {
     boe <- retrieve_sumario(today)
@@ -29,11 +30,11 @@ departaments <- boe %>%
 
 message(departaments)
 # Remove it from future tweets:
-boe2 <- filter(boe, !departaments %in% departament & !is.na(epigraph))
+boe2 <- filter(boe, !departament %in% departaments & !is.na(epigraph))
 saveRDS(boe2,  "boe-hoy.RDS")
 
 pre_message <- boe %>%
-    filter(!is.na(epigraph), departaments %in% departament) %>%
+    filter(!is.na(epigraph), departaments == departament) %>%
     count(section_number, epigraph, sort = TRUE) %>%
     mutate(section_number = gsub("[IV].*\\. ", "", section_number)) %>%
     mutate(epigraph = case_when(
