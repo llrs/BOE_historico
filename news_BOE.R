@@ -27,8 +27,9 @@ departaments <- boe %>%
     pull(departament) %>%
     .[1]
 
+message(departaments)
 # Remove it from future tweets:
-boe2 <- filter(boe, !departament %in% departaments & !is.na(epigraph))
+boe2 <- filter(boe, !departaments %in% departament & !is.na(epigraph))
 saveRDS(boe2,  "boe-hoy.RDS")
 
 pre_message <- boe %>%
@@ -58,6 +59,7 @@ if (nchar(msg) > limit_text_message) {
     text_tweet <- msg
 }
 
+message(text_tweet)
 message <- paste0(text_tweet, ": ",
                   "https://llrs.github.io/BOE_historico/last_BOE.html",
                   collapse = "")
