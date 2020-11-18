@@ -41,7 +41,6 @@ jobs:
         continue-on-error: true # Just needed for the first time
         with:
           name: update
-          path: boe-hoy.RDS
       - name: run BOE
         run: Rscript news_BOE.R
       - name: Save remaining

@@ -15,6 +15,7 @@ if (file.exists("boe-hoy.RDS")) {
     boe <- readRDS("boe-hoy.RDS")
 } else {
     boe <- retrieve_sumario(today)
+    boe <- boe[!is.na(boe$epigraph), ]
 }
 
 if (boe$date[1] != today) {
@@ -30,9 +31,14 @@ departaments <- boe %>%
 
 message(departaments)
 # Remove it from future tweets:
-print(boe)
-boe2 <- filter(boe, !departament %in% departaments & !is.na(epigraph))
-print(boe2)
+boe %>%
+    count(departament, sort = TRUE) %>%
+    head()
+boe2 <- filter(boe, !departament %in% departaments, !is.na(epigraph))
+message("Remaining")
+boe2 %>%
+    count(departament, sort = TRUE) %>%
+    head()
 saveRDS(boe2,  "boe-hoy.RDS")
 
 pre_message <- boe %>%
