@@ -36,11 +36,15 @@ jobs:
           remotes::install_github('rOpenSpain/BOE');
           install.packages('rtweet');
           install.packages('poorman')"
+      - name: Check files
+        run: ls -l
       - name: Check available
         uses: actions/download-artifact@v2
         continue-on-error: true # Just needed for the first time
         with:
           name: update
+      - name: Check files again
+        run: ls -l
       - name: run BOE
         run: Rscript news_BOE.R
       - name: Save remaining

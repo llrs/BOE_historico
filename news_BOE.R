@@ -1,6 +1,6 @@
 library('BOE')
-library("rtweet")
-library("poorman")
+suppressPackageStartupMessages({library("rtweet")})
+suppressPackageStartupMessages({library("poorman")})
 token <- rtweet::create_token(
     app = "Boletines Españoles",
     consumer_key =    Sys.getenv("TWITTER_API_KEY"),
@@ -15,6 +15,7 @@ if (file.access("boe-hoy.RDS", mode = "4") == 0) {
     message("Artifact downloaded and found.")
     boe <- readRDS("boe-hoy.RDS")
 } else {
+    message("Data downloaded from the website.")
     boe <- retrieve_sumario(today)
     boe <- boe[!is.na(boe$epigraph), ]
 }
