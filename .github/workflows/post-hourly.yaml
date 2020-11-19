@@ -40,7 +40,6 @@ jobs:
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: post-hourly.yaml
-          branch: master
           name: update
           workflow_conclusion: success
       - name: run BOE
