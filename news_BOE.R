@@ -10,7 +10,8 @@ token <- rtweet::create_token(
 )
 
 today <- Sys.Date()
-if (file.exists("boe-hoy.RDS")) {
+print(list.files(pattern = "*.RDS"))
+if (file.access("boe-hoy.RDS", mode = "4") == 0) {
     message("Artifact downloaded and found.")
     boe <- readRDS("boe-hoy.RDS")
 } else {
