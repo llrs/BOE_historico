@@ -40,7 +40,9 @@ jobs:
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: post_hourly.yaml
+          branch: master
           name: update
+          workflow_conclusion: success
       - name: run BOE
         run: Rscript news_BOE.R
       - name: Save remaining
