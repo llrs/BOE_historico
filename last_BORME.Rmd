@@ -19,13 +19,10 @@ knitr::opts_chunk$set(echo = FALSE, include = TRUE, message=FALSE, warning=FALSE
 
 ```{r dates}
 today <- Sys.Date()
-yesterday <- today - 1
 library("BOE")
 sumario_hoy <- try(retrieve_sumario(today, journal = "BORME"), silent = TRUE)
-d <- today
 if (is(sumario_hoy, "try-error")) {
-    d <- yesterday
-   sumario_hoy <- retrieve_sumario(yesterday, journal = "BORME")
+    knitr::knit_exit()
 }
 ```
 

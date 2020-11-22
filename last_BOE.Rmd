@@ -19,14 +19,8 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, error = FA
 
 ```{r dates}
 today <- Sys.Date()
-yesterday <- today - 1
 library("BOE")
 sumario_hoy <- try(retrieve_sumario(today), silent = TRUE)
-d <- today
-if (is(sumario_hoy, "try-error")) {
-    d <- yesterday
-   sumario_hoy <- retrieve_sumario(yesterday)
-}
 ts <- table(gsub(pattern = "BOE-([AB])-.*", 
                  replacement = "\\1", sumario_hoy$publication))
 anuncios <- ifelse("B" %in% names(ts), ts[["B"]], 0)
