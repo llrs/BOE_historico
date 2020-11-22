@@ -65,7 +65,7 @@ freqs %>%
   guides(fill = FALSE) +
   theme_void() +
   labs(title = paste("Disposiciones publicadas el", d),
-       caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado\nAutor: @Lluis_Rev")
+       caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado\nAutor: @Lluis_Revilla")
 unlink("docs/last_BOE_files/figure-html/graphics-1.png")
 ggsave(filename = "graphics-1.png", path = "docs/last_BOE_files/figure-html/")
 ```
@@ -85,7 +85,7 @@ freqs %>%
   guides(fill = FALSE) +
   theme_void() +
   labs(title = paste("Anuncios publicados el", d),
-         caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado\nAutor: @Lluis_Rev")
+         caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado\nAutor: @Lluis_Revilla")
 unlink("docs/last_BOE_files/figure-html/anuncios-1.png")
 ggsave(filename = "anuncios-1.png", path = "docs/last_BOE_files/figure-html/")
 ```

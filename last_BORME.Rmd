@@ -60,7 +60,7 @@ sumario_hoy %>%
     scale_x_discrete(limits = c("section_number", "emisor")) +
     theme_void() +
     labs(title = paste0("Anuncios del BORME publicados el ", d),
-         caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado\nAutor: @Lluis_Rev")
+         caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado\nAutor: @Lluis_Revilla")
 ggsave("docs/last_BORME_files/figure-html/graphics-1.png")
 ```
 

@@ -113,7 +113,7 @@ mm %>%
               aes(x, y, label = "Juzgados de lo mercantil"), col = "black") +
     labs(x = element_blank(), y = "% sobre el máximo publicado",
          caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado\r
-         Autor: @Lluis_Rev") +
+         Autor: @Lluis_Revilla") +
     theme_minimal()
 ```
 
