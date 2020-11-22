@@ -25,53 +25,52 @@ if (boe$date[1] != today) {
     boe <- boe[!is.na(boe$epigraph), ]
 }
 
-departaments <- boe %>%
-    filter(!is.na(epigraph)) %>%
-    count(departament, sort = TRUE) %>%
-    pull(departament) %>%
-    .[1]
+# Run code if there are message to post
+if (nrow(boe) > 0) {
 
-message(departaments)
-# Remove it from future tweets:
-boe %>%
-    count(departament, sort = TRUE) %>%
-    head()
-boe2 <- filter(boe, !departament %in% departaments, !is.na(epigraph))
-message("Remaining")
-boe2 %>%
-    count(departament, sort = TRUE) %>%
-    head()
-saveRDS(boe2,  "boe-hoy.RDS")
+    departaments <- boe %>%
+        filter(!is.na(epigraph)) %>%
+        count(departament, sort = TRUE) %>%
+        pull(departament) %>%
+        .[1]
 
-pre_message <- boe %>%
-    filter(!is.na(epigraph), departaments == departament) %>%
-    count(section_number, epigraph, sort = TRUE) %>%
-    mutate(section_number = gsub("[IV].*\\. ", "", section_number)) %>%
-    mutate(epigraph = case_when(
-        section_number == "Oposiciones y concursos" ~ paste(section_number, "a", tolower(epigraph)),
-                                TRUE ~ epigraph)) %>%
-    select(epigraph, n)
+    message("Posting about:", departaments)
+    # Remove it from future tweets:
+    boe2 <- filter(boe, !departament %in% departaments, !is.na(epigraph))
+    saveRDS(boe2,  "boe-hoy.RDS")
 
-msg <- paste(apply(pre_message, 1, function(x){paste(rev(x), collapse = " ")}), collapse = ", ")
+    pre_message <- boe %>%
+        filter(!is.na(epigraph), departaments == departament) %>%
+        count(section_number, epigraph, sort = TRUE) %>%
+        mutate(section_number = gsub("[IV].*\\. ", "", section_number)) %>%
+        mutate(epigraph = case_when(
+            section_number == "Oposiciones y concursos" ~ paste(section_number, "a", tolower(epigraph)),
+            TRUE ~ epigraph)) %>%
+        select(epigraph, n)
 
-message_length <- 280
-link_hashtag <- 30
-limit_text_message <- message_length - link_hashtag
+    msg <- paste(apply(pre_message, 1, function(x){paste(rev(x), collapse = " ")}), collapse = ", ")
 
-msg <- paste0("Hoy en el #BOE; ", tolower(departaments), ": ", msg)
+    header <- c("Hoy en el #BOE: ", "Publicado en el #BOE: ")
+    h <- sample(header, 1)
 
-if (nchar(msg) > limit_text_message) {
-    split_text <- strsplit(msg, "\\s")[[1]]
-    characters <- cumsum(nchar(split_text) + 1)
-    text_tweet <- paste(split_text[characters + 4 < limit_text_message],
-                        collapse = " ")
-    text_tweet <- paste0(text_tweet, "...")
-} else {
-    text_tweet <- msg
+    message_length <- 280
+    link_hashtag <- 30
+    limit_text_message <- message_length - link_hashtag
+    msg <- paste0(h, tolower(departaments), ": ", msg)
+
+    if (nchar(msg) > limit_text_message) {
+        split_text <- strsplit(msg, "\\s")[[1]]
+        characters <- cumsum(nchar(split_text) + 1)
+        text_tweet <- paste(split_text[characters + 4 < limit_text_message],
+                            collapse = " ")
+        text_tweet <- paste0(text_tweet, "...")
+    } else {
+        text_tweet <- msg
+    }
+
+    message(text_tweet)
+    message <- paste0(text_tweet, ": ",
+                      "https://llrs.github.io/BOE_historico/last_BOE.html",
+                      collapse = "")
+    r <- post_tweet(status = message)
 }
-
-message(text_tweet)
-message <- paste0(text_tweet, ": ",
-                  "https://llrs.github.io/BOE_historico/last_BOE.html",
-                  collapse = "")
-r <- post_tweet(status = message)
