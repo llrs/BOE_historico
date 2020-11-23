@@ -28,7 +28,7 @@ if (is(sumario_hoy, "try-error")) {
 
 # Resumen gráfico
 
-Esta página web contiene el último sumario del BORME publicado el `r d` con `r nrow(sumario_hoy)` publicaciones.
+Esta página web contiene el último sumario del BORME publicado el `r today` con `r nrow(sumario_hoy)` publicaciones.
 
 ```{r graphics, fig.asp="center"}
 library("dplyr")
@@ -56,7 +56,7 @@ sumario_hoy %>%
     guides(fill = FALSE) +
     scale_x_discrete(limits = c("section_number", "emisor")) +
     theme_void() +
-    labs(title = paste0("Anuncios del BORME publicados el ", d),
+    labs(title = paste0("Anuncios del BORME publicados el ", today),
          caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado\nAutor: @Lluis_Revilla")
 ggsave("docs/last_BORME_files/figure-html/graphics-1.png")
 ```

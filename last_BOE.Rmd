@@ -26,7 +26,7 @@ ts <- table(gsub(pattern = "BOE-([AB])-.*",
 anuncios <- ifelse("B" %in% names(ts), ts[["B"]], 0)
 ```
 
-Esta página web contiene el último sumario del BOE publicado el `r d` con `r nrow(sumario_hoy)` publicaciones, de las cuales `r ts[["A"]]` son disposiciones.
+Esta página web contiene el último sumario del BOE publicado el `r today` con `r nrow(sumario_hoy)` publicaciones, de las cuales `r ts[["A"]]` son disposiciones.
 
 # Resumen gráfico de las disposiciones
 
@@ -58,7 +58,7 @@ freqs %>%
                            stat = "stratum", min.size = 1) +
   guides(fill = FALSE) +
   theme_void() +
-  labs(title = paste("Disposiciones publicadas el", d),
+  labs(title = paste("Disposiciones publicadas el", today),
        caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado\nAutor: @Lluis_Revilla")
 unlink("docs/last_BOE_files/figure-html/graphics-1.png")
 ggsave(filename = "graphics-1.png", path = "docs/last_BOE_files/figure-html/")
@@ -78,7 +78,7 @@ freqs %>%
                            stat = "stratum", min.size = 1) +
   guides(fill = FALSE) +
   theme_void() +
-  labs(title = paste("Anuncios publicados el", d),
+  labs(title = paste("Anuncios publicados el", today),
          caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado\nAutor: @Lluis_Revilla")
 unlink("docs/last_BOE_files/figure-html/anuncios-1.png")
 ggsave(filename = "anuncios-1.png", path = "docs/last_BOE_files/figure-html/")
