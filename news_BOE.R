@@ -20,7 +20,14 @@ if (file.access("boe-hoy.RDS", mode = "4") == 0) {
     boe <- boe[!is.na(boe$epigraph), ]
 }
 
+if (nrow(boe) == 0) {
+    message("BOE is empty")
+    boe <- retrieve_sumario(today)
+    boe <- boe[!is.na(boe$epigraph), ]
+}
+
 if (boe$date[1] != today) {
+    message("Retrieve ne data")
     boe <- retrieve_sumario(today)
     boe <- boe[!is.na(boe$epigraph), ]
 }
