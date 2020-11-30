@@ -11,7 +11,8 @@ knitr::opts_chunk$set(cache = TRUE, echo = FALSE, error = FALSE,
                       warning = FALSE, message = FALSE, include = TRUE)
 ```
 
-No conozco mucho las diferencias entre tipos de leyes pero los diferentes tipos tienen recorridos distintos y controles diferentes, así que ver los diferentes tipos de publicaciones es relevante.
+No conozco mucho las diferencias entre tipos de leyes pero los diferentes tipos tienen recorridos distintos y controles diferentes, así que ver los diferentes tipos de publicaciones puede ser relevante.
+También creo que puede ser interés si hay más retraso en la publicación de cierto tipo de reglamento o si en ciertas épocas se publica más otro tipo de normativa.
 
 ```{r cargar}
 library("data.table", warn.conflicts = FALSE)
@@ -33,7 +34,7 @@ boe <- fread("../BOE_sumario/till_20191117.csv", sep = "\t", quote = FALSE) %>%
 ```
 
 
-```{r acuerdos-internacionales}
+```{r leyes}
 preleyes <- boe %>% 
   as_tibble() %>% 
   filter(!is.na(epigraf)) %>% 
@@ -74,58 +75,147 @@ leyes <- preleyes %>%
   mutate(fecha_pub = case_when(
     is.na(fecha_pub) ~ as.Date(gsub(x = rel, pattern = ".*/", replacement = ""), "%Y de %d de %B,"),
     TRUE ~ fecha_pub))
+```
 
+Aquí podemos ver todas las normas publicadas en el BOE desde el 2009 hasta la fecha de recolección de datos según la fecha de aprobación y la fecha de publicación en el BOE.
+
+```{r publicaciones}
 leyes %>% 
   ggplot() + 
   geom_point(aes(date, fecha_pub, col = tipo)) +
   theme_minimal() +
-  labs(x = "Fecha publicación", y = "Fecha ordenamiento jurídico") 
+  labs(x = "Fecha publicación", y = "Fecha aprobación",
+       col = "Tipo", 
+       title = "Normativa según fecha aprobación y fecha publicación")
+```
 
+Hay un grupo de normativas que han tardado mucho en publicarse.
+Algunas leyes se transfirieron del País Vasco al BOE mucho más tarde,
+Pero [otras](https://www.boe.es/buscar/doc.php?id=BOE-A-2009-20287) son acuerdos que han tardado mucho.
+Si hacemos un zoom en las que se han aprobado sede 2009 podemos ver mejor que se han publicado casi todo muy pronto:
+
+```{r publicaciones}
 leyes %>% 
-  mutate(retraso = date - fecha_pub) %>% 
+  filter(fecha_pub >= as.Date("2009/01/01")) %>% 
+  ggplot() + 
+  geom_linerange(aes(y = fecha_pub, x = date, xmin = date, xmax = fecha_pub),
+                 col = "grey") +
+  geom_point(aes(date, fecha_pub, col = tipo)) +
+  theme_minimal() +
+  labs(x = "Fecha publicación", y = "Fecha aprobación",
+       col = "Tipo", 
+       title = "Normativa según fecha aprobación y fecha publicación")
+```
+
+```{r retraso-medio}
+leyes_retraso <- leyes %>% 
+  mutate(retraso = date - fecha_pub)
+leyes_retraso %>%   
   group_by(tipo) %>% 
   summarize(retraso = median(retraso, na.rm = TRUE),
             n = n()) %>% 
   filter(!is.na(retraso)) %>% 
   ggplot() + 
-  geom_point(aes(fct_reorder(tipo, -retraso, sum), retraso, size = n)) +
+  geom_point(aes(fct_reorder(tipo, retraso, sum), retraso, size = n)) +
   theme_minimal() +
-  labs(x = "Fecha publicación", y = "Días de retraso") +
+  labs(x = "Fecha publicación", y = "Días de retraso",
+       title = "Retraso medio entre aprobación y publicación de la normativa",
+       size = "Publicaciones") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  scale_y_continuous(breaks = seq(0, 70, by = 7))
-leyes %>% 
-  mutate(retraso = date - fecha_pub) %>% 
-  group_by(date, tipo) %>% 
-  summarize(retraso = median(retraso, na.rm = TRUE)) %>% 
-  ggplot() + 
-  geom_point(aes(date, retraso, col = tipo)) +
-  theme_minimal() +
-  labs(x = "Fecha publicación", y = "Días de retraso")
-
-leyes %>% 
-  mutate(retraso = date - fecha_pub) %>% 
-  group_by(date) %>% 
-  summarize(retraso = median(retraso, na.rm = TRUE)) %>% 
-  ggplot() + 
-  geom_point(aes(date, retraso)) +
-  theme_minimal() +
-  labs(x = "Fecha publicación", y = "Días de retraso", 
-       title = "Media de retraso entre aprobación y publicación en el BOE")
-
-leyes %>% 
-  mutate(retraso = date - fecha_pub) %>% 
-  filter(!is.na(retraso)) %>% 
-  group_by(date) %>% 
-  summarize(retraso = median(retraso, na.rm = TRUE)) %>% 
-  ungroup() %>% 
-  filter(retraso < 365) %>%
-  summarize(across(retraso, .fns = list(min = min, median = median, max = max), .names = "{.fn}"))
+  scale_y_continuous(breaks = seq(0, 170, by = 7), 
+                     expand = expansion(add = c(1, 1)))
 ```
 
-Algunas leyes se transfirieron del País Vasco al BOE mucho más tarde,
-Pero [otras](https://www.boe.es/buscar/doc.php?id=BOE-A-2009-20287) son acuerdos que han tardado mucho.
-En general se mantiene estable alrededor de 12 días entre la aprobación y la publicación.
+Antes de seguir me gustaría comentar un par de errores del BOE `r paste(leyes_retraso$publication[leyes_retraso$retraso < 0], collapse = ", ")`.
+En el primer documento, ¡¡se ha publicado antes de aprobarse!!
+La segunda publicación hay discrepancias en el sumario respecto a la publicación.
+Omito las dos publicaciones a partir de ahora.
 
+Excluyendo aquellas que se aprobaron antes de 2009:
+
+```{r retraso-medio-filter}
+leyes_retraso <- leyes_retraso[leyes_retraso$retraso >= 0, ]
+leyes_retraso_medio <- leyes_retraso %>% 
+  filter(fecha_pub >= as.Date("2009/01/01")) %>%
+  group_by(tipo) %>%
+  summarize(retraso = median(retraso, na.rm = TRUE),
+            n = n()) %>%
+  filter(!is.na(retraso))
+
+ggplot(leyes_retraso_medio) + 
+  geom_point(aes(fct_reorder(tipo, retraso, sum), retraso, size = n)) +
+  theme_minimal() +
+  labs(x = "Fecha publicación", y = "Días de retraso",
+       title = "Retraso medio entre aprobación y publicación de la normativa",
+       size = "Publicaciones") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        panel.grid.minor.y = element_blank()) +
+  scale_y_continuous(breaks = seq(0, 170, by = 7), 
+                     expand = expansion(add = c(1, 1)))
+```
+
+Podemos ver que hay mucha variación según el tipo de publicación:
+
+```{r retraso-rangos, echo=FALSE, }
+leyes_retraso %>% 
+  filter(fecha_pub >= as.Date("2009/01/01")) %>%
+  filter(!is.na(retraso)) %>% 
+  ungroup() %>% 
+  group_by(tipo) %>% 
+  summarize(across(retraso, .fns = list(min = min, median = median, max = max), .names = "{.fn}"),
+            n = n()) %>% 
+  filter(n > 1) %>% 
+  select(-n) %>% 
+  arrange(median, min, max)
+```
+
+En general se mantiene estable alrededor de 15 días entre la aprobación y la publicación:
+
+```{r retraso-fecha}
+leyes_retraso %>% 
+  filter(fecha_pub >= as.Date("2009/01/01")) %>%
+  ggplot() +
+  geom_smooth(aes(date, retraso)) +
+  theme_minimal() +
+  theme(panel.grid.minor.x = element_blank()) +
+  ylim(c(0, NA)) +
+  scale_x_date(breaks = "1 year", expand = expansion()) +
+  labs(x = "Publicación", y = "Días de retraso", 
+       title = "Estimación del tiempo de retraso entre aprobación y publicación")
+
+```
+
+Cambios de gobierno
+Muy útil esta [página de la wikipedia](https://es.wikipedia.org/wiki/Anexo:Presidentes_del_Gobierno_de_Espa%C3%B1a#Lista_de_presidentes_del_Gobierno)
+
+```{r}
+presi <- leyes %>% 
+  filter(department == "JEFATURA DEL ESTADO",
+         epigraf %in% c("Nombramientos")) %>% 
+  filter(str_detect(text, "Presidente del Gobierno")) %>% 
+  mutate(presidente = gsub(pattern = ".+ se nombra Presidente del Gobierno a don (.+)\\.", 
+                                replacement = "\\1",
+                                x = text),
+         type = "start")
+cese <- leyes %>% 
+  filter(department == "PRESIDENCIA DEL GOBIERNO",
+         epigraf == "Ceses") %>% 
+  filter(str_detect(text, "cese de (.+?) como Presidente del Gobierno\\.")) %>% 
+  mutate(presidente = gsub(pattern = ".+ cese de don (.+) como Presidente del Gobierno\\.", 
+                              replacement = "\\1",
+                              x = text),
+         type = "end")
+presis <- rbind(presi, cese)
+
+count(presis, presidente)
+presis %>% 
+  group_by(presidente) %>% 
+  arrange(fecha_pub) %>% 
+  select(presidente, fecha_pub, type)
+# Still missing some end dates of Mariano Rajoy
+```
+
+Ritmo de publicaciones
 
 ```{r }
 theme_set(theme_minimal())
