@@ -94,7 +94,7 @@ Algunas leyes se transfirieron del País Vasco al BOE mucho más tarde,
 Pero [otras](https://www.boe.es/buscar/doc.php?id=BOE-A-2009-20287) son acuerdos que han tardado mucho.
 Si hacemos un zoom en las que se han aprobado sede 2009 podemos ver mejor que se han publicado casi todo muy pronto:
 
-```{r publicaciones}
+```{r publicaciones-zoom}
 leyes %>% 
   filter(fecha_pub >= as.Date("2009/01/01")) %>% 
   ggplot() + 

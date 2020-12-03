@@ -40,6 +40,6 @@ navbar:
           href: crisis.html
   right:
     - icon: fa-twitter
-      href: https://twitter.com/intent/tweet?text=Gracias%20%40Lluis_Revill%20por%20esta%20herramienta%20%40Boletines_es
+      href: https://twitter.com/intent/tweet?text=Gracias%20%40Lluis_Revilla%20por%20esta%20herramienta%20%40Boletines_es
     - icon: fa-github
       href: https://github.com/llrs/BOE_historico/

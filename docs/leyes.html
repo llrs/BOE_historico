@@ -27,10 +27,33 @@
 <script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57101844-6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-57101844-6');
+</script>
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@Lluís_Revilla">
 <meta name="twitter:title" content="Histórico del BOE">
 <meta name="twitter:description" content="Novedades y análisis del BOE y el BORME.">
+<meta name="twitter:url" content="https://llrs.github.io/BOE_historico"/>
+<meta name="description" content="Analisis del BOE"/>
+<meta name="github-repo" content="llrs/BOE_historico"/>
+<meta name="twitter:image:src" content="https://llrs.github.io/BOE_historico/index_files/figure-html/BOE-1.png"/>
+<meta name="twitter:image:alt" content="The BOE daily publications from 2009 to almost the end of 2019"/>
+<meta name="twitter:card" content="summary"/>
+<meta property="og:title" content="Histórico del BOE"/>
+<meta property="og:description" content="Analisis del BOE"/>
+<meta property="og:url" content="https://llrs.github.io/BOE_historico"/>
+<meta property="og:image" content="https://llrs.github.io/BOE_historico/index_files/figure-html/BOE-1.png"/>
+<meta property="og:image:alt" content="The BOE daily publications from 2009 to almost the end of 2019"/>
+<meta property="og:type" content="website"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="article:author" content="Lluís Revilla Sancho"/>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -355,7 +378,7 @@ $(document).ready(function () {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://twitter.com/intent/tweet?text=Gracias%20%40Lluis_Revill%20por%20esta%20herramienta%20%40Boletines_es">
+  <a href="https://twitter.com/intent/tweet?text=Gracias%20%40Lluis_Revilla%20por%20esta%20herramienta%20%40Boletines_es">
     <span class="fa fa-twitter"></span>
      
   </a>
@@ -380,14 +403,56 @@ $(document).ready(function () {
 </div>
 
 
-<p>No conozco mucho las diferencias entre tipos de leyes pero los diferentes tipos tienen recorridos distintos y controles diferentes, así que ver los diferentes tipos de publicaciones es relevante.</p>
-<p><img src="leyes_files/figure-html/acuerdos-internacionales-1.png" width="672" /><img src="leyes_files/figure-html/acuerdos-internacionales-2.png" width="672" /><img src="leyes_files/figure-html/acuerdos-internacionales-3.png" width="672" /><img src="leyes_files/figure-html/acuerdos-internacionales-4.png" width="672" /></p>
-<pre><code>## # A tibble: 1 x 3
-##   min    median  max     
-##   &lt;drtn&gt; &lt;drtn&gt;  &lt;drtn&gt;  
-## 1 0 days 12 days 206 days</code></pre>
-<p>Algunas leyes se transfirieron del País Vasco al BOE mucho más tarde, Pero <a href="https://www.boe.es/buscar/doc.php?id=BOE-A-2009-20287">otras</a> son acuerdos que han tardado mucho. En general se mantiene estable alrededor de 12 días entre la aprobación y la publicación.</p>
-<p><img src="leyes_files/figure-html/unnamed-chunk-1-1.png" width="672" /><img src="leyes_files/figure-html/unnamed-chunk-1-2.png" width="672" /></p>
+<p>No conozco mucho las diferencias entre tipos de leyes pero los diferentes tipos tienen recorridos distintos y controles diferentes, así que ver los diferentes tipos de publicaciones puede ser relevante. También creo que puede ser interés si hay más retraso en la publicación de cierto tipo de reglamento o si en ciertas épocas se publica más otro tipo de normativa.</p>
+<p>Aquí podemos ver todas las normas publicadas en el BOE desde el 2009 hasta la fecha de recolección de datos según la fecha de aprobación y la fecha de publicación en el BOE.</p>
+<p><img src="leyes_files/figure-html/publicaciones-1.png" width="672" /></p>
+<p>Hay un grupo de normativas que han tardado mucho en publicarse. Algunas leyes se transfirieron del País Vasco al BOE mucho más tarde, Pero <a href="https://www.boe.es/buscar/doc.php?id=BOE-A-2009-20287">otras</a> son acuerdos que han tardado mucho. Si hacemos un zoom en las que se han aprobado sede 2009 podemos ver mejor que se han publicado casi todo muy pronto:</p>
+<p><img src="leyes_files/figure-html/publicaciones-zoom-1.png" width="672" /></p>
+<p><img src="leyes_files/figure-html/retraso-medio-1.png" width="672" /></p>
+<p>Antes de seguir me gustaría comentar un par de errores del BOE BOE-A-2009-20666, BOE-A-2011-1183. En el primer documento, ¡¡se ha publicado antes de aprobarse!! La segunda publicación hay discrepancias en el sumario respecto a la publicación. Omito las dos publicaciones a partir de ahora.</p>
+<p>Excluyendo aquellas que se aprobaron antes de 2009:</p>
+<p><img src="leyes_files/figure-html/retraso-medio-filter-1.png" width="672" /></p>
+<p>Podemos ver que hay mucha variación según el tipo de publicación:</p>
+<pre><code>## # A tibble: 15 x 4
+##    tipo                     min     median    max      
+##    &lt;fct&gt;                    &lt;drtn&gt;  &lt;drtn&gt;    &lt;drtn&gt;   
+##  1 real decreto-ley          0 days  1.0 days    7 days
+##  2 real decreto              0 days  1.0 days  209 days
+##  3 ley orgánica              1 days  1.0 days    3 days
+##  4 real decreto legislativo  1 days  1.0 days   45 days
+##  5 instrucción               2 days  5.0 days   51 days
+##  6 orden                     0 days 11.0 days  388 days
+##  7 decreto foral             1 days 16.0 days  348 days
+##  8 ley foral                11 days 25.5 days   68 days
+##  9 orden foral               8 days 27.0 days   29 days
+## 10 ley                       1 days 29.0 days  700 days
+## 11 decreto-ley foral        15 days 30.5 days   83 days
+## 12 decreto ley              30 days 37.5 days   45 days
+## 13 decreto                   1 days 42.0 days 1315 days
+## 14 decreto legislativo      15 days 44.5 days  224 days
+## 15 decreto-ley               4 days 51.0 days  345 days</code></pre>
+<p>En general se mantiene estable alrededor de 15 días entre la aprobación y la publicación:</p>
+<p><img src="leyes_files/figure-html/retraso-fecha-1.png" width="672" /></p>
+<p>Cambios de gobierno Muy útil esta <a href="https://es.wikipedia.org/wiki/Anexo:Presidentes_del_Gobierno_de_Espa%C3%B1a#Lista_de_presidentes_del_Gobierno">página de la wikipedia</a></p>
+<pre><code>## # A tibble: 3 x 2
+##   presidente                       n
+##   &lt;chr&gt;                        &lt;int&gt;
+## 1 José Luis Rodríguez Zapatero     1
+## 2 Mariano Rajoy Brey               4
+## 3 Pedro Sánchez Pérez-Castejón     2</code></pre>
+<pre><code>## # A tibble: 7 x 3
+## # Groups:   presidente [3]
+##   presidente                   fecha_pub  type 
+##   &lt;chr&gt;                        &lt;date&gt;     &lt;chr&gt;
+## 1 José Luis Rodríguez Zapatero 2011-11-21 end  
+## 2 Mariano Rajoy Brey           2011-12-20 start
+## 3 Mariano Rajoy Brey           2015-12-21 end  
+## 4 Mariano Rajoy Brey           2016-10-30 start
+## 5 Pedro Sánchez Pérez-Castejón 2018-06-01 start
+## 6 Mariano Rajoy Brey           2018-06-01 end  
+## 7 Pedro Sánchez Pérez-Castejón 2019-04-29 end</code></pre>
+<p>Ritmo de publicaciones</p>
+<p><img src="leyes_files/figure-html/unnamed-chunk-2-1.png" width="672" /><img src="leyes_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
 
 
 
