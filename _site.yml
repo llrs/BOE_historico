@@ -6,7 +6,6 @@ output:
       in_header: twitter_card.html
 base_url: https:llrs.github.io/BOE_historico/
 self_contained: false
-google_analytics: "UA-57101844-6"
 navbar:
   title: "Histórico del BOE"
   left:
