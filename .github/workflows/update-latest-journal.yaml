@@ -55,8 +55,7 @@ jobs:
         run: Rscript last_BOE.R
       - name: Commit results
         run: |
-          git add -A .
-          git commit -m 'Automatic commit to update last BOE'
+          git diff-index --quiet HEAD || git commit -a -m 'Automatic commit to update last BOE'
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
         with:
@@ -65,8 +64,7 @@ jobs:
         run: Rscript last_BORME.R
       - name: Commit results
         run: |
-          git add -A .
-          git commit -m 'Automatic commit to update last BORME'
+          git diff-index --quiet HEAD || git commit -a -m 'Automatic commit to update last BORME'
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
         with:
