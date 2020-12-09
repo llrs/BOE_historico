@@ -408,32 +408,36 @@ $(document).ready(function () {
 <p><img src="leyes_files/figure-html/publicaciones-1.png" width="672" /></p>
 <p>Hay un grupo de normativas que han tardado mucho en publicarse. Algunas leyes se transfirieron del País Vasco al BOE mucho más tarde, Pero <a href="https://www.boe.es/buscar/doc.php?id=BOE-A-2009-20287">otras</a> son acuerdos que han tardado mucho. Si hacemos un zoom en las que se han aprobado sede 2009 podemos ver mejor que se han publicado casi todo muy pronto:</p>
 <p><img src="leyes_files/figure-html/publicaciones-zoom-1.png" width="672" /></p>
+<p>Si agrupamos por rango de ley podemos observar si hay alguna tendencia. También he recortado las que no aparecen más de 5 veces en todo el conjunto.</p>
 <p><img src="leyes_files/figure-html/retraso-medio-1.png" width="672" /></p>
-<p>Antes de seguir me gustaría comentar un par de errores del BOE BOE-A-2009-20666, BOE-A-2011-1183. En el primer documento, ¡¡se ha publicado antes de aprobarse!! La segunda publicación hay discrepancias en el sumario respecto a la publicación. Omito las dos publicaciones a partir de ahora.</p>
-<p>Excluyendo aquellas que se aprobaron antes de 2009:</p>
-<p><img src="leyes_files/figure-html/retraso-medio-filter-1.png" width="672" /></p>
-<p>Podemos ver que hay mucha variación según el tipo de publicación:</p>
-<pre><code>## # A tibble: 15 x 4
-##    tipo                     min     median    max      
-##    &lt;fct&gt;                    &lt;drtn&gt;  &lt;drtn&gt;    &lt;drtn&gt;   
-##  1 real decreto-ley          0 days  1.0 days    7 days
-##  2 real decreto              0 days  1.0 days  209 days
-##  3 ley orgánica              1 days  1.0 days    3 days
-##  4 real decreto legislativo  1 days  1.0 days   45 days
-##  5 instrucción               2 days  5.0 days   51 days
-##  6 orden                     0 days 11.0 days  388 days
-##  7 decreto foral             1 days 16.0 days  348 days
-##  8 ley foral                11 days 25.5 days   68 days
-##  9 orden foral               8 days 27.0 days   29 days
-## 10 ley                       1 days 29.0 days  700 days
-## 11 decreto-ley foral        15 days 30.5 days   83 days
-## 12 decreto ley              30 days 37.5 days   45 days
-## 13 decreto                   1 days 42.0 days 1315 days
-## 14 decreto legislativo      15 days 44.5 days  224 days
-## 15 decreto-ley               4 days 51.0 days  345 days</code></pre>
+<p>Antes de seguir me gustaría comentar un par de errores del BOE BOE-A-2009-20666, BOE-A-2011-1183. En el primer documento, ¡¡se ha publicado antes de aprobarse!! La segunda publicación hay discrepancias en el sumario respecto a la publicación y posteriormente se publicó una corrección. Omito las dos publicaciones a partir de ahora. Podemos ver que hay mucha variación según el tipo de publicación:</p>
+<pre><code>## # A tibble: 15 x 5
+##    tipo                     min     median    q75        max      
+##    &lt;fct&gt;                    &lt;drtn&gt;  &lt;drtn&gt;    &lt;drtn&gt;     &lt;drtn&gt;   
+##  1 real decreto-ley          0 days  1.0 days  1.00 days    7 days
+##  2 real decreto              0 days  1.0 days 20.00 days  209 days
+##  3 ley orgánica              1 days  1.0 days  1.00 days    3 days
+##  4 real decreto legislativo  1 days  1.0 days  1.75 days   45 days
+##  5 instrucción               2 days  5.0 days  7.00 days   51 days
+##  6 orden                    -3 days 11.0 days 17.00 days  388 days
+##  7 decreto foral             1 days 16.0 days 21.25 days  348 days
+##  8 ley foral                11 days 25.5 days 32.00 days   68 days
+##  9 orden foral               8 days 27.0 days 27.50 days   29 days
+## 10 ley                       1 days 29.0 days 46.00 days  700 days
+## 11 decreto-ley foral        15 days 30.5 days 42.25 days   83 days
+## 12 decreto ley              30 days 37.5 days 41.25 days   45 days
+## 13 decreto                   1 days 42.0 days 66.00 days 1315 days
+## 14 decreto legislativo      15 days 44.5 days 93.25 days  224 days
+## 15 decreto-ley               4 days 51.0 days 65.50 days  345 days</code></pre>
 <p>En general se mantiene estable alrededor de 15 días entre la aprobación y la publicación:</p>
 <p><img src="leyes_files/figure-html/retraso-fecha-1.png" width="672" /></p>
-<p>Cambios de gobierno Muy útil esta <a href="https://es.wikipedia.org/wiki/Anexo:Presidentes_del_Gobierno_de_Espa%C3%B1a#Lista_de_presidentes_del_Gobierno">página de la wikipedia</a></p>
+<p>Pasemos a ver si ahora se aprueban más disposiciones o no</p>
+<p><img src="leyes_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p><img src="leyes_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Hay un ligero incremento de ordenes cuando se produce una disminución de real decretos. El resto de publicaciones se publican mucho menos y no se puede estimar bien su evolución en el tiempo.</p>
+<div id="cambios-de-gobierno" class="section level2">
+<h2>Cambios de gobierno</h2>
+<p>Muy útil esta <a href="https://es.wikipedia.org/wiki/Anexo:Presidentes_del_Gobierno_de_Espa%C3%B1a#Lista_de_presidentes_del_Gobierno">página de la wikipedia</a></p>
 <pre><code>## # A tibble: 3 x 2
 ##   presidente                       n
 ##   &lt;chr&gt;                        &lt;int&gt;
@@ -452,7 +456,8 @@ $(document).ready(function () {
 ## 6 Mariano Rajoy Brey           2018-06-01 end  
 ## 7 Pedro Sánchez Pérez-Castejón 2019-04-29 end</code></pre>
 <p>Ritmo de publicaciones</p>
-<p><img src="leyes_files/figure-html/unnamed-chunk-2-1.png" width="672" /><img src="leyes_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
+<p><img src="leyes_files/figure-html/unnamed-chunk-4-1.png" width="672" /><img src="leyes_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+</div>
 
 
 
