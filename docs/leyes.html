@@ -405,58 +405,148 @@ $(document).ready(function () {
 
 <p>No conozco mucho las diferencias entre tipos de leyes pero los diferentes tipos tienen recorridos distintos y controles diferentes, así que ver los diferentes tipos de publicaciones puede ser relevante. También creo que puede ser interés si hay más retraso en la publicación de cierto tipo de reglamento o si en ciertas épocas se publica más otro tipo de normativa.</p>
 <p>Aquí podemos ver todas las normas publicadas en el BOE desde el 2009 hasta la fecha de recolección de datos según la fecha de aprobación y la fecha de publicación en el BOE.</p>
-<p><img src="leyes_files/figure-html/publicaciones-1.png" width="672" /></p>
+<p><img src="leyes_files/figure-html/publicaciones-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Hay un grupo de normativas que han tardado mucho en publicarse. Algunas leyes se transfirieron del País Vasco al BOE mucho más tarde, Pero <a href="https://www.boe.es/buscar/doc.php?id=BOE-A-2009-20287">otras</a> son acuerdos que han tardado mucho. Si hacemos un zoom en las que se han aprobado sede 2009 podemos ver mejor que se han publicado casi todo muy pronto:</p>
-<p><img src="leyes_files/figure-html/publicaciones-zoom-1.png" width="672" /></p>
+<p><img src="leyes_files/figure-html/publicaciones-zoom-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Si agrupamos por rango de ley podemos observar si hay alguna tendencia. También he recortado las que no aparecen más de 5 veces en todo el conjunto.</p>
-<p><img src="leyes_files/figure-html/retraso-medio-1.png" width="672" /></p>
-<p>Antes de seguir me gustaría comentar un par de errores del BOE BOE-A-2009-20666, BOE-A-2011-1183. En el primer documento, ¡¡se ha publicado antes de aprobarse!! La segunda publicación hay discrepancias en el sumario respecto a la publicación y posteriormente se publicó una corrección. Omito las dos publicaciones a partir de ahora. Podemos ver que hay mucha variación según el tipo de publicación:</p>
-<pre><code>## # A tibble: 15 x 5
-##    tipo                     min     median    q75        max      
-##    &lt;fct&gt;                    &lt;drtn&gt;  &lt;drtn&gt;    &lt;drtn&gt;     &lt;drtn&gt;   
-##  1 real decreto-ley          0 days  1.0 days  1.00 days    7 days
-##  2 real decreto              0 days  1.0 days 20.00 days  209 days
-##  3 ley orgánica              1 days  1.0 days  1.00 days    3 days
-##  4 real decreto legislativo  1 days  1.0 days  1.75 days   45 days
-##  5 instrucción               2 days  5.0 days  7.00 days   51 days
-##  6 orden                    -3 days 11.0 days 17.00 days  388 days
-##  7 decreto foral             1 days 16.0 days 21.25 days  348 days
-##  8 ley foral                11 days 25.5 days 32.00 days   68 days
-##  9 orden foral               8 days 27.0 days 27.50 days   29 days
-## 10 ley                       1 days 29.0 days 46.00 days  700 days
-## 11 decreto-ley foral        15 days 30.5 days 42.25 days   83 days
-## 12 decreto ley              30 days 37.5 days 41.25 days   45 days
-## 13 decreto                   1 days 42.0 days 66.00 days 1315 days
-## 14 decreto legislativo      15 days 44.5 days 93.25 days  224 days
-## 15 decreto-ley               4 days 51.0 days 65.50 days  345 days</code></pre>
+<p><img src="leyes_files/figure-html/retraso-medio-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Antes de seguir me gustaría comentar un par de errores del BOE: BOE-A-2009-20666, BOE-A-2011-1183. En el primer documento, ¡¡se ha publicado antes de aprobarse!! La segunda publicación hay discrepancias en el sumario respecto a la publicación y posteriormente se publicó una corrección. Omito las dos publicaciones a partir de ahora. Podemos ver que hay mucha variación según el tipo de publicación:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Tipo</th>
+<th align="left">Mínimo</th>
+<th align="left">Mediana</th>
+<th align="left">Percentil 75</th>
+<th align="left">Máxmimo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">real decreto-ley</td>
+<td align="left">0 days</td>
+<td align="left">1.0 days</td>
+<td align="left">1.00 days</td>
+<td align="left">7 days</td>
+</tr>
+<tr class="even">
+<td align="left">real decreto</td>
+<td align="left">0 days</td>
+<td align="left">1.0 days</td>
+<td align="left">20.00 days</td>
+<td align="left">209 days</td>
+</tr>
+<tr class="odd">
+<td align="left">ley orgánica</td>
+<td align="left">1 days</td>
+<td align="left">1.0 days</td>
+<td align="left">1.00 days</td>
+<td align="left">3 days</td>
+</tr>
+<tr class="even">
+<td align="left">real decreto legislativo</td>
+<td align="left">1 days</td>
+<td align="left">1.0 days</td>
+<td align="left">1.75 days</td>
+<td align="left">45 days</td>
+</tr>
+<tr class="odd">
+<td align="left">instrucción</td>
+<td align="left">2 days</td>
+<td align="left">5.0 days</td>
+<td align="left">7.00 days</td>
+<td align="left">51 days</td>
+</tr>
+<tr class="even">
+<td align="left">orden</td>
+<td align="left">0 days</td>
+<td align="left">11.0 days</td>
+<td align="left">17.00 days</td>
+<td align="left">388 days</td>
+</tr>
+<tr class="odd">
+<td align="left">decreto foral</td>
+<td align="left">1 days</td>
+<td align="left">16.0 days</td>
+<td align="left">21.25 days</td>
+<td align="left">348 days</td>
+</tr>
+<tr class="even">
+<td align="left">ley foral</td>
+<td align="left">11 days</td>
+<td align="left">25.5 days</td>
+<td align="left">32.00 days</td>
+<td align="left">68 days</td>
+</tr>
+<tr class="odd">
+<td align="left">orden foral</td>
+<td align="left">8 days</td>
+<td align="left">27.0 days</td>
+<td align="left">27.50 days</td>
+<td align="left">29 days</td>
+</tr>
+<tr class="even">
+<td align="left">ley</td>
+<td align="left">1 days</td>
+<td align="left">29.0 days</td>
+<td align="left">46.00 days</td>
+<td align="left">700 days</td>
+</tr>
+<tr class="odd">
+<td align="left">decreto-ley foral</td>
+<td align="left">15 days</td>
+<td align="left">30.5 days</td>
+<td align="left">42.25 days</td>
+<td align="left">83 days</td>
+</tr>
+<tr class="even">
+<td align="left">decreto ley</td>
+<td align="left">30 days</td>
+<td align="left">37.5 days</td>
+<td align="left">41.25 days</td>
+<td align="left">45 days</td>
+</tr>
+<tr class="odd">
+<td align="left">decreto</td>
+<td align="left">1 days</td>
+<td align="left">42.0 days</td>
+<td align="left">66.00 days</td>
+<td align="left">1315 days</td>
+</tr>
+<tr class="even">
+<td align="left">decreto legislativo</td>
+<td align="left">15 days</td>
+<td align="left">44.5 days</td>
+<td align="left">93.25 days</td>
+<td align="left">224 days</td>
+</tr>
+<tr class="odd">
+<td align="left">decreto-ley</td>
+<td align="left">4 days</td>
+<td align="left">51.0 days</td>
+<td align="left">65.50 days</td>
+<td align="left">345 days</td>
+</tr>
+</tbody>
+</table>
 <p>En general se mantiene estable alrededor de 15 días entre la aprobación y la publicación:</p>
-<p><img src="leyes_files/figure-html/retraso-fecha-1.png" width="672" /></p>
-<p>Pasemos a ver si ahora se aprueban más disposiciones o no</p>
-<p><img src="leyes_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
-<p><img src="leyes_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<p>Hay un ligero incremento de ordenes cuando se produce una disminución de real decretos. El resto de publicaciones se publican mucho menos y no se puede estimar bien su evolución en el tiempo.</p>
+<p><img src="leyes_files/figure-html/retraso-fecha-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Aunque hay más retraso últimamente esto se debe a un colapso por mayor número de publicaciones?</p>
+<p><img src="leyes_files/figure-html/reglas-tiempo-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Cada vez se aprueban menos reglamentos, así pues el retraso no es por eso. Si miramos por tipo de legislación a lo mejor encontramos la causa:</p>
+<p><img src="leyes_files/figure-html/reglas-tiempo-tipo-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Hay un ligero incremento de ordenes cuando se produce una disminución de real decretos. El resto de publicaciones se publican mucho menos y no se puede estimar bien su evolución en el tiempo a menos que lo agrupemos por año:</p>
+<p><img src="leyes_files/figure-html/reglas-tiempo-tipo2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Ahora bien ¿se publican cada día un poco o en un solo día salen muchas leyes?</p>
+<p><img src="leyes_files/figure-html/publicacion-cantidad-fecha-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Los reales decretos se publican 1 de cada 4 días y suelen publicarse alrededor de 20. En cambio casi cada día se publican 9 ordenes. El resto de tipos de legislación no se publica ni frecuentemente ni en grandes cantidades cuando se hace.</p>
 <div id="cambios-de-gobierno" class="section level2">
 <h2>Cambios de gobierno</h2>
-<p>Muy útil esta <a href="https://es.wikipedia.org/wiki/Anexo:Presidentes_del_Gobierno_de_Espa%C3%B1a#Lista_de_presidentes_del_Gobierno">página de la wikipedia</a></p>
-<pre><code>## # A tibble: 3 x 2
-##   presidente                       n
-##   &lt;chr&gt;                        &lt;int&gt;
-## 1 José Luis Rodríguez Zapatero     1
-## 2 Mariano Rajoy Brey               4
-## 3 Pedro Sánchez Pérez-Castejón     2</code></pre>
-<pre><code>## # A tibble: 7 x 3
-## # Groups:   presidente [3]
-##   presidente                   fecha_pub  type 
-##   &lt;chr&gt;                        &lt;date&gt;     &lt;chr&gt;
-## 1 José Luis Rodríguez Zapatero 2011-11-21 end  
-## 2 Mariano Rajoy Brey           2011-12-20 start
-## 3 Mariano Rajoy Brey           2015-12-21 end  
-## 4 Mariano Rajoy Brey           2016-10-30 start
-## 5 Pedro Sánchez Pérez-Castejón 2018-06-01 start
-## 6 Mariano Rajoy Brey           2018-06-01 end  
-## 7 Pedro Sánchez Pérez-Castejón 2019-04-29 end</code></pre>
-<p>Ritmo de publicaciones</p>
-<p><img src="leyes_files/figure-html/unnamed-chunk-4-1.png" width="672" /><img src="leyes_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<p>Mirando el BOE podemos ver los cambios de presidente del gobierno. Sino es muy útil esta <a href="https://es.wikipedia.org/wiki/Anexo:Presidentes_del_Gobierno_de_Espa%C3%B1a#Lista_de_presidentes_del_Gobierno">página de la wikipedia</a>. Esto nos permite ver que se ha publicado con cada presidente (o sin presidente).</p>
+<p><img src="leyes_files/figure-html/presidente-tipo-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Parece que esté quien esté se aprueban el mismo tipo de leyes, exceptuando los decretos legislativos y los reales decretos legislativos. Tampoco se aprueban leyes orgánicas cuando no hay presidente.</p>
+<p>Si miramos los tipos de leyes a lo largo del tiempo respecto los mandatos presidenciales quizá vemos otro panorama:</p>
+<p><img src="leyes_files/figure-html/presidentes-tipo-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 
 

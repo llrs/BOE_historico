@@ -8,7 +8,8 @@ editor_options:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(cache = TRUE, echo = FALSE, error = FALSE, 
-                      warning = FALSE, message = FALSE, include = TRUE)
+                      warning = FALSE, message = FALSE, include = TRUE,
+                      fig.align = "center")
 ```
 
 No conozco mucho las diferencias entre tipos de leyes pero los diferentes tipos tienen recorridos distintos y controles diferentes, así que ver los diferentes tipos de publicaciones puede ser relevante.
@@ -157,7 +158,9 @@ leyes_retraso %>%
             n = n()) %>% 
   filter(n > 1) %>% 
   select(-n) %>% 
-  arrange(median, min, q75, max)
+  arrange(median, min, q75, max) %>% 
+  knitr::kable(row.names = FALSE, 
+               col.names = c("Tipo", "Mínimo", "Mediana", "Percentil 75", "Máxmimo"))
 ```
 
 En general se mantiene estable alrededor de 15 días entre la aprobación y la publicación:
@@ -171,13 +174,13 @@ leyes_retraso %>%
   theme_minimal() +
   theme(panel.grid.minor.x = element_blank()) +
   scale_y_continuous(breaks = seq(0, 20, by = 2), limits = c(0, NA)) +
-  scale_x_date(breaks = "1 year", expand = expansion()) +
+  scale_x_date(breaks = "1 year", date_label = "%Y", expand = expansion()) +
   labs(x = "Publicación", y = "Días de retraso", 
        title = "Estimación del tiempo de retraso entre aprobación y publicación")
 
 ```
 
-Pasemos a ver si ahora se aprueban más disposiciones o no
+Aunque hay más retraso últimamente esto se debe a un colapso por mayor número de publicaciones?
 
 ```{r reglas-tiempo}
 leyes %>% 
@@ -187,12 +190,14 @@ leyes %>%
   geom_smooth(aes(fecha_pub, n), ) +
   scale_y_continuous(expand = expansion(), limits = c(0, NA),
                      breaks = seq(0, 30, by = 2)) +
-  scale_x_date(date_breaks = "1 year", expand = expansion()) +
+  scale_x_date(date_breaks = "1 year", date_label = "%Y", expand = expansion()) +
   theme_minimal() +
   labs(title = "Disposicones sobre el reglamento por fecha", 
        y = "Disposiciones", x = element_blank())
 ```
 
+Cada vez se aprueban menos reglamentos, así pues el retraso no es por eso.
+Si miramos por tipo de legislación a lo mejor encontramos la causa:
 
 ```{r reglas-tiempo-tipo}
 date_tipo <- leyes %>% 
@@ -212,20 +217,38 @@ date_tipo %>%
   droplevels() %>% 
   ggplot(aes(fecha_pub, n, col = fct_reorder(tipo, -n, .fun = sum))) +
   geom_smooth() +
-  ggrepel::geom_text_repel(aes(label = tipo)) +
   scale_color_manual(values = colors) +
   scale_y_continuous(breaks = seq(0, 40, by = 2), expand = expansion(), 
                      limits = c(0, NA)) +
-  scale_x_date(date_breaks = "1 year", expand = expansion()) +
+  scale_x_date(date_breaks = "1 year", date_label = "%Y", expand = expansion()) +
   theme_minimal() +
   labs(x = element_blank(), y = "Publicaciones", col = "Tipo",
-       title = "Tipo de Publicaciones por fecha") +
+       title = "Tipo de publicaciones por fecha") +
   theme(panel.grid.minor.y = element_blank())
 ```
 
-El número de 
 Hay un ligero incremento de ordenes cuando se produce una disminución de real decretos. 
-El resto de publicaciones se publican mucho menos y no se puede estimar bien su evolución en el tiempo.
+El resto de publicaciones se publican mucho menos y no se puede estimar bien su evolución en el tiempo a menos que lo agrupemos por año:
+
+```{r reglas-tiempo-tipo2}
+theme_set(theme_minimal())
+
+leyes %>% 
+  group_by(year = floor_date(date, unit = "year"), tipo) %>% 
+  count(sort = TRUE) %>% 
+  ungroup() %>% 
+  ggplot() +
+  geom_tile(aes(year, fct_reorder(tipo, n, sum), fill = n)) +
+  guides(col = FALSE) +
+  scale_x_date(date_breaks = "1 year", date_labels = "%Y", 
+               expand = expansion()) +
+  labs(x = element_blank(), y = element_blank(), 
+       title = "Tipo de ley por año", fill = "Publicaciones",
+       size = "Número publicado") +
+  theme_minimal()
+```
+
+Ahora bien ¿se publican cada día un poco o en un solo día salen muchas leyes?
 
 ```{r publicacion-cantidad-fecha}
 d <- boe %>% 
@@ -239,27 +262,29 @@ date_tipo %>%
   mutate(ddays = days/d, dpub = pub/days) %>% 
   filter(pub2 != 0) %>% 
   ggplot() +
-  # geom_smooth(aes(ddays, dpub), method = "glm") +
-  # geom_abline(intercept = 0, slope = 1) +
   geom_point(aes(ddays, dpub, col = tipo), size = 3) +
   ggrepel::geom_text_repel(aes(ddays, dpub, col = tipo, label = tipo),
                             data = . %>%  filter(ddays > 0.1)) +
   scale_color_manual(values = colors) +
   scale_y_continuous(breaks = seq(0, 22, by = 2)) +
   scale_x_continuous(limits = c(0, 1), labels = scales::percent_format()) +
-  # scale_size(trans = "log10") +
   theme_minimal() +
-  labs(y = "Publicaciones por día que hay alguno publicado", x = "Días en que salen",
+  labs(y = "Publicaciones por día que hay alguna publicado", x = "Días en que salen",
        col = "Tipo disposición", title = "Modo de publicación",
        subtitle = "¿Se publican muchas de golpe?") +
   theme(legend.position = c(0.9, 0.6),
         legend.box.background = element_rect(fill = "white"))
 ```
 
+Los reales decretos se publican 1 de cada 4 días y suelen publicarse alrededor de 20. 
+En cambio casi cada día se publican 9 ordenes.
+El resto de tipos de legislación no se publica ni frecuentemente ni en grandes cantidades cuando se hace. 
 
 ## Cambios de gobierno
 
-Muy útil esta [página de la wikipedia](https://es.wikipedia.org/wiki/Anexo:Presidentes_del_Gobierno_de_Espa%C3%B1a#Lista_de_presidentes_del_Gobierno)
+Mirando el BOE podemos ver los cambios de presidente del gobierno. 
+Sino es muy útil esta [página de la wikipedia](https://es.wikipedia.org/wiki/Anexo:Presidentes_del_Gobierno_de_Espa%C3%B1a#Lista_de_presidentes_del_Gobierno). 
+Esto nos permite ver que se ha publicado con cada presidente (o sin presidente). 
 
 ```{r presidentes}
 presi <- leyes %>% 
@@ -278,41 +303,61 @@ cese <- leyes %>%
                               replacement = "\\1",
                               x = text),
          type = "end")
-presis <- rbind(presi, cese)
-
-count(presis, presidente)
-presis %>% 
-  group_by(presidente) %>% 
-  arrange(fecha_pub) %>% 
-  select(presidente, fecha_pub, type)
-# Still missing some end dates of Mariano Rajoy
+presis <- rbind(presi, cese) %>% 
+  arrange(date, presidente) %>% 
+  mutate(dates = lag(date, default = as.Date("2009-01-01"))) %>% 
+  arrange(dates) %>% 
+  filter(type == "end") %>% 
+  mutate(date = date - 1,
+         dates = dates - 1,
+         days = date - dates) %>% 
+  select(dates, date, days, presidente)
 ```
 
-Ritmo de publicaciones
 
-```{r presidentes2}
-theme_set(theme_minimal())
+```{r presidente-tipo}
+leyes_presi <- date_tipo %>% 
+  mutate(presi = case_when(
+    fecha_pub < presis$date[1] ~ presis$presidente[1],
+    fecha_pub < presis$date[2] & fecha_pub > presis$dates[2] ~ presis$presidente[2],
+    fecha_pub < presis$date[3] & fecha_pub > presis$dates[3] ~ presis$presidente[3],
+    fecha_pub < presis$date[4] & fecha_pub > presis$dates[4] ~ presis$presidente[4],
+    TRUE ~ ""
+  ))
 
-leyes %>% 
-  group_by(year = floor_date(date, unit = "year"), tipo) %>% 
-  count(sort = TRUE) %>% 
+leyes_presi %>% 
+  group_by(tipo, presi) %>% 
+  summarize(n = sum(n)) %>% 
   ungroup() %>% 
+  group_by(presi) %>% 
+  mutate(perc = n/sum(n)) %>% 
   ggplot() +
-  geom_point(aes(year, fct_reorder(tipo, n, sum), size = n, col = tipo)) +
-  guides(col = FALSE) +
-  labs(x = element_blank(), y = element_blank(), 
-       title = "Tipo de ley por año", 
-       size = "Número publicado")
-leyes %>% 
-  group_by(month = floor_date(date, unit = "month"), tipo) %>% 
-  count(sort = TRUE) %>% 
-  ungroup() %>% 
+  geom_tile(aes(presi, forcats::fct_reorder(tipo, n, .fun = sum), fill = perc)) +
+  theme_minimal() +
+  scale_fill_continuous(labels = scales::label_percent()) +
+  labs(title = "Proporción de leyes aprobadas por presidente", 
+       x = element_blank(), y = element_blank(), fill = "Porcentaje") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+Parece que esté quien esté se aprueban el mismo tipo de leyes, exceptuando los decretos legislativos y los reales decretos legislativos. 
+Tampoco se aprueban leyes orgánicas cuando no hay presidente.
+
+Si miramos los tipos de leyes a lo largo del tiempo respecto los mandatos presidenciales quizá vemos otro panorama:
+
+```{r presidentes-tipo}
+date_tipo %>% 
+  filter(tipo %in% c("orden", "real decreto")) %>% 
+  droplevels() %>% 
   ggplot() +
-  geom_point(aes(month, fct_reorder(tipo, n, sum), size = n, col = tipo)) +
-  guides(col = FALSE) +
-  labs(x = element_blank(), y = element_blank(), 
-       title = "Tipo de ley por mes", 
-       size = "Número publicado") +
-  scale_size_area(breaks = seq(0, 300, by = 50))
+  geom_rect(aes(xmin = dates, xmax = date, ymin = 0, ymax = 35, 
+                fill = presidente), alpha = 0.5, data = presis) +
+  geom_smooth(aes(fecha_pub, n, linetype = fct_reorder(tipo, -n, .fun = sum))) +
+  scale_x_date(date_breaks = "1 year", date_label = "%Y", expand = expansion()) +
+  theme_minimal() +
+  scale_fill_brewer(type = "qual", palette = "Dark2") +
+  labs(x = element_blank(), y = "Publicaciones", linetype = "Tipo",
+       title = "Tipo de publicaciones por fecha", fill = "Presidente") +
+  theme(panel.grid.minor.y = element_blank())
 ```
 
