@@ -125,6 +125,7 @@ leyes_retraso %>%
   ggplot() + 
   geom_point(aes(fct_reorder(tipo, mediana, sum), mediana, size = n, col = tipo)) +
   scale_color_manual(values = colors) +
+  scale_size(breaks = seq(0, 20000, by = 2500)) +
   guides(col = FALSE) +
   theme_minimal() +
   labs(x = element_blank(), y = "Días de retraso (mediana)",
@@ -135,19 +136,20 @@ leyes_retraso %>%
                      expand = expansion(add = c(1, 1)))
 ```
 
-Antes de seguir me gustaría comentar un par de errores del BOE `r paste(leyes_retraso$publication[leyes_retraso$retraso < 0], collapse = ", ")`.
+Antes de seguir me gustaría comentar un par de errores del BOE: `r paste(leyes_retraso$publication[leyes_retraso$retraso < 0], collapse = ", ")`.
 En el primer documento, ¡¡se ha publicado antes de aprobarse!!
 La segunda publicación hay discrepancias en el sumario respecto a la publicación y posteriormente se publicó una corrección.
 Omito las dos publicaciones a partir de ahora.
 Podemos ver que hay mucha variación según el tipo de publicación:
 
-```{r retraso-rangos, echo=FALSE, }
+```{r retraso-rangos, echo=FALSE}
 q <- function(x){
   quantile(x, probs = 0.75)
 }
 leyes_retraso %>% 
   filter(fecha_pub >= as.Date("2009/01/01")) %>%
-  filter(!is.na(retraso)) %>% 
+  filter(!is.na(retraso)) %>%
+  filter(retraso >= 0) %>% 
   ungroup() %>% 
   group_by(tipo) %>% 
   summarize(across(retraso, .fns = list(
@@ -163,11 +165,12 @@ En general se mantiene estable alrededor de 15 días entre la aprobación y la p
 ```{r retraso-fecha}
 leyes_retraso %>% 
   filter(fecha_pub >= as.Date("2009/01/01")) %>%
+  filter(retraso >= 0) %>% 
   ggplot() +
   geom_smooth(aes(date, retraso)) +
   theme_minimal() +
   theme(panel.grid.minor.x = element_blank()) +
-  ylim(c(0, NA)) +
+  scale_y_continuous(breaks = seq(0, 20, by = 2), limits = c(0, NA)) +
   scale_x_date(breaks = "1 year", expand = expansion()) +
   labs(x = "Publicación", y = "Días de retraso", 
        title = "Estimación del tiempo de retraso entre aprobación y publicación")
@@ -176,13 +179,14 @@ leyes_retraso %>%
 
 Pasemos a ver si ahora se aprueban más disposiciones o no
 
-```{r}
+```{r reglas-tiempo}
 leyes %>% 
   filter(fecha_pub >= as.Date("2009/01/01")) %>%
   count(fecha_pub) %>% 
   ggplot() +
   geom_smooth(aes(fecha_pub, n), ) +
-  scale_y_continuous(expand = expansion(), limits = c(0, NA)) +
+  scale_y_continuous(expand = expansion(), limits = c(0, NA),
+                     breaks = seq(0, 30, by = 2)) +
   scale_x_date(date_breaks = "1 year", expand = expansion()) +
   theme_minimal() +
   labs(title = "Disposicones sobre el reglamento por fecha", 
@@ -190,39 +194,74 @@ leyes %>%
 ```
 
 
-```{r}
+```{r reglas-tiempo-tipo}
 date_tipo <- leyes %>% 
   filter(fecha_pub >= as.Date("2009/01/01")) %>%
   group_by(fecha_pub) %>% 
   count(tipo) %>% 
   ungroup()
 include_tipo <- date_tipo %>% 
+  filter(fecha_pub >= as.Date("2009/01/01")) %>%
   group_by(tipo) %>% 
   count(sort = TRUE) %>% 
   filter(n > 100) %>% 
-  pull(tipo)
+  pull(tipo) %>% 
+  droplevels()
 date_tipo %>% 
   filter(tipo %in% include_tipo) %>% 
   droplevels() %>% 
-  ggplot() +
-  geom_smooth(aes(fecha_pub, n, col = tipo)) +
+  ggplot(aes(fecha_pub, n, col = fct_reorder(tipo, -n, .fun = sum))) +
+  geom_smooth() +
+  ggrepel::geom_text_repel(aes(label = tipo)) +
   scale_color_manual(values = colors) +
-  scale_y_continuous(expand = expansion(), limits = c(0, NA)) +
+  scale_y_continuous(breaks = seq(0, 40, by = 2), expand = expansion(), 
+                     limits = c(0, NA)) +
   scale_x_date(date_breaks = "1 year", expand = expansion()) +
   theme_minimal() +
-  labs(x = element_blank(), y = "Publicaciones", 
-       title = "Tipo de Publicaciones por fecha")
+  labs(x = element_blank(), y = "Publicaciones", col = "Tipo",
+       title = "Tipo de Publicaciones por fecha") +
+  theme(panel.grid.minor.y = element_blank())
 ```
 
+El número de 
 Hay un ligero incremento de ordenes cuando se produce una disminución de real decretos. 
 El resto de publicaciones se publican mucho menos y no se puede estimar bien su evolución en el tiempo.
+
+```{r publicacion-cantidad-fecha}
+d <- boe %>% 
+  as_tibble() %>% 
+  ungroup() %>% 
+  summarize(d = length(unique(date))) %>% 
+  pull(d)
+date_tipo %>% 
+  group_by(tipo) %>% 
+  summarize(days = n(), pub = sum(n), pub2 = median(n)) %>% 
+  mutate(ddays = days/d, dpub = pub/days) %>% 
+  filter(pub2 != 0) %>% 
+  ggplot() +
+  # geom_smooth(aes(ddays, dpub), method = "glm") +
+  # geom_abline(intercept = 0, slope = 1) +
+  geom_point(aes(ddays, dpub, col = tipo), size = 3) +
+  ggrepel::geom_text_repel(aes(ddays, dpub, col = tipo, label = tipo),
+                            data = . %>%  filter(ddays > 0.1)) +
+  scale_color_manual(values = colors) +
+  scale_y_continuous(breaks = seq(0, 22, by = 2)) +
+  scale_x_continuous(limits = c(0, 1), labels = scales::percent_format()) +
+  # scale_size(trans = "log10") +
+  theme_minimal() +
+  labs(y = "Publicaciones por día que hay alguno publicado", x = "Días en que salen",
+       col = "Tipo disposición", title = "Modo de publicación",
+       subtitle = "¿Se publican muchas de golpe?") +
+  theme(legend.position = c(0.9, 0.6),
+        legend.box.background = element_rect(fill = "white"))
+```
 
 
 ## Cambios de gobierno
 
 Muy útil esta [página de la wikipedia](https://es.wikipedia.org/wiki/Anexo:Presidentes_del_Gobierno_de_Espa%C3%B1a#Lista_de_presidentes_del_Gobierno)
 
-```{r}
+```{r presidentes}
 presi <- leyes %>% 
   filter(department == "JEFATURA DEL ESTADO",
          epigraf %in% c("Nombramientos")) %>% 
@@ -251,7 +290,7 @@ presis %>%
 
 Ritmo de publicaciones
 
-```{r }
+```{r presidentes2}
 theme_set(theme_minimal())
 
 leyes %>% 
