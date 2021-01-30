@@ -38,6 +38,8 @@ navbar:
           href: insolvencia.html
         - text: "Crisis"
           href: crisis.html
+        - text: "Legislación"
+          href: leyes.html
   right:
     - icon: fa-twitter
       href: https://twitter.com/intent/tweet?text=Gracias%20%40Lluis_Revilla%20por%20esta%20herramienta%20%40Boletines_es
