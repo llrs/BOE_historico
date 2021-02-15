@@ -101,7 +101,7 @@ DT::datatable(s, filter = 'top', options = list(
 ), escape = FALSE)
 ```
 
-```{r twitter}
+```{r twitter, eval=as.logical(Sys.getenv("BOE_TWITTER")), include=FALSE}
 library("rtweet")
 nacionalizaciones <- sum(grepl(x = sumario_hoy$text, 
             pattern = "concede la nacionalidad española"))

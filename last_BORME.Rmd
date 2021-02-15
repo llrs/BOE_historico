@@ -77,7 +77,7 @@ DT::datatable(s, filter = 'top', options = list(
 
 ```
 
-```{r twitter}
+```{r twitter, eval=as.logical(Sys.getenv("BOE_TWITTER"))}
 library("rtweet")
 
 files2 <- "docs/last_BORME_files/figure-html/graphics-1.png"
