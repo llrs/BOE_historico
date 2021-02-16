@@ -13,20 +13,28 @@
 
 <title>Lo último del BORME</title>
 
-<script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.6.6/header-attrs.js"></script>
+<script src="site_libs/jquery-3.5.1/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
-<script src="site_libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
+<script src="site_libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
 <link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="site_libs/datatables-binding-0.16/datatables.js"></script>
+<script src="site_libs/datatables-binding-0.17/datatables.js"></script>
 <link href="site_libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="site_libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="site_libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
@@ -34,8 +42,8 @@
 <script src="site_libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
 <link href="site_libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
 <script src="site_libs/selectize-0.12.0/selectize.min.js"></script>
-<link href="site_libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
-<script src="site_libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="site_libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-57101844-6"></script>
@@ -76,11 +84,6 @@
     </style>
 
 <style type="text/css">code{white-space: pre;}</style>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -93,32 +96,7 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+
 
 
 
@@ -128,10 +106,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -148,40 +122,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -209,7 +156,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -221,7 +168,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -232,10 +179,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -247,7 +207,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -325,7 +284,7 @@ $(document).ready(function () {
       <ul class="nav navbar-nav">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-newspaper"></span>
+    <span class="fas fa-newspaper"></span>
      
     Último
      
@@ -342,7 +301,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-eye"></span>
+    <span class="fas fa-eye"></span>
      
     Vista de pájaro
      
@@ -359,7 +318,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-chart-bar"></span>
+    <span class="fas fa-chart-bar"></span>
      
     Analysis
      
@@ -393,13 +352,13 @@ $(document).ready(function () {
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://twitter.com/intent/tweet?text=Gracias%20%40Lluis_Revilla%20por%20esta%20herramienta%20%40Boletines_es">
-    <span class="fa fa-twitter"></span>
+    <span class="fas fa-twitter"></span>
      
   </a>
 </li>
 <li>
   <a href="https://github.com/llrs/BOE_historico/">
-    <span class="fa fa-github"></span>
+    <span class="fas fa-github"></span>
      
   </a>
 </li>
@@ -408,7 +367,7 @@ $(document).ready(function () {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -425,8 +384,8 @@ $(document).ready(function () {
 <div id="tabla-de-publicaciones" class="section level1">
 <h1>Tabla de publicaciones</h1>
 <p>Aquí está la tabla completa con enlaces a las publicaciones:</p>
-<div id="htmlwidget-d0f8cb48212f6d7a4436" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d0f8cb48212f6d7a4436">{"x":{"filter":"top","filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46"],["SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales"],["Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","CONVOCATORIAS DE JUNTAS","CONVOCATORIAS DE JUNTAS","CONVOCATORIAS DE JUNTAS","CONVOCATORIAS DE JUNTAS","CONVOCATORIAS DE JUNTAS","CONVOCATORIAS DE JUNTAS","CONVOCATORIAS DE JUNTAS","CONVOCATORIAS DE JUNTAS","CONVOCATORIAS DE JUNTAS","FUSIONES Y ABSORCIONES DE EMPRESAS","FUSIONES Y ABSORCIONES DE EMPRESAS","ESCISIÓN DE EMPRESAS","CESIÓN DE EMPRESAS","TRANSFORMACIÓN DE EMPRESAS","TRANSFORMACIÓN DE EMPRESAS","TRANSFORMACIÓN DE EMPRESAS","REDUCCIÓN DE CAPITAL","REDUCCIÓN DE CAPITAL","OTROS ANUNCIOS Y AVISOS LEGALES"],["ALBACETE","ALICANTE","BADAJOZ","ILLES BALEARS","BARCELONA","CÁDIZ","CASTELLÓN","CIUDAD REAL","CÓRDOBA","A CORUÑA","GIRONA","GRANADA","JAÉN","LEÓN","LLEIDA","LA RIOJA","MADRID","MÁLAGA","MURCIA","NAVARRA","ASTURIAS","LAS PALMAS","SEGOVIA","TARRAGONA","VALLADOLID","ZARAGOZA","ÍNDICE ALFABÉTICO DE SOCIEDADES","ALTER CAPITAL &amp; LOGISTICS, S.A.","BIRDIE VINOS DEL MUNDO, S.L.","ELECTRODOMESTICS MARTÍNEZ, S.A.","ESTACIONES DE SERVICIO MOTRIL, SOCIEDAD ANÓNIMA","GRUPO IGUALMEQUISA, S.A.","IBEXLAN, S.A.","MULTIBROKER INTERNACIONAL, CORREDURÍA DE SEGUROS Y REASEGUROS, S.A.","TORNILLERÍA DEBA, S.A.L.","URUBAMBA, S.A.","MERRY HAT, S.L.U. \r\n(SOCIEDAD ABSORBENTE) \r\nH. PREPPY BRAND STORES, S.L.U. \r\n(SOCIEDAD ABSORBIDA)","SMART DEVELOPMENT 56, S.L.U. \r\n(SOCIEDAD ABSORBENTE) \r\nSMART LOCAL ENTERPRISE, S.L.U. \r\n(SOCIEDAD ABSORBIDA)","INTEGRA LEX ABOGADOS Y ASESORES TRIBUTARIOS, S.L.P. \r\n(SOCIEDAD PARCIALMENTE ESCINDIDA) \r\nCIEN TALADITOS, S.L. \r\n(SOCIEDAD BENEFICIARIA)","EMPRESA MUNICIPAL DE PROMOCIÓN Y DESARROLLO LOCAL DE REINOSA, S.A. \r\n(EN LIQUIDACIÓN)\r\n(SOCIEDAD CEDENTE) \r\nEXCMO. AYUNTAMIENTO DE REINOSA\r\n(ENTIDAD CESIONARIA)","CAPITAL ENERGY HOLCO, S.L.U.","IBERMON INSTALACIONES INDUSTRIALES, S.A.","SOCIEDAD AGRARIA DE TRANSFORMACIÓN EGUZKI 603 NA","CIMENTACIONES Y FERRALLA, S.A.","GLOBALIA BROKER SERVICES,\r\nSOCIEDAD ANÓNIMA UNIPERSONAL","REGISTRO MERCANTIL CENTRAL"],["<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-02.pdf>BORME-A-2021-31-02<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-03.pdf>BORME-A-2021-31-03<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-06.pdf>BORME-A-2021-31-06<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-07.pdf>BORME-A-2021-31-07<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-08.pdf>BORME-A-2021-31-08<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-11.pdf>BORME-A-2021-31-11<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-12.pdf>BORME-A-2021-31-12<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-13.pdf>BORME-A-2021-31-13<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-14.pdf>BORME-A-2021-31-14<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-15.pdf>BORME-A-2021-31-15<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-17.pdf>BORME-A-2021-31-17<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-18.pdf>BORME-A-2021-31-18<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-23.pdf>BORME-A-2021-31-23<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-24.pdf>BORME-A-2021-31-24<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-25.pdf>BORME-A-2021-31-25<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-26.pdf>BORME-A-2021-31-26<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-28.pdf>BORME-A-2021-31-28<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-29.pdf>BORME-A-2021-31-29<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-30.pdf>BORME-A-2021-31-30<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-31.pdf>BORME-A-2021-31-31<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-33.pdf>BORME-A-2021-31-33<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-35.pdf>BORME-A-2021-31-35<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-40.pdf>BORME-A-2021-31-40<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-43.pdf>BORME-A-2021-31-43<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-47.pdf>BORME-A-2021-31-47<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-50.pdf>BORME-A-2021-31-50<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-99.pdf>BORME-A-2021-31-99<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-570.pdf>BORME-C-2021-570<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-571.pdf>BORME-C-2021-571<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-572.pdf>BORME-C-2021-572<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-573.pdf>BORME-C-2021-573<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-574.pdf>BORME-C-2021-574<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-575.pdf>BORME-C-2021-575<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-576.pdf>BORME-C-2021-576<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-577.pdf>BORME-C-2021-577<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-578.pdf>BORME-C-2021-578<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-579.pdf>BORME-C-2021-579<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-580.pdf>BORME-C-2021-580<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-581.pdf>BORME-C-2021-581<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-582.pdf>BORME-C-2021-582<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-583.pdf>BORME-C-2021-583<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-584.pdf>BORME-C-2021-584<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-585.pdf>BORME-C-2021-585<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-586.pdf>BORME-C-2021-586<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-587.pdf>BORME-C-2021-587<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-588.pdf>BORME-C-2021-588<\/a>"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Sección<\/th>\n      <th>Emisor<\/th>\n      <th>Texto<\/th>\n      <th>Link<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"autoWidth":true,"order":[],"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}],"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-bf0d311a71270cd15f10" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-bf0d311a71270cd15f10">{"x":{"filter":"top","filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46"],["SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN PRIMERA. Empresarios","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales","SECCIÓN SEGUNDA. Anuncios y avisos legales"],["Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","Actos inscritos","CONVOCATORIAS DE JUNTAS","CONVOCATORIAS DE JUNTAS","CONVOCATORIAS DE JUNTAS","CONVOCATORIAS DE JUNTAS","CONVOCATORIAS DE JUNTAS","CONVOCATORIAS DE JUNTAS","CONVOCATORIAS DE JUNTAS","CONVOCATORIAS DE JUNTAS","CONVOCATORIAS DE JUNTAS","FUSIONES Y ABSORCIONES DE EMPRESAS","FUSIONES Y ABSORCIONES DE EMPRESAS","ESCISIÓN DE EMPRESAS","CESIÓN DE EMPRESAS","TRANSFORMACIÓN DE EMPRESAS","TRANSFORMACIÓN DE EMPRESAS","TRANSFORMACIÓN DE EMPRESAS","REDUCCIÓN DE CAPITAL","REDUCCIÓN DE CAPITAL","OTROS ANUNCIOS Y AVISOS LEGALES"],["ALBACETE","ALICANTE","BADAJOZ","ILLES BALEARS","BARCELONA","CÁDIZ","CASTELLÓN","CIUDAD REAL","CÓRDOBA","A CORUÑA","GIRONA","GRANADA","JAÉN","LEÓN","LLEIDA","LA RIOJA","MADRID","MÁLAGA","MURCIA","NAVARRA","ASTURIAS","LAS PALMAS","SEGOVIA","TARRAGONA","VALLADOLID","ZARAGOZA","ÍNDICE ALFABÉTICO DE SOCIEDADES","ALTER CAPITAL &amp; LOGISTICS, S.A.","BIRDIE VINOS DEL MUNDO, S.L.","ELECTRODOMESTICS MARTÍNEZ, S.A.","ESTACIONES DE SERVICIO MOTRIL, SOCIEDAD ANÓNIMA","GRUPO IGUALMEQUISA, S.A.","IBEXLAN, S.A.","MULTIBROKER INTERNACIONAL, CORREDURÍA DE SEGUROS Y REASEGUROS, S.A.","TORNILLERÍA DEBA, S.A.L.","URUBAMBA, S.A.","MERRY HAT, S.L.U. \r\n(SOCIEDAD ABSORBENTE) \r\nH. PREPPY BRAND STORES, S.L.U. \r\n(SOCIEDAD ABSORBIDA)","SMART DEVELOPMENT 56, S.L.U. \r\n(SOCIEDAD ABSORBENTE) \r\nSMART LOCAL ENTERPRISE, S.L.U. \r\n(SOCIEDAD ABSORBIDA)","INTEGRA LEX ABOGADOS Y ASESORES TRIBUTARIOS, S.L.P. \r\n(SOCIEDAD PARCIALMENTE ESCINDIDA) \r\nCIEN TALADITOS, S.L. \r\n(SOCIEDAD BENEFICIARIA)","EMPRESA MUNICIPAL DE PROMOCIÓN Y DESARROLLO LOCAL DE REINOSA, S.A. \r\n(EN LIQUIDACIÓN)\r\n(SOCIEDAD CEDENTE) \r\nEXCMO. AYUNTAMIENTO DE REINOSA\r\n(ENTIDAD CESIONARIA)","CAPITAL ENERGY HOLCO, S.L.U.","IBERMON INSTALACIONES INDUSTRIALES, S.A.","SOCIEDAD AGRARIA DE TRANSFORMACIÓN EGUZKI 603 NA","CIMENTACIONES Y FERRALLA, S.A.","GLOBALIA BROKER SERVICES,\r\nSOCIEDAD ANÓNIMA UNIPERSONAL","REGISTRO MERCANTIL CENTRAL"],["<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-02.pdf>BORME-A-2021-31-02<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-03.pdf>BORME-A-2021-31-03<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-06.pdf>BORME-A-2021-31-06<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-07.pdf>BORME-A-2021-31-07<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-08.pdf>BORME-A-2021-31-08<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-11.pdf>BORME-A-2021-31-11<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-12.pdf>BORME-A-2021-31-12<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-13.pdf>BORME-A-2021-31-13<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-14.pdf>BORME-A-2021-31-14<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-15.pdf>BORME-A-2021-31-15<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-17.pdf>BORME-A-2021-31-17<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-18.pdf>BORME-A-2021-31-18<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-23.pdf>BORME-A-2021-31-23<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-24.pdf>BORME-A-2021-31-24<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-25.pdf>BORME-A-2021-31-25<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-26.pdf>BORME-A-2021-31-26<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-28.pdf>BORME-A-2021-31-28<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-29.pdf>BORME-A-2021-31-29<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-30.pdf>BORME-A-2021-31-30<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-31.pdf>BORME-A-2021-31-31<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-33.pdf>BORME-A-2021-31-33<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-35.pdf>BORME-A-2021-31-35<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-40.pdf>BORME-A-2021-31-40<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-43.pdf>BORME-A-2021-31-43<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-47.pdf>BORME-A-2021-31-47<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-50.pdf>BORME-A-2021-31-50<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-A-2021-31-99.pdf>BORME-A-2021-31-99<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-570.pdf>BORME-C-2021-570<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-571.pdf>BORME-C-2021-571<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-572.pdf>BORME-C-2021-572<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-573.pdf>BORME-C-2021-573<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-574.pdf>BORME-C-2021-574<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-575.pdf>BORME-C-2021-575<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-576.pdf>BORME-C-2021-576<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-577.pdf>BORME-C-2021-577<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-578.pdf>BORME-C-2021-578<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-579.pdf>BORME-C-2021-579<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-580.pdf>BORME-C-2021-580<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-581.pdf>BORME-C-2021-581<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-582.pdf>BORME-C-2021-582<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-583.pdf>BORME-C-2021-583<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-584.pdf>BORME-C-2021-584<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-585.pdf>BORME-C-2021-585<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-586.pdf>BORME-C-2021-586<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-587.pdf>BORME-C-2021-587<\/a>","<a href=https://boe.es/borme/dias/2021/02/16/pdfs/BORME-C-2021-588.pdf>BORME-C-2021-588<\/a>"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Sección<\/th>\n      <th>Emisor<\/th>\n      <th>Texto<\/th>\n      <th>Link<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"autoWidth":true,"order":[],"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}],"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
 </div>
 
 
@@ -456,7 +415,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
