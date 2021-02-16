@@ -25,7 +25,8 @@ dff <- fread("../BOE_sumario/till_20191117.csv", sep = "\t", quote = FALSE)
 dff <- dff %>% 
     lazy_dt() %>% 
     mutate(date = as.Date(date, format = "%d/%m/%Y"),
-           weekday = weekdays(date))
+           weekday = weekdays(date)) %>% 
+    as_tibble()
 ```
 
 ```{r com}

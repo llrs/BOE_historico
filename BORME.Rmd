@@ -42,6 +42,7 @@ Sin mucho detalle (por el momento) solo algunas graficas sobre que se publica.
 
 ```{r seccion, echo=FALSE}
 df2 <- dff %>% 
+    as_tibble() %>% 
     group_by(date) %>% 
     count(section) %>% 
     ungroup()
@@ -58,6 +59,7 @@ df2 %>%
 
 # The section with higher prevalence
 dff %>% 
+    as_tibble() %>% 
     group_by(date, section) %>% 
     summarise(n = n()) %>% 
     mutate(publications = sum(n), ratio = n/publications) %>% 
@@ -77,6 +79,7 @@ dff %>%
 
 # An increase of a predominant section
 dff %>% 
+    as_tibble() %>% 
     group_by(date, section) %>% 
     summarise(n = n()) %>% 
     mutate(publications = sum(n), ratio = n/publications) %>% 
@@ -98,6 +101,7 @@ El emisor es el segundo desglose de la publicación.
 
 ```{r departamento, echo=FALSE}
 df3 <- dff %>% 
+    as_tibble() %>% 
     group_by(date) %>% 
     count(emisor) %>% 
     ungroup()
@@ -132,6 +136,7 @@ df3 %>%
 
 # The section with higher prevalence
 dff %>% 
+    as_tibble() %>% 
     group_by(date, emisor) %>% 
     summarise(n = n()) %>% 
     mutate(publications = sum(n), ratio = n/publications) %>% 
@@ -150,6 +155,7 @@ dff %>%
 
 # An increase of a predominant department on 2013
 dff %>% 
+    as_tibble() %>% 
     group_by(date, emisor) %>% 
     summarise(n = n()) %>% 
     mutate(publications = sum(n), ratio = n/publications) %>% 
@@ -170,6 +176,7 @@ Aquí podemos ver que se informa más a menudo en el BORME:
  
 ```{r barplot, echo=FALSE}
 dff %>% 
+    as_tibble() %>% 
     mutate(department = tolower(emisor)) %>% 
     group_by(department) %>% 
     count(sort = TRUE) %>% 
@@ -192,11 +199,13 @@ Podemos buscar algunas palabras del breve resumen:
 
 ```{r texto, echo=FALSE}
 text_search <- dff %>% 
+    as_tibble() %>% 
     group_by(text) %>% 
     count(sort = TRUE) %>% 
     ungroup() %>% 
     as_tibble()
 text_search %>%
+    as_tibble() %>% 
     filter(text != "ÍNDICE ALFABÉTICO DE SOCIEDADES") %>% 
     top_n(52) %>% 
     ggplot() +

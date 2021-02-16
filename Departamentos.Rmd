@@ -21,7 +21,8 @@ suppressPackageStartupMessages(library("ggplot2"))
 suppressPackageStartupMessages(library("patchwork"))
 df <- dff %>% 
     lazy_dt() %>% 
-    mutate(date = as.Date(date, format = "%d/%m/%Y"))
+    mutate(date = as.Date(date, format = "%d/%m/%Y")) %>% 
+    as_tibble()
 ```
 
 Una cosa que me sorprendió mucho al mirar el resumen de 10 años del BOE fue el incremento en publicaciones hacia 2017.

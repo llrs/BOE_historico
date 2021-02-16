@@ -75,8 +75,9 @@ Sin mucho detalle (por el momento) solo algunas graficas sobre que se publica, e
 
 ```{r seccion, echo=FALSE}
 df2 <- dff %>% 
-    group_by(date) %>% 
-    count(section)
+  as_tibble() %>% 
+  group_by(date) %>% 
+  count(section)
 
 df2 %>%
     as_tibble() %>% 
@@ -138,6 +139,7 @@ El departamento es el segundo desglose de la publicación. Cada departamento tie
 ```{r departamento, echo=FALSE}
 
 df3 <- dff %>% 
+    as_tibble() %>% 
     group_by(date) %>% 
     count(department)
 
@@ -206,6 +208,7 @@ Aquí podemos ver que las universidades son el tercer departamento que más publ
  
 ```{r barplot, echo=FALSE, fig.height=50, fig.width=40}
 dff %>% 
+    as_tibble() %>% 
     mutate(department = tolower(department)) %>% 
     group_by(department) %>% 
     count(sort = TRUE) %>% 
@@ -215,7 +218,7 @@ dff %>%
     scale_y_continuous(expand = c(0, 0)) +
     coord_flip() +
     guides(fill = FALSE) +
-    labs(x = "Departamento", y= "log10(Publicaciones)") +
+    labs(x = "Departamento", y = "log10(Publicaciones)") +
     scale_fill_viridis_c(option = "A", direction = -1) +
     labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
     theme_bw() +
@@ -229,6 +232,7 @@ Los epígrafes solo los tienen las disposiciones, pero no especifica que [nivel]
 
 ```{r epigrafe, echo=FALSE}
 df4 <- dff %>% 
+    as_tibble() %>% 
     group_by(date) %>% 
     filter(epigraf != "") %>% 
     count(epigraf)
@@ -288,6 +292,7 @@ Podemos buscar algunas palabras del breve resumen:
 
 ```{r texto, echo=FALSE}
 text_search <- dff %>% 
+  as_tibble() %>% 
   mutate(Orden = grepl("^Orden ", text, ignore.case = FALSE),
          Marco = grepl("marco", text, ignore.case = FALSE),
          Errores = grepl("error", text, ignore.case = FALSE),
@@ -310,10 +315,10 @@ Por último las páginas publicadas:
 
 ```{r pages, echo=FALSE}
 dff %>% 
+    as_tibble() %>% 
     group_by(sumario_code, weekday) %>% 
     summarise(n = n(), total = sum(pages)) %>% 
     ungroup() %>% 
-    as_tibble() %>% 
     ggplot() +
     geom_jitter(aes(fct_relevel(weekday, "lunes", "martes", "miércoles", 
                                 "jueves", "viernes", "sábado", "domingo"), 
@@ -323,6 +328,7 @@ dff %>%
     theme_bw()
 
 dff %>% 
+  as_tibble() %>% 
   group_by(sumario_code) %>% 
   summarise(n = n(), total = sum(pages), 
             median = median(pages)) %>% 
@@ -346,6 +352,7 @@ Cada publicación tiene un código que va incrementando según el tipo de public
 
 ```{r nbo, echo=FALSE}
 coding <- dff %>% 
+  as_tibble() %>% 
   mutate(Number = as.numeric(str_extract(publication, "[0-9]+$")),
          Year = as.numeric(str_extract(str_extract(publication, "-[0-9]+-"), "[0-9]+")),
          Publication = if_else(is.na(epigraf), "anuncio", "disposición")) %>% 

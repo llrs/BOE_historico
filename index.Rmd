@@ -52,7 +52,7 @@ dff <- dff %>%
     mutate(date = as.Date(date, format = "%Y-%m-%d"),
            weekday = weekdays(date))
 df <- dff %>% 
-  lazy_dt() %>% 
+  as_tibble() %>% 
   group_by(date) %>% 
   count() %>% 
   ungroup() %>% 
