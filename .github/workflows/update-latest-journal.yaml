@@ -3,10 +3,10 @@
 
 
 on:
-  push:
-    branches:
-      - main
-      - master
+  # push:
+  #   branches:
+  #     - main
+  #     - master
   schedule:
     # Desired timezone: "Europe/Madrid" # In case it is used, from https://unix.stackexchange.com/a/504044/260613
     - cron:  '30 6 * * *' # Every day at 7:40 Spain time, be aware of time changes
@@ -38,7 +38,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-2-${{ hashFiles('.github/depends.Rds') }}
           restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-2-
       - name: Install dependencies
-        # if: ${{ failure() }} # https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstepsif
+        if: ${{ failure() }} # https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstepsif
         run: |
           Rscript -e "install.packages(c('remotes'));
           remotes::install_github('rOpenSpain/BOE');
