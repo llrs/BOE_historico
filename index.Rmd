@@ -12,14 +12,21 @@ Hace uso de [este programa](https://www.github.com/llrs/BOE) que a partir de los
 suppressPackageStartupMessages(library("data.table"))
 suppressPackageStartupMessages(library("dtplyr"))
 suppressPackageStartupMessages(library("dplyr"))
-dff <- fread("../BOE_sumario/till_20191117.csv", sep = "\t", quote = FALSE)
+con <- DBI::dbConnect(RSQLite::SQLite(),
+                      dbname = "sumarios.sqlite") 
+dff <- con %>% 
+  tbl("sumario") %>% 
+  collect() %>% 
+  mutate(date = as.Date(date),
+         weekday = weekdays(date))
+DBI::dbDisconnect(con)
 suppressPackageStartupMessages(library("ggplot2"))
 suppressPackageStartupMessages(library("patchwork"))
 df <- dff %>% 
     lazy_dt() %>% 
     group_by(sumario_code) %>% 
-    summarise(ratio = sum(is.na(epigraf))/sum(!is.na(epigraf)),
-              ratio2 = sum(!is.na(epigraf))/sum(is.na(epigraf)),
+    summarise(ratio = sum(is.na(epigraph))/sum(!is.na(epigraph)),
+              ratio2 = sum(!is.na(epigraph))/sum(is.na(epigraph)),
               n = n(),
               date = as.Date(unique(date), format = "%d/%m/%Y")) %>% 
     select(date, ratio, ratio2, n) %>% 

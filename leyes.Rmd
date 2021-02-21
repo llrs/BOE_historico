@@ -26,19 +26,19 @@ library("forcats", warn.conflicts = FALSE)
 library("tidyr", warn.conflicts = FALSE)
 library("stringr", warn.conflicts = FALSE)
 
-    
-boe <- fread("../BOE_sumario/till_20191117.csv", sep = "\t", quote = FALSE) %>% 
-    lazy_dt() %>% 
-    mutate(date = as.Date(date, format = "%d/%m/%Y"),
-           weekday = weekdays(date))
-
+boe <- DBI::dbConnect(RSQLite::SQLite(),
+                      dbname = "sumarios.sqlite") %>% 
+  tbl("sumario") %>% 
+  collect() %>% 
+  mutate(date = as.Date(date),
+         weekday = weekdays(date))
 ```
 
 
 ```{r leyes}
 preleyes <- boe %>% 
   as_tibble() %>% 
-  filter(!is.na(epigraf)) %>% 
+  filter(!is.na(epigraph)) %>% 
   filter(str_detect(text, "^Resoluci[oó]n", negate = TRUE),
          str_detect(text, "^Anuncio", negate = TRUE),
          str_detect(text, "^Recurso", negate = TRUE),
@@ -288,40 +288,42 @@ Esto nos permite ver que se ha publicado con cada presidente (o sin presidente).
 
 ```{r presidentes}
 presi <- leyes %>% 
-  filter(department == "JEFATURA DEL ESTADO",
-         epigraf %in% c("Nombramientos")) %>% 
+  filter(departament == "JEFATURA DEL ESTADO",
+         epigraph %in% c("Nombramientos")) %>% 
   filter(str_detect(text, "Presidente del Gobierno")) %>% 
   mutate(presidente = gsub(pattern = ".+ se nombra Presidente del Gobierno a don (.+)\\.", 
                                 replacement = "\\1",
                                 x = text),
-         type = "start")
+         type = "start") %>% 
+  select(date, presidente, type)
 cese <- leyes %>% 
-  filter(department == "PRESIDENCIA DEL GOBIERNO",
-         epigraf == "Ceses") %>% 
+  filter(departament == "PRESIDENCIA DEL GOBIERNO",
+         epigraph == "Ceses") %>% 
   filter(str_detect(text, "cese de (.+?) como Presidente del Gobierno\\.")) %>% 
   mutate(presidente = gsub(pattern = ".+ cese de don (.+) como Presidente del Gobierno\\.", 
                               replacement = "\\1",
                               x = text),
-         type = "end")
+         type = "end") %>% 
+  select(date, presidente, type)
 presis <- rbind(presi, cese) %>% 
   arrange(date, presidente) %>% 
-  mutate(dates = lag(date, default = as.Date("2009-01-01"))) %>% 
-  arrange(dates) %>% 
-  filter(type == "end") %>% 
-  mutate(date = date - 1,
-         dates = dates - 1,
-         days = date - dates) %>% 
-  select(dates, date, days, presidente)
+  mutate(presidencia = cumsum(type == "start") + 1) %>% 
+  group_by(presidencia) %>% 
+  pivot_wider(names_from = type, values_from = date) %>% 
+  mutate(start = if_else(is.na(start), as.Date("2009-01-01"), start),
+         end = if_else(is.na(end), as.Date("2021-02-21"), end))
+  
 ```
 
 
 ```{r presidente-tipo}
 leyes_presi <- date_tipo %>% 
   mutate(presi = case_when(
-    fecha_pub < presis$date[1] ~ presis$presidente[1],
-    fecha_pub < presis$date[2] & fecha_pub > presis$dates[2] ~ presis$presidente[2],
-    fecha_pub < presis$date[3] & fecha_pub > presis$dates[3] ~ presis$presidente[3],
-    fecha_pub < presis$date[4] & fecha_pub > presis$dates[4] ~ presis$presidente[4],
+    fecha_pub < presis$end[1] ~ presis$presidente[1],
+    fecha_pub < presis$end[2] & fecha_pub > presis$start[2] ~ presis$presidente[2],
+    fecha_pub < presis$end[3] & fecha_pub > presis$start[3] ~ presis$presidente[3],
+    fecha_pub < presis$end[4] & fecha_pub > presis$start[4] ~ presis$presidente[4],
+    fecha_pub < presis$end[5] & fecha_pub > presis$start[5] ~ presis$presidente[5],
     TRUE ~ ""
   ))
 
@@ -350,7 +352,7 @@ date_tipo %>%
   filter(tipo %in% c("orden", "real decreto")) %>% 
   droplevels() %>% 
   ggplot() +
-  geom_rect(aes(xmin = dates, xmax = date, ymin = 0, ymax = 35, 
+  geom_rect(aes(xmin = start, xmax = end, ymin = 0, ymax = 35, 
                 fill = presidente), alpha = 0.5, data = presis) +
   geom_smooth(aes(fecha_pub, n, linetype = fct_reorder(tipo, -n, .fun = sum))) +
   scale_x_date(date_breaks = "1 year", date_label = "%Y", expand = expansion()) +

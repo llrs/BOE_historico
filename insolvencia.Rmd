@@ -21,11 +21,12 @@ library("forcats", warn.conflicts = FALSE)
 library("tidyr", warn.conflicts = FALSE)
 library("stringr", warn.conflicts = FALSE)
 
-dff <- fread("../BORME/till_20191221.csv", sep = "\t")
-dff <- dff %>% 
-    lazy_dt() %>% 
-    mutate(date = as.Date(date, format = "%Y-%m-%d"),
-           weekday = weekdays(date))
+dff <- DBI::dbConnect(RSQLite::SQLite(),
+                      dbname = "sumarios.sqlite") %>% 
+  tbl("sumario") %>% 
+  collect() %>% 
+  mutate(date = as.Date(date),
+         weekday = weekdays(date))
 ```
 
 Mirando el BORME me sorprendieron las insolvencias.

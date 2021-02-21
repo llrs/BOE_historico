@@ -8,7 +8,7 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(cache = TRUE, collapse = TRUE, warning = FALSE)
+knitr::opts_chunk$set(cache = TRUE, collapse = TRUE, warning = FALSE, message = FALSE)
 ```
 
 ```{r explorar, eval=FALSE, include=FALSE}
@@ -32,8 +32,6 @@ write.table(dff, "../BOE_sumario/till_20191117.csv", sep = "\t", quote = FALSE, 
 
 # Preparación
 
-Aquí cargo las librerías que me ayudan a visualizar los datos. 
-También cargamos los datos del BOE del 2009/01/01 (fecha a partir de la cual lo que figure en la página web tiene validez legal) hasta el 2019/11/17:
 
 ```{r cargar, echo=FALSE}
 library("data.table", warn.conflicts = FALSE)
@@ -46,14 +44,18 @@ library("forcats", warn.conflicts = FALSE)
 library("tidyr", warn.conflicts = FALSE)
 library("stringr", warn.conflicts = FALSE)
 
-dff <- fread("../BOE_sumario/till_20191117.csv", sep = "\t", quote = FALSE)
-dff <- dff %>% 
-    lazy_dt() %>% 
-    mutate(date = as.Date(date, format = "%d/%m/%Y"),
+
+con <- DBI::dbConnect(RSQLite::SQLite(),
+                      dbname = "sumarios.sqlite")
+dff <- con %>% 
+    tbl("sumario") %>% 
+    collect() %>% 
+    mutate(date = as.Date(date),
            weekday = weekdays(date))
+DBI::dbDisconnect(con)
 ```
 
-Por último le añadimos el día de la semana.
+Cargamos los datos del BOE del 2009/01/01 (fecha a partir de la cual lo que figure en la página web tiene validez legal) hasta el `r max(dff$date)`.
 
 # Sección
 
@@ -141,13 +143,13 @@ El departamento es el segundo desglose de la publicación. Cada departamento tie
 df3 <- dff %>% 
     as_tibble() %>% 
     group_by(date) %>% 
-    count(department)
+    count(departament)
 
 
 df3 %>%
     as_tibble() %>% 
     ggplot() +
-    geom_point(aes(date, n, col = department), alpha = 0.2) +
+    geom_point(aes(date, n, col = departament), alpha = 0.2) +
     scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
     scale_y_continuous(expand = c(0, 10)) +
     labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
@@ -158,9 +160,9 @@ df3 %>%
 # From what section are the dates with more publications?
 # Juzgados de primera instancia e instruccion
 df3 %>%
-    as_tibble() %>% 
+    ungroup() %>% 
     ggplot() +
-    geom_point(aes(date, n, col = department), alpha = 0.7) +
+    geom_point(aes(date, n, col = departament), alpha = 0.7) +
     gghighlight(n > 150, use_direct_label = FALSE) +
     scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
     scale_y_continuous(expand = c(0, 10)) +
@@ -171,7 +173,7 @@ df3 %>%
 
 # The section with higher prevalence
 dff %>% 
-    group_by(date, department) %>% 
+    group_by(date, departament) %>% 
     summarise(n = n()) %>% 
     mutate(publications = sum(n), ratio = n/publications) %>% 
     ungroup() %>% 
@@ -179,7 +181,7 @@ dff %>%
     filter(ratio == max(ratio)) %>% 
     as_tibble() %>% 
     ggplot() +
-    geom_point(aes(date, publications, col = department, alpha = ratio)) +
+    geom_point(aes(date, publications, col = departament, alpha = ratio)) +
     scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
     scale_y_continuous(expand = c(0, 10)) +
     guides(col = FALSE) +
@@ -187,15 +189,15 @@ dff %>%
     labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
     theme_bw()
 
-# An increase of a predominant department on 2013
+# An increase of a predominant departament on 2013
 dff %>% 
-    group_by(date, department) %>% 
+    group_by(date, departament) %>% 
     summarise(n = n()) %>% 
     mutate(publications = sum(n), ratio = n/publications) %>% 
     ungroup() %>% 
     as_tibble() %>% 
     ggplot() +
-    geom_point(aes(date, ratio, col = department)) +
+    geom_point(aes(date, ratio, col = departament)) +
     scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
     scale_y_continuous(expand = c(0, 0)) +
     guides(col = FALSE) +
@@ -209,12 +211,12 @@ Aquí podemos ver que las universidades son el tercer departamento que más publ
 ```{r barplot, echo=FALSE, fig.height=50, fig.width=40}
 dff %>% 
     as_tibble() %>% 
-    mutate(department = tolower(department)) %>% 
-    group_by(department) %>% 
+    mutate(departament = tolower(departament)) %>% 
+    group_by(departament) %>% 
     count(sort = TRUE) %>% 
     as_tibble() %>% 
     ggplot() +
-    geom_col(aes(y= log10(n), x = fct_reorder(department, n), fill = log10(n))) +
+    geom_col(aes(y= log10(n), x = fct_reorder(departament, n), fill = log10(n))) +
     scale_y_continuous(expand = c(0, 0)) +
     coord_flip() +
     guides(fill = FALSE) +
@@ -230,18 +232,18 @@ dff %>%
 
 Los epígrafes solo los tienen las disposiciones, pero no especifica que [nivel](https://dudaslegislativas.com/tipos-de-leyes-y-jerarquia-normativa/) tienen las disposiciones.
 
-```{r epigrafe, echo=FALSE}
+```{r epigraphe, echo=FALSE}
 df4 <- dff %>% 
     as_tibble() %>% 
     group_by(date) %>% 
-    filter(epigraf != "") %>% 
-    count(epigraf)
+    filter(epigraph != "") %>% 
+    count(epigraph)
 
 
 df4 %>%
     as_tibble() %>% 
     ggplot() +
-    geom_point(aes(date, n, col = epigraf), alpha = 0.2) +
+    geom_point(aes(date, n, col = epigraph), alpha = 0.2) +
     scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
     scale_y_continuous(expand = c(0, 10)) +
     labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
@@ -251,8 +253,8 @@ df4 %>%
 
 # The section with higher prevalence
 dff %>% 
-    filter(epigraf != "") %>% 
-    group_by(date, epigraf) %>% 
+    filter(epigraph != "") %>% 
+    group_by(date, epigraph) %>% 
     summarise(n = n()) %>% 
     mutate(publications = sum(n), ratio = n/publications) %>% 
     ungroup() %>% 
@@ -260,7 +262,7 @@ dff %>%
     filter(ratio == max(ratio)) %>% 
     as_tibble() %>% 
     ggplot() +
-    geom_point(aes(date, publications, col = epigraf, alpha = ratio)) +
+    geom_point(aes(date, publications, col = epigraph, alpha = ratio)) +
     scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
     scale_y_continuous(expand = c(0, 10)) +
     guides(col = FALSE) +
@@ -269,14 +271,14 @@ dff %>%
     theme_bw()
 
 dff %>% 
-    filter(epigraf != "") %>% 
-    group_by(date, epigraf) %>% 
+    filter(epigraph != "") %>% 
+    group_by(date, epigraph) %>% 
     summarise(n = n()) %>% 
     mutate(publications = sum(n), ratio = n/publications) %>% 
     ungroup() %>% 
     as_tibble() %>% 
     ggplot() +
-    geom_point(aes(date, ratio, col = epigraf)) +
+    geom_point(aes(date, ratio, col = epigraph)) +
     scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
     scale_y_continuous(expand = c(0, 0)) +
     guides(col = FALSE) +
@@ -355,16 +357,17 @@ coding <- dff %>%
   as_tibble() %>% 
   mutate(Number = as.numeric(str_extract(publication, "[0-9]+$")),
          Year = as.numeric(str_extract(str_extract(publication, "-[0-9]+-"), "[0-9]+")),
-         Publication = if_else(is.na(epigraf), "anuncio", "disposición")) %>% 
-  arrange(Year, Number)
+         Publication = if_else(is.na(epigraph), "anuncio", "disposición")) %>% 
+  arrange(Year, Number) %>% 
+  select(sumario_nbo, Number, Year, publication, Publication) %>% 
+  mutate(sumario_nbo = as.numeric(sumario_nbo))
 
 coding %>% 
   filter(Publication == "anuncio") %>% 
-  as_tibble() %>% 
   ggplot() +
   geom_path(aes(sumario_nbo, Number, group = Year, col = Year)) +
   labs(y = "Número anuncios", x = "Número sumarios", col = "Año") +
-  theme_bw()
+  theme_bw() 
 
 coding %>% 
   filter(Publication == "disposición") %>% 

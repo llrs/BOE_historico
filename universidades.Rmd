@@ -18,17 +18,15 @@ library("gghighlight", warn.conflicts = FALSE)
 library("forcats", warn.conflicts = FALSE)
 library("stringr", warn.conflicts = FALSE)
 
-dff <- fread("../BOE_sumario/till_20191117.csv", sep = "\t", quote = FALSE)
-dff <- dff %>% 
-    lazy_dt() %>% 
-    mutate(date = as.Date(date, format = "%d/%m/%Y"),
+con <- DBI::dbConnect(RSQLite::SQLite(),
+                      dbname = "sumarios.sqlite")
+unis <- con %>% 
+    tbl("sumario") %>% 
+    filter(departament == "UNIVERSIDADES") %>% 
+    collect() %>% 
+    mutate(date = as.Date(date),
            weekday = weekdays(date))
-```
-
-```{r universities}
-unis <- dff %>% 
-    filter(department == "UNIVERSIDADES") %>% 
-    as_tibble()
+DBI::dbDisconnect(con)
 ```
 
 Trabajamos solo con las universidades.
@@ -38,18 +36,18 @@ Trabajamos solo con las universidades.
 
 ```{r disposiciones}
 unis %>% 
-  filter(!is.na(epigraf)) %>% 
-  count(epigraf, sort = TRUE) %>% 
+  filter(!is.na(epigraph)) %>% 
+  count(epigraph, sort = TRUE) %>% 
   top_n(7, n) %>% 
   ggplot() +
-  geom_col(aes(fct_reorder(epigraf, -n), n)) +
+  geom_col(aes(fct_reorder(epigraph, -n), n)) +
   labs(x = element_blank(), y = "Disposiciones") +
   labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 unis %>% 
-  filter(!is.na(epigraf)) %>% 
+  filter(!is.na(epigraph)) %>% 
   count(section_number, sort = TRUE) %>% 
   ggplot() +
   geom_col(aes(fct_reorder(section_number, -n), n)) +
@@ -65,7 +63,7 @@ Cómo no hay epígrafe empezamos directamente por sección y luego el texto:
 
 ```{r anuncios}
 unis %>% 
-  filter(is.na(epigraf)) %>% 
+  filter(is.na(epigraph)) %>% 
   count(section_number, sort = TRUE) %>% 
   mutate(s = str_extract(section_number, "[AB]\\. .+$")) %>% 
   ggplot() +
@@ -77,15 +75,15 @@ unis %>%
 
 extr <- unis %>% 
     mutate(extravio = str_detect(text, "extrav[íi]o del? (un )?t[íi]tulo"),
-           epigraf = if_else(is.na(epigraf), "Anuncio", epigraf))
+           epigraph = if_else(is.na(epigraph), "Anuncio", epigraph))
 extr %>% 
-  group_by(epigraf) %>% 
+  group_by(epigraph) %>% 
   count(extravio, sort = TRUE) %>%
   ungroup() %>% 
   top_n(11, n) %>% 
   ungroup() %>% 
   ggplot() +
-  geom_col(aes(fct_reorder(epigraf, -n), n, fill = extravio)) + 
+  geom_col(aes(fct_reorder(epigraph, -n), n, fill = extravio)) + 
   scale_fill_manual(values = c("TRUE" = "red", "FALSE" = "darkgray")) +
   labs(fill = "Extravío títulos", x = element_blank(), y = "Publicaciones",
        caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +

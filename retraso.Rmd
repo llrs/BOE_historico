@@ -21,11 +21,15 @@ library("gghighlight", warn.conflicts = FALSE)
 library("forcats", warn.conflicts = FALSE)
 library("stringr", warn.conflicts = FALSE)
 
-dff <- fread("../BOE_sumario/till_20191117.csv", sep = "\t", quote = FALSE)
-dff <- dff %>% 
-    lazy_dt() %>% 
-    mutate(date = as.Date(date, format = "%d/%m/%Y"),
+
+con <- DBI::dbConnect(RSQLite::SQLite(),
+                      dbname = "sumarios.sqlite")
+dff <- con %>% 
+    tbl("sumario") %>% 
+    collect() %>% 
+    mutate(date = as.Date(date),
            weekday = weekdays(date))
+DBI::dbDisconnect(con)
 ```
 
 # Días de retraso
@@ -40,7 +44,7 @@ s <- c("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio",
 months_s <- paste0("(", s,")", collapse = "|")
 
 r <- dff %>% 
-    filter(!is.na(epigraf)) %>% 
+    filter(!is.na(epigraph)) %>% 
     mutate(Public = str_detect(text, months_s)) %>% 
     as_tibble()
 
@@ -113,7 +117,7 @@ Sorprendentemente hay publicaciones que se han aprobado el mismo día:
 
 ```{r mismo}
 filter(r3, df == 0) %>% 
-    select(date, section_number, department, epigraf, text) %>% 
+    select(date, section_number, departament, epigraph, text) %>% 
     knitr::kable(knitr.kable.NA = '', format = "html", align = "c", 
                  row.names = TRUE, 
                  col.names = c("Fecha", "Sección", 

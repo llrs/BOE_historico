@@ -378,8 +378,7 @@ $(document).ready(function () {
 
 <div id="preparación" class="section level1">
 <h1>Preparación</h1>
-<p>Aquí cargo las librerías que me ayudan a visualizar los datos. También cargamos los datos del BOE del 2009/01/01 (fecha a partir de la cual lo que figure en la página web tiene validez legal) hasta el 2019/11/17:</p>
-<p>Por último le añadimos el día de la semana.</p>
+<p>Cargamos los datos del BOE del 2009/01/01 (fecha a partir de la cual lo que figure en la página web tiene validez legal) hasta el 2021-02-20.</p>
 </div>
 <div id="sección" class="section level1">
 <h1>Sección</h1>
@@ -424,19 +423,18 @@ $(document).ready(function () {
 <div id="epígrafe" class="section level1">
 <h1>Epígrafe</h1>
 <p>Los epígrafes solo los tienen las disposiciones, pero no especifica que <a href="https://dudaslegislativas.com/tipos-de-leyes-y-jerarquia-normativa/">nivel</a> tienen las disposiciones.</p>
-<p><img src="BOE_files/figure-html/epigrafe-1.png" width="672" /><img src="BOE_files/figure-html/epigrafe-2.png" width="672" /><img src="BOE_files/figure-html/epigrafe-3.png" width="672" /></p>
+<p><img src="BOE_files/figure-html/epigraphe-1.png" width="672" /><img src="BOE_files/figure-html/epigraphe-2.png" width="672" /><img src="BOE_files/figure-html/epigraphe-3.png" width="672" /></p>
 </div>
 <div id="texto" class="section level1">
 <h1>Texto</h1>
 <p>Podemos buscar algunas palabras del breve resumen:</p>
 <pre><code>##      Marco    Errores      Orden    Anuncio Resolucion 
-##       7231      12966      28885     196849     218416</code></pre>
+##       7562      13973      30588     214445     237260</code></pre>
 <p>Parece que hay muchas publicaciones relacionadas con resoluciones y anuncio.</p>
 </div>
 <div id="número-de-páginas" class="section level1">
 <h1>Número de páginas</h1>
 <p>Por último las páginas publicadas:</p>
-<pre><code>## `summarise()` has grouped output by &#39;sumario_code&#39;. You can override using the `.groups` argument.</code></pre>
 <p><img src="BOE_files/figure-html/pages-1.png" width="672" /><img src="BOE_files/figure-html/pages-2.png" width="672" /></p>
 <p>En el último gráfico la línea indica la relación 1 página por publicación.</p>
 </div>

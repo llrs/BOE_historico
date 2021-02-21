@@ -20,17 +20,21 @@ library("gghighlight", warn.conflicts = FALSE)
 library("forcats", warn.conflicts = FALSE)
 library("stringr", warn.conflicts = FALSE)
 
-dff <- fread("../BOE_sumario/till_20191117.csv", sep = "\t", quote = FALSE)
-dff <- dff %>% 
-    lazy_dt() %>% 
-    mutate(date = as.Date(date, format = "%d/%m/%Y"),
+
+con <- DBI::dbConnect(RSQLite::SQLite(),
+                      dbname = "sumarios.sqlite")
+dff <- con %>% 
+    tbl("sumario") %>% 
+    collect() %>% 
+    mutate(date = as.Date(date),
            weekday = weekdays(date))
+DBI::dbDisconnect(con)
 ```
 
 
 ```{r buscando}
 cn2 <- dff %>% 
-    filter(epigraf == "Nacionalidad española") %>% 
+    filter(epigraph == "Nacionalidad española") %>% 
     as_tibble()
 cn <- cn2 %>% 
     mutate(CN = str_detect(text, "carta de naturaleza"))
@@ -73,7 +77,7 @@ Para terminar con un poquito más de contenido. Los otros epígrafes sobre la "N
 ```{r kable, }
 d <- cn %>% 
     filter(!CN) %>% 
-    select(date, section, section_number, department, text, publication)
+    select(date, section, section_number, departament, text, publication)
 
 knitr::kable(d, format = "html", row.names = TRUE, align = "c", 
              col.names = c("Fecha", "Sección", "Texto sección", "Departamento", 

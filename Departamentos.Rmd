@@ -16,13 +16,18 @@ knitr::opts_chunk$set(echo = FALSE, cache = TRUE, message = FALSE, warning = FAL
 suppressPackageStartupMessages(library("data.table"))
 suppressPackageStartupMessages(library("dtplyr"))
 suppressPackageStartupMessages(library("dplyr"))
-dff <- fread("../BOE_sumario/till_20191117.csv", sep = "\t", quote = FALSE)
+
+con <- DBI::dbConnect(RSQLite::SQLite(),
+                      dbname = "sumarios.sqlite")
+df <- con %>% 
+    tbl("sumario") %>% 
+    collect() %>% 
+    mutate(date = as.Date(date),
+           weekday = weekdays(date))
+DBI::dbDisconnect(con)
 suppressPackageStartupMessages(library("ggplot2"))
 suppressPackageStartupMessages(library("patchwork"))
-df <- dff %>% 
-    lazy_dt() %>% 
-    mutate(date = as.Date(date, format = "%d/%m/%Y")) %>% 
-    as_tibble()
+
 ```
 
 Una cosa que me sorprendió mucho al mirar el resumen de 10 años del BOE fue el incremento en publicaciones hacia 2017.
@@ -36,11 +41,11 @@ Esto es debido a las sentencias de los juzgados de lo mercantil.
 ```{r deprt, fig.width=10, fig.asp=1}
 deprt <- df %>% 
     group_by(sumario_code, date) %>% 
-    count(department)
+    count(departament)
 
 mercantil <- df %>% 
     filter(section == "4",
-           department == "JUZGADOS DE LO MERCANTIL") %>% 
+           departament == "JUZGADOS DE LO MERCANTIL") %>% 
     mutate(text = trimws(toupper(text))) %>% 
     mutate(text = gsub("\\.$", "", text))
 
@@ -117,7 +122,7 @@ Esto es debido como veremos a los juzgados de primera instancia:
 ```{r primera}
 primera <- df %>% 
     filter(section == "4",
-           department == "JUZGADOS DE PRIMERA INSTANCIA E INSTRUCCIÓN") %>% 
+           departament == "JUZGADOS DE PRIMERA INSTANCIA E INSTRUCCIÓN") %>% 
     mutate(text = trimws(toupper(text))) %>% 
     mutate(text = gsub("\\.$", "", text))
 
@@ -203,7 +208,7 @@ ord <- df %>%
     filter(section == "4") %>% 
     as_tibble()
 militar <- ord %>% 
-    filter(department %in% c("TRIBUNALES MILITARES TERRITORIALES", 
+    filter(departament %in% c("TRIBUNALES MILITARES TERRITORIALES", 
                              "JUZGADOS TOGADOS MILITARES")) %>% 
     mutate(text = trimws(toupper(text))) %>% 
     mutate(text = gsub("\\.$", "", text)) %>% 
@@ -218,11 +223,11 @@ militar <- ord %>%
 militar %>% 
     mutate(year_s = as.character(year(date))) %>% 
     group_by(year_s) %>% 
-    count(department) %>% 
+    count(departament) %>% 
     ungroup() %>% 
     as_tibble() %>% 
     ggplot() +
-    geom_col(aes(year_s, n, fill = department)) +
+    geom_col(aes(year_s, n, fill = departament)) +
     labs(x = element_blank(), y = "Anuncios", fill = "Departamento",
          caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
     theme_bw() 
@@ -230,7 +235,7 @@ militar %>%
 
 ```{r militia2, fig.width=10, fig.asp=1}
 militar %>% 
-    filter(department == "TRIBUNALES MILITARES TERRITORIALES") %>% 
+    filter(departament == "TRIBUNALES MILITARES TERRITORIALES") %>% 
     mutate(year_s = as.character(year(date))) %>% 
     group_by(year_s) %>% 
     count(text) %>% 
@@ -249,7 +254,7 @@ Los tribunales militares territoriales incluyen edictos.
 
 ```{r milita3, fig.width=10, fig.asp=1}
 militar %>% 
-    filter(department == "JUZGADOS TOGADOS MILITARES") %>% 
+    filter(departament == "JUZGADOS TOGADOS MILITARES") %>% 
     mutate(year_s = as.character(year(date))) %>% 
     group_by(year_s) %>% 
     count(text) %>% 
