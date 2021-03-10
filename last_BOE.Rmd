@@ -21,12 +21,14 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, error = FA
 today <- Sys.Date()
 library("BOE")
 sumario_hoy <- try(retrieve_sumario(today), silent = TRUE)
-ts <- table(gsub(pattern = "BOE-([AB])-.*", 
-                 replacement = "\\1", sumario_hoy$publication))
+tipo <- gsub(pattern = "BOE-([AB])-.*", 
+     replacement = "\\1", sumario_hoy$publication)
+ts <- table(tipo)
 anuncios <- ifelse("B" %in% names(ts), ts[["B"]], 0)
 ```
 
 Esta página web contiene el último sumario del BOE publicado el `r today` con `r nrow(sumario_hoy)` publicaciones, de las cuales `r ts[["A"]]` son disposiciones.
+En total suman `r sum(sumario_hoy$pages)` páginas, `r sum(sumario_hoy$pages[tipo == "A"])` de las disposiciones. 
 
 # Resumen gráfico de las disposiciones
 
