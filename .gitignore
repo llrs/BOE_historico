@@ -9,5 +9,6 @@ BOE_files/
 *_files/
 !docs/*_files/
 *.html
+*.sqlite
 !docs/*.html
 docs/README.html

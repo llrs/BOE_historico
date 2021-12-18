@@ -58,7 +58,7 @@ freqs %>%
   # geom_text(stat = "stratum", aes(label = after_stat(stratum))) +
   ggfittext::geom_fit_text(mapping = aes(label = after_stat(stratum)), 
                            stat = "stratum", min.size = 1) +
-  guides(fill = FALSE) +
+  guides(fill = "none") +
   theme_void() +
   labs(title = paste("Disposiciones publicadas el", today),
        caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado\nAutor: @Lluis_Revilla")
@@ -78,7 +78,7 @@ freqs %>%
   geom_stratum(fill = "white", color = "darkgrey") +
   ggfittext::geom_fit_text(mapping = aes(label = after_stat(stratum)), 
                            stat = "stratum", min.size = 1) +
-  guides(fill = FALSE) +
+  guides(fill = "none") +
   theme_void() +
   labs(title = paste("Anuncios publicados el", today),
          caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado\nAutor: @Lluis_Revilla")
