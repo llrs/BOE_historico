@@ -23,7 +23,7 @@ library("stringr", warn.conflicts = FALSE)
 
 
 con <- DBI::dbConnect(RSQLite::SQLite(),
-                      dbname = "sumarios.sqlite")
+                      dbname = "boes.sqlite")
 dff <- con %>% 
     tbl("sumario") %>% 
     collect() %>% 

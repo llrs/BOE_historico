@@ -13,8 +13,7 @@
 
 <title>Tipo de leyes</title>
 
-<script src="site_libs/header-attrs-2.6.6/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -89,6 +88,7 @@ if (window.hljs) {
 
 
 
+
 <style type = "text/css">
 .main-container {
   max-width: 940px;
@@ -109,6 +109,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -261,7 +264,7 @@ $(document).ready(function () {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -271,8 +274,8 @@ $(document).ready(function () {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa-newspaper"></span>
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-newspaper"></span>
      
     Último
      
@@ -288,8 +291,8 @@ $(document).ready(function () {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa-eye"></span>
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-eye"></span>
      
     Vista de pájaro
      
@@ -305,8 +308,8 @@ $(document).ready(function () {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa-chart-bar"></span>
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-chart-bar"></span>
      
     Analysis
      
@@ -340,13 +343,13 @@ $(document).ready(function () {
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://twitter.com/intent/tweet?text=Gracias%20%40Lluis_Revilla%20por%20esta%20herramienta%20%40Boletines_es">
-    <span class="fas fa-twitter"></span>
+    <span class="fa fa-twitter"></span>
      
   </a>
 </li>
 <li>
   <a href="https://github.com/llrs/BOE_historico/">
-    <span class="fas fa-github"></span>
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -394,7 +397,7 @@ $(document).ready(function () {
 <td align="left">real decreto</td>
 <td align="left">0 days</td>
 <td align="left">1.0 days</td>
-<td align="left">19.00 days</td>
+<td align="left">18.00 days</td>
 <td align="left">209 days</td>
 </tr>
 <tr class="odd">
@@ -415,14 +418,14 @@ $(document).ready(function () {
 <td align="left">instrucción</td>
 <td align="left">2 days</td>
 <td align="left">5.0 days</td>
-<td align="left">8.25 days</td>
+<td align="left">9.00 days</td>
 <td align="left">51 days</td>
 </tr>
 <tr class="even">
 <td align="left">orden</td>
 <td align="left">0 days</td>
 <td align="left">11.0 days</td>
-<td align="left">17.00 days</td>
+<td align="left">16.00 days</td>
 <td align="left">388 days</td>
 </tr>
 <tr class="odd">
@@ -440,53 +443,60 @@ $(document).ready(function () {
 <td align="left">68 days</td>
 </tr>
 <tr class="odd">
+<td align="left">decreto foral legislativo</td>
+<td align="left">13 days</td>
+<td align="left">25.0 days</td>
+<td align="left">47.50 days</td>
+<td align="left">106 days</td>
+</tr>
+<tr class="even">
 <td align="left">orden foral</td>
 <td align="left">8 days</td>
 <td align="left">27.0 days</td>
 <td align="left">27.50 days</td>
 <td align="left">29 days</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">ley</td>
 <td align="left">1 days</td>
 <td align="left">29.0 days</td>
 <td align="left">46.00 days</td>
 <td align="left">700 days</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">decreto ley</td>
 <td align="left">30 days</td>
 <td align="left">37.5 days</td>
 <td align="left">41.25 days</td>
 <td align="left">45 days</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">decreto-ley foral</td>
 <td align="left">15 days</td>
-<td align="left">40.0 days</td>
-<td align="left">48.50 days</td>
+<td align="left">41.0 days</td>
+<td align="left">51.25 days</td>
 <td align="left">83 days</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">decreto</td>
 <td align="left">1 days</td>
-<td align="left">42.0 days</td>
-<td align="left">66.00 days</td>
+<td align="left">43.0 days</td>
+<td align="left">68.00 days</td>
 <td align="left">1315 days</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">decreto legislativo</td>
 <td align="left">15 days</td>
 <td align="left">43.0 days</td>
 <td align="left">77.75 days</td>
 <td align="left">224 days</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">decreto-ley</td>
 <td align="left">4 days</td>
-<td align="left">48.0 days</td>
-<td align="left">60.50 days</td>
-<td align="left">345 days</td>
+<td align="left">51.0 days</td>
+<td align="left">66.00 days</td>
+<td align="left">389 days</td>
 </tr>
 </tbody>
 </table>

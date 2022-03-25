@@ -13,8 +13,7 @@
 
 <title>Tiempo entre decreto y publicación</title>
 
-<script src="site_libs/header-attrs-2.6.6/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -91,6 +90,7 @@ if (window.hljs) {
 
 
 
+
 <style type = "text/css">
 .main-container {
   max-width: 940px;
@@ -111,6 +111,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -263,7 +266,7 @@ $(document).ready(function () {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -273,8 +276,8 @@ $(document).ready(function () {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa-newspaper"></span>
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-newspaper"></span>
      
     Último
      
@@ -290,8 +293,8 @@ $(document).ready(function () {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa-eye"></span>
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-eye"></span>
      
     Vista de pájaro
      
@@ -307,8 +310,8 @@ $(document).ready(function () {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa-chart-bar"></span>
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-chart-bar"></span>
      
     Analysis
      
@@ -342,13 +345,13 @@ $(document).ready(function () {
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://twitter.com/intent/tweet?text=Gracias%20%40Lluis_Revilla%20por%20esta%20herramienta%20%40Boletines_es">
-    <span class="fas fa-twitter"></span>
+    <span class="fa fa-twitter"></span>
      
   </a>
 </li>
 <li>
   <a href="https://github.com/llrs/BOE_historico/">
-    <span class="fas fa-github"></span>
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -375,10 +378,11 @@ $(document).ready(function () {
 ## [2] &quot;Instrumento de Ratificación del Convenio Civil sobre la Corrupción (número 174 del Consejo de Europa) hecho en Estrasburgo el cuatro de noviembre de mil novecientos noventa y nueve.&quot;                                                                                                                                                                      
 ## [3] &quot;Conflicto positivo de competencia n.º 6862-2012, contra la decisión del Gobierno Vasco de fecha indeterminada por la que acuerda que los trabajadores del sector público vasco cobren la paga extraordinaria de diciembre de 2012, \&quot;así como respecto a las actuaciones o disposiciones que apliquen este criterio\&quot;.&quot;                                     
 ## [4] &quot;Conflicto positivo de competencia n.º 6862-2012, contra la Decisión del Gobierno Vasco, de fecha indeterminada, por la que acuerda que los trabajadores del sector público vasco cobren la paga extraordinaria de diciembre de 2012, \&quot;así como respecto a las actuaciones o disposiciones que apliquen este criterio\&quot;.&quot;                                   
-## [5] &quot;Intercambio de Cartas constitutivo de Acuerdo Administrativo Internacional entre el Reino de España y el Organismo Internacional de Energía Atómica (OIEA) para la celebración de un Taller Internacional sobre Cultura de la Seguridad Física Nuclear, del 29 de febrero al 4 de marzo de 2016, hecho en Viena el 20 de octubre y 24 de noviembre de 2015.&quot;</code></pre>
+## [5] &quot;Intercambio de Cartas constitutivo de Acuerdo Administrativo Internacional entre el Reino de España y el Organismo Internacional de Energía Atómica (OIEA) para la celebración de un Taller Internacional sobre Cultura de la Seguridad Física Nuclear, del 29 de febrero al 4 de marzo de 2016, hecho en Viena el 20 de octubre y 24 de noviembre de 2015.&quot;
+## [6] &quot;Orden INT/242/2021, de 11, de marzo, por la que se dispone el cese del Teniente General don Juan Luis Pérez Martín en el Mando de la Jefatura Fiscal y de Fronteras.&quot;</code></pre>
 <p>Hay una publicación del 30 de marzo de 2010 que por fecha pone “el tres de mayo de dos mil dos”! y otras dos que no se sabe el día que se tomaron y una con demasiadas fechas como para saber con exactitud que pasó.</p>
 <p>También hay publicaciones que han tardado mucho en salir, o que hacen referencia a fechas muy anteriores (más de un año) :</p>
-<p>Hay unas 1186 publicaciones donde las que la diferencia es de más de un año, algunas porque hay varias fechas (error mío), otras están bien, se aprueban en 2019 cosas de 2007 o similares.</p>
+<p>Hay unas 1281 publicaciones donde las que la diferencia es de más de un año, algunas porque hay varias fechas (error mío), otras están bien, se aprueban en 2019 cosas de 2007 o similares.</p>
 <p>Sorprendentemente hay publicaciones que se han aprobado el mismo día:</p>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
@@ -2268,6 +2272,46 @@ Medidas excepcionales
 </td>
 <td style="text-align:center;">
 Orden PCM/1237/2020, de 22 de diciembre, por la que se publica el Acuerdo del Consejo de Ministros de 22 de diciembre de 2020, por el que se establecen medidas excepcionales para limitar la propagación y el contagio por el COVID-19, mediante la limitación de los vuelos directos y buques de pasaje entre Reino Unido y los aeropuertos y puertos españoles.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+93
+</td>
+<td style="text-align:center;">
+2021-04-29
+</td>
+<td style="text-align:center;">
+I. Disposiciones generales
+</td>
+<td style="text-align:center;">
+TRIBUNAL CONSTITUCIONAL
+</td>
+<td style="text-align:center;">
+Recursos de inconstitucionalidad
+</td>
+<td style="text-align:center;">
+Recurso de inconstitucionalidad n.º 1200-2021, contra el artículo 88 de la Ley de la Generalitat de Cataluña 5/2020, de 29 de abril, de medidas fiscales, financieras, administrativas y del sector público y de creación del impuesto sobre las instalaciones que inciden en el medio ambiente.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+94
+</td>
+<td style="text-align:center;">
+2021-12-23
+</td>
+<td style="text-align:center;">
+I. Disposiciones generales
+</td>
+<td style="text-align:center;">
+JEFATURA DEL ESTADO
+</td>
+<td style="text-align:center;">
+Medidas urgentes
+</td>
+<td style="text-align:center;">
+Real Decreto-ley 30/2021, de 23 de diciembre, por el que se adoptan medidas urgentes de prevención y contención para hacer frente a la crisis sanitaria ocasionada por la COVID-19.
 </td>
 </tr>
 </tbody>

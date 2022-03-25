@@ -25,13 +25,14 @@ library("ggplot2", warn.conflicts = FALSE)
 library("forcats", warn.conflicts = FALSE)
 library("tidyr", warn.conflicts = FALSE)
 library("stringr", warn.conflicts = FALSE)
-
-boe <- DBI::dbConnect(RSQLite::SQLite(),
-                      dbname = "sumarios.sqlite") %>% 
+con <- DBI::dbConnect(RSQLite::SQLite(),
+                      dbname = "boes.sqlite")
+boe <- con |> 
   tbl("sumario") %>% 
   collect() %>% 
   mutate(date = as.Date(date),
          weekday = weekdays(date))
+DBI::dbDisconnect(con)
 ```
 
 
@@ -127,7 +128,7 @@ leyes_retraso %>%
   geom_point(aes(fct_reorder(tipo, mediana, sum), mediana, size = n, col = tipo)) +
   scale_color_manual(values = colors) +
   scale_size(breaks = seq(0, 20000, by = 2500)) +
-  guides(col = FALSE) +
+  guides(col = "none") +
   theme_minimal() +
   labs(x = element_blank(), y = "Días de retraso (mediana)",
        title = "Retraso medio entre aprobación y publicación de la normativa",
@@ -239,7 +240,7 @@ leyes %>%
   ungroup() %>% 
   ggplot() +
   geom_tile(aes(year, fct_reorder(tipo, n, sum), fill = n)) +
-  guides(col = FALSE) +
+  guides(col = "none") +
   scale_x_date(date_breaks = "1 year", date_labels = "%Y", 
                expand = expansion()) +
   labs(x = element_blank(), y = element_blank(), 
