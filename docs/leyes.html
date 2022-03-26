@@ -13,6 +13,7 @@
 
 <title>Tipo de leyes</title>
 
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -367,15 +368,42 @@ $(document).ready(function () {
 </div>
 
 
-<p>No conozco mucho las diferencias entre tipos de leyes pero los diferentes tipos tienen recorridos distintos y controles diferentes, así que ver los diferentes tipos de publicaciones puede ser relevante. También creo que puede ser interés si hay más retraso en la publicación de cierto tipo de reglamento o si en ciertas épocas se publica más otro tipo de normativa.</p>
-<p>Aquí podemos ver todas las normas publicadas en el BOE desde el 2009 hasta la fecha de recolección de datos según la fecha de aprobación y la fecha de publicación en el BOE.</p>
+<p>No conozco mucho las diferencias entre tipos de leyes pero los
+diferentes tipos tienen recorridos distintos y controles diferentes, así
+que ver los diferentes tipos de publicaciones puede ser relevante.
+También creo que puede ser interés si hay más retraso en la publicación
+de cierto tipo de reglamento o si en ciertas épocas se publica más otro
+tipo de normativa.</p>
+<p>Aquí podemos ver todas las normas publicadas en el BOE desde el 2009
+hasta la fecha de recolección de datos según la fecha de aprobación y la
+fecha de publicación en el BOE.</p>
 <p><img src="leyes_files/figure-html/publicaciones-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Hay un grupo de normativas que han tardado mucho en publicarse. Algunas leyes se transfirieron del País Vasco al BOE mucho más tarde, Pero <a href="https://www.boe.es/buscar/doc.php?id=BOE-A-2009-20287">otras</a> son acuerdos que han tardado mucho. Si hacemos un zoom en las que se han aprobado sede 2009 podemos ver mejor que se han publicado casi todo muy pronto:</p>
+<p>Hay un grupo de normativas que han tardado mucho en publicarse.
+Algunas leyes se transfirieron del País Vasco al BOE mucho más tarde,
+Pero <a
+href="https://www.boe.es/buscar/doc.php?id=BOE-A-2009-20287">otras</a>
+son acuerdos que han tardado mucho. Si hacemos un zoom en las que se han
+aprobado sede 2009 podemos ver mejor que se han publicado casi todo muy
+pronto:</p>
 <p><img src="leyes_files/figure-html/publicaciones-zoom-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Si agrupamos por rango de ley podemos observar si hay alguna tendencia. También he recortado las que no aparecen más de 5 veces en todo el conjunto.</p>
+<p>Si agrupamos por rango de ley podemos observar si hay alguna
+tendencia. También he recortado las que no aparecen más de 5 veces en
+todo el conjunto.</p>
 <p><img src="leyes_files/figure-html/retraso-medio-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Antes de seguir me gustaría comentar un par de errores del BOE: BOE-A-2009-20666, BOE-A-2011-1183. En el primer documento, ¡¡se ha publicado antes de aprobarse!! La segunda publicación hay discrepancias en el sumario respecto a la publicación y posteriormente se publicó una corrección. Omito las dos publicaciones a partir de ahora. Podemos ver que hay mucha variación según el tipo de publicación:</p>
+<p>Antes de seguir me gustaría comentar un par de errores del BOE:
+BOE-A-2009-20666, BOE-A-2011-1183. En el primer documento, ¡¡se ha
+publicado antes de aprobarse!! La segunda publicación hay discrepancias
+en el sumario respecto a la publicación y posteriormente se publicó una
+corrección. Omito las dos publicaciones a partir de ahora. Podemos ver
+que hay mucha variación según el tipo de publicación:</p>
 <table>
+<colgroup>
+<col width="38%" />
+<col width="11%" />
+<col width="14%" />
+<col width="19%" />
+<col width="14%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="left">Tipo</th>
@@ -500,23 +528,42 @@ $(document).ready(function () {
 </tr>
 </tbody>
 </table>
-<p>En general se mantiene estable alrededor de 15 días entre la aprobación y la publicación:</p>
+<p>En general se mantiene estable alrededor de 15 días entre la
+aprobación y la publicación:</p>
 <p><img src="leyes_files/figure-html/retraso-fecha-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Aunque hay más retraso últimamente esto se debe a un colapso por mayor número de publicaciones?</p>
+<p>Aunque hay más retraso últimamente esto se debe a un colapso por
+mayor número de publicaciones?</p>
 <p><img src="leyes_files/figure-html/reglas-tiempo-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Cada vez se aprueban menos reglamentos, así pues el retraso no es por eso. Si miramos por tipo de legislación a lo mejor encontramos la causa:</p>
+<p>Cada vez se aprueban menos reglamentos, así pues el retraso no es por
+eso. Si miramos por tipo de legislación a lo mejor encontramos la
+causa:</p>
 <p><img src="leyes_files/figure-html/reglas-tiempo-tipo-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Hay un ligero incremento de ordenes cuando se produce una disminución de real decretos. El resto de publicaciones se publican mucho menos y no se puede estimar bien su evolución en el tiempo a menos que lo agrupemos por año:</p>
+<p>Hay un ligero incremento de ordenes cuando se produce una disminución
+de real decretos. El resto de publicaciones se publican mucho menos y no
+se puede estimar bien su evolución en el tiempo a menos que lo agrupemos
+por año:</p>
 <p><img src="leyes_files/figure-html/reglas-tiempo-tipo2-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Ahora bien ¿se publican cada día un poco o en un solo día salen muchas leyes?</p>
+<p>Ahora bien ¿se publican cada día un poco o en un solo día salen
+muchas leyes?</p>
 <p><img src="leyes_files/figure-html/publicacion-cantidad-fecha-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Los reales decretos se publican 1 de cada 4 días y suelen publicarse alrededor de 20. En cambio casi cada día se publican 9 ordenes. El resto de tipos de legislación no se publica ni frecuentemente ni en grandes cantidades cuando se hace.</p>
+<p>Los reales decretos se publican 1 de cada 4 días y suelen publicarse
+alrededor de 20. En cambio casi cada día se publican 9 ordenes. El resto
+de tipos de legislación no se publica ni frecuentemente ni en grandes
+cantidades cuando se hace.</p>
 <div id="cambios-de-gobierno" class="section level2">
 <h2>Cambios de gobierno</h2>
-<p>Mirando el BOE podemos ver los cambios de presidente del gobierno. Sino es muy útil esta <a href="https://es.wikipedia.org/wiki/Anexo:Presidentes_del_Gobierno_de_Espa%C3%B1a#Lista_de_presidentes_del_Gobierno">página de la wikipedia</a>. Esto nos permite ver que se ha publicado con cada presidente (o sin presidente).</p>
+<p>Mirando el BOE podemos ver los cambios de presidente del gobierno.
+Sino es muy útil esta <a
+href="https://es.wikipedia.org/wiki/Anexo:Presidentes_del_Gobierno_de_Espa%C3%B1a#Lista_de_presidentes_del_Gobierno">página
+de la wikipedia</a>. Esto nos permite ver que se ha publicado con cada
+presidente (o sin presidente).</p>
 <p><img src="leyes_files/figure-html/presidente-tipo-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Parece que esté quien esté se aprueban el mismo tipo de leyes, exceptuando los decretos legislativos y los reales decretos legislativos. Tampoco se aprueban leyes orgánicas cuando no hay presidente.</p>
-<p>Si miramos los tipos de leyes a lo largo del tiempo respecto los mandatos presidenciales quizá vemos otro panorama:</p>
+<p>Parece que esté quien esté se aprueban el mismo tipo de leyes,
+exceptuando los decretos legislativos y los reales decretos
+legislativos. Tampoco se aprueban leyes orgánicas cuando no hay
+presidente.</p>
+<p>Si miramos los tipos de leyes a lo largo del tiempo respecto los
+mandatos presidenciales quizá vemos otro panorama:</p>
 <p><img src="leyes_files/figure-html/presidentes-tipo-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 
