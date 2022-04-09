@@ -53,7 +53,7 @@ sumario_hoy %>%
     # geom_text(stat = "stratum", aes(label = after_stat(stratum))) +
     ggfittext::geom_fit_text(mapping = aes(label = after_stat(stratum)), 
                            stat = "stratum", min.size = 1) +
-    guides(fill = FALSE) +
+    guides(fill = "none") +
     scale_x_discrete(limits = c("section_number", "emisor")) +
     theme_void() +
     labs(title = paste0("Anuncios del BORME publicados el ", today),

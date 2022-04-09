@@ -46,7 +46,7 @@ library("stringr", warn.conflicts = FALSE)
 
 
 con <- DBI::dbConnect(RSQLite::SQLite(),
-                      dbname = "sumarios.sqlite")
+                      dbname = "boes.sqlite")
 dff <- con %>% 
     tbl("sumario") %>% 
     collect() %>% 
@@ -153,7 +153,7 @@ df3 %>%
     scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
     scale_y_continuous(expand = c(0, 10)) +
     labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
-    guides(col = FALSE) +
+    guides(col = "none") +
     scale_color_viridis_d() +
     theme_bw()
 
@@ -166,7 +166,7 @@ df3 %>%
     gghighlight(n > 150, use_direct_label = FALSE) +
     scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
     scale_y_continuous(expand = c(0, 10)) +
-    # guides(col = FALSE) +
+    # guides(col = "none") +
     scale_color_viridis_d() +
     labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
     theme_bw()
@@ -184,7 +184,7 @@ dff %>%
     geom_point(aes(date, publications, col = departament, alpha = ratio)) +
     scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
     scale_y_continuous(expand = c(0, 10)) +
-    guides(col = FALSE) +
+    guides(col = "none") +
     scale_color_viridis_d() +
     labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
     theme_bw()
@@ -200,7 +200,7 @@ dff %>%
     geom_point(aes(date, ratio, col = departament)) +
     scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
     scale_y_continuous(expand = c(0, 0)) +
-    guides(col = FALSE) +
+    guides(col = "none") +
     scale_color_viridis_d() +
     labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
     theme_bw()
@@ -219,7 +219,7 @@ dff %>%
     geom_col(aes(y= log10(n), x = fct_reorder(departament, n), fill = log10(n))) +
     scale_y_continuous(expand = c(0, 0)) +
     coord_flip() +
-    guides(fill = FALSE) +
+    guides(fill = "none") +
     labs(x = "Departamento", y = "log10(Publicaciones)") +
     scale_fill_viridis_c(option = "A", direction = -1) +
     labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
@@ -247,7 +247,7 @@ df4 %>%
     scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
     scale_y_continuous(expand = c(0, 10)) +
     labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
-    guides(col = FALSE) +
+    guides(col = "none") +
     scale_color_viridis_d() +
     theme_bw()
 
@@ -265,7 +265,7 @@ dff %>%
     geom_point(aes(date, publications, col = epigraph, alpha = ratio)) +
     scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
     scale_y_continuous(expand = c(0, 10)) +
-    guides(col = FALSE) +
+    guides(col = "none") +
     scale_color_viridis_d() +
     labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
     theme_bw()
@@ -281,7 +281,7 @@ dff %>%
     geom_point(aes(date, ratio, col = epigraph)) +
     scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
     scale_y_continuous(expand = c(0, 0)) +
-    guides(col = FALSE) +
+    guides(col = "none") +
     scale_color_viridis_d() +
     labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
     theme_bw()

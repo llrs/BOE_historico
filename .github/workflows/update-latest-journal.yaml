@@ -15,6 +15,7 @@ on:
 
 name: update-latest-journal
 env:
+  GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
   TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
   TWITTER_API_SECRET_KEY: ${{ secrets.TWITTER_API_SECRET_KEY }}
   TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
@@ -26,10 +27,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: r-lib/actions/setup-r@v1
-        with:
-          r-version: '4.0.1'
-      - uses: r-lib/actions/setup-pandoc@v1
+      - uses: r-lib/actions/setup-r@v2
+      - uses: r-lib/actions/setup-pandoc@v2
       - name: Install system dependencies
         run:  sudo apt-get install libcurl4-openssl-dev
       - name: Cache R packages # From https://github.com/r-lib/actions/blob/master/.github/workflows/check-standard.yaml#L50-L56
@@ -37,10 +36,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-2-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-2-
+          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-3-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-3-
       - name: Install dependencies
-        if: ${{ failure() }} # https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstepsif
+        # if: ${{ failure() }} # https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstepsif
         run: |
           Rscript -e "install.packages(c('remotes'));
           remotes::install_github('rOpenSpain/BOE');

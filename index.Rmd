@@ -13,7 +13,7 @@ suppressPackageStartupMessages(library("data.table"))
 suppressPackageStartupMessages(library("dtplyr"))
 suppressPackageStartupMessages(library("dplyr"))
 con <- DBI::dbConnect(RSQLite::SQLite(),
-                      dbname = "sumarios.sqlite") 
+                      dbname = "boes.sqlite") 
 dff <- con %>% 
   tbl("sumario") %>% 
   collect() %>% 

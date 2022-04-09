@@ -13,8 +13,8 @@
 
 <title>Tiempo entre decreto y publicación</title>
 
-<script src="site_libs/header-attrs-2.6.6/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -91,6 +91,7 @@ if (window.hljs) {
 
 
 
+
 <style type = "text/css">
 .main-container {
   max-width: 940px;
@@ -111,6 +112,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -263,7 +267,7 @@ $(document).ready(function () {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -273,8 +277,8 @@ $(document).ready(function () {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa-newspaper"></span>
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-newspaper"></span>
      
     Último
      
@@ -290,8 +294,8 @@ $(document).ready(function () {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa-eye"></span>
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-eye"></span>
      
     Vista de pájaro
      
@@ -307,8 +311,8 @@ $(document).ready(function () {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa-chart-bar"></span>
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-chart-bar"></span>
      
     Analysis
      
@@ -342,13 +346,13 @@ $(document).ready(function () {
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://twitter.com/intent/tweet?text=Gracias%20%40Lluis_Revilla%20por%20esta%20herramienta%20%40Boletines_es">
-    <span class="fas fa-twitter"></span>
+    <span class="fa fa-twitter"></span>
      
   </a>
 </li>
 <li>
   <a href="https://github.com/llrs/BOE_historico/">
-    <span class="fas fa-github"></span>
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -368,18 +372,28 @@ $(document).ready(function () {
 
 <div id="días-de-retraso" class="section level1">
 <h1>Días de retraso</h1>
-<p>Las disposiciones suelen ser efectivas a partir del momento de publicación o al día siguiente por eso es importante ver si hay retrasos entre aprobación y publicación.</p>
+<p>Las disposiciones suelen ser efectivas a partir del momento de
+publicación o al día siguiente por eso es importante ver si hay retrasos
+entre aprobación y publicación.</p>
 <p><img src="retraso_files/figure-html/pressure-1.png" width="672" /><img src="retraso_files/figure-html/pressure-2.png" width="672" /></p>
 <p>Hay algunas fechas que están escritas en vez de usar números:</p>
 <pre><code>## [1] &quot;Instrumento de Ratificación del Protocolo número 13 al Convenio para la protección de los Derechos Humanos y las Libertades Fundamentales, relativo a la abolición de la pena de muerte en todas las circunstancias, hecho en Vilna el tres de mayo de dos mil dos.&quot;                                                                                        
 ## [2] &quot;Instrumento de Ratificación del Convenio Civil sobre la Corrupción (número 174 del Consejo de Europa) hecho en Estrasburgo el cuatro de noviembre de mil novecientos noventa y nueve.&quot;                                                                                                                                                                      
 ## [3] &quot;Conflicto positivo de competencia n.º 6862-2012, contra la decisión del Gobierno Vasco de fecha indeterminada por la que acuerda que los trabajadores del sector público vasco cobren la paga extraordinaria de diciembre de 2012, \&quot;así como respecto a las actuaciones o disposiciones que apliquen este criterio\&quot;.&quot;                                     
 ## [4] &quot;Conflicto positivo de competencia n.º 6862-2012, contra la Decisión del Gobierno Vasco, de fecha indeterminada, por la que acuerda que los trabajadores del sector público vasco cobren la paga extraordinaria de diciembre de 2012, \&quot;así como respecto a las actuaciones o disposiciones que apliquen este criterio\&quot;.&quot;                                   
-## [5] &quot;Intercambio de Cartas constitutivo de Acuerdo Administrativo Internacional entre el Reino de España y el Organismo Internacional de Energía Atómica (OIEA) para la celebración de un Taller Internacional sobre Cultura de la Seguridad Física Nuclear, del 29 de febrero al 4 de marzo de 2016, hecho en Viena el 20 de octubre y 24 de noviembre de 2015.&quot;</code></pre>
-<p>Hay una publicación del 30 de marzo de 2010 que por fecha pone “el tres de mayo de dos mil dos”! y otras dos que no se sabe el día que se tomaron y una con demasiadas fechas como para saber con exactitud que pasó.</p>
-<p>También hay publicaciones que han tardado mucho en salir, o que hacen referencia a fechas muy anteriores (más de un año) :</p>
-<p>Hay unas 1186 publicaciones donde las que la diferencia es de más de un año, algunas porque hay varias fechas (error mío), otras están bien, se aprueban en 2019 cosas de 2007 o similares.</p>
-<p>Sorprendentemente hay publicaciones que se han aprobado el mismo día:</p>
+## [5] &quot;Intercambio de Cartas constitutivo de Acuerdo Administrativo Internacional entre el Reino de España y el Organismo Internacional de Energía Atómica (OIEA) para la celebración de un Taller Internacional sobre Cultura de la Seguridad Física Nuclear, del 29 de febrero al 4 de marzo de 2016, hecho en Viena el 20 de octubre y 24 de noviembre de 2015.&quot;
+## [6] &quot;Orden INT/242/2021, de 11, de marzo, por la que se dispone el cese del Teniente General don Juan Luis Pérez Martín en el Mando de la Jefatura Fiscal y de Fronteras.&quot;</code></pre>
+<p>Hay una publicación del 30 de marzo de 2010 que por fecha pone “el
+tres de mayo de dos mil dos”! y otras dos que no se sabe el día que se
+tomaron y una con demasiadas fechas como para saber con exactitud que
+pasó.</p>
+<p>También hay publicaciones que han tardado mucho en salir, o que hacen
+referencia a fechas muy anteriores (más de un año) :</p>
+<p>Hay unas 1281 publicaciones donde las que la diferencia es de más de
+un año, algunas porque hay varias fechas (error mío), otras están bien,
+se aprueban en 2019 cosas de 2007 o similares.</p>
+<p>Sorprendentemente hay publicaciones que se han aprobado el mismo
+día:</p>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -421,7 +435,9 @@ JEFATURA DEL ESTADO
 Medidas financieras
 </td>
 <td style="text-align:center;">
-Real Decreto-ley 4/2009, de 29 de marzo, por el que se autoriza la concesión de garantías derivadas de la financiación que pueda otorgar el Banco de España a favor de Caja de Ahorros de Castilla-La Mancha.
+Real Decreto-ley 4/2009, de 29 de marzo, por el que se autoriza la
+concesión de garantías derivadas de la financiación que pueda otorgar el
+Banco de España a favor de Caja de Ahorros de Castilla-La Mancha.
 </td>
 </tr>
 <tr>
@@ -441,7 +457,8 @@ PRESIDENCIA DEL GOBIERNO
 Organización
 </td>
 <td style="text-align:center;">
-Real Decreto 542/2009, de 7 de abril, por el que se reestructuran los departamentos ministeriales.
+Real Decreto 542/2009, de 7 de abril, por el que se reestructuran los
+departamentos ministeriales.
 </td>
 </tr>
 <tr>
@@ -461,7 +478,8 @@ PRESIDENCIA DEL GOBIERNO
 Organización
 </td>
 <td style="text-align:center;">
-Real Decreto 543/2009, de 7 de abril, sobre las Vicepresidencias del Gobierno.
+Real Decreto 543/2009, de 7 de abril, sobre las Vicepresidencias del
+Gobierno.
 </td>
 </tr>
 <tr>
@@ -473,7 +491,8 @@ Real Decreto 543/2009, de 7 de abril, sobre las Vicepresidencias del Gobierno.
 </td>
 <td style="text-align:center;">
 <ol start="2" style="list-style-type: upper-roman">
-<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+<li>Autoridades y personal. - A. Nombramientos, situaciones e
+incidencias
 </td>
 <td style="text-align:center;">
 PRESIDENCIA DEL GOBIERNO
@@ -482,7 +501,8 @@ PRESIDENCIA DEL GOBIERNO
 Ceses
 </td>
 <td style="text-align:center;">
-Real Decreto 544/2009, de 7 de abril, por el que se dispone el cese de don Pedro Solbes Mira como Vicepresidente Segundo del Gobierno.
+Real Decreto 544/2009, de 7 de abril, por el que se dispone el cese de
+don Pedro Solbes Mira como Vicepresidente Segundo del Gobierno.
 </td>
 </tr>
 <tr>
@@ -494,7 +514,8 @@ Real Decreto 544/2009, de 7 de abril, por el que se dispone el cese de don Pedro
 </td>
 <td style="text-align:center;">
 <ol start="2" style="list-style-type: upper-roman">
-<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+<li>Autoridades y personal. - A. Nombramientos, situaciones e
+incidencias
 </td>
 <td style="text-align:center;">
 PRESIDENCIA DEL GOBIERNO
@@ -503,7 +524,8 @@ PRESIDENCIA DEL GOBIERNO
 Ceses
 </td>
 <td style="text-align:center;">
-Real Decreto 545/2009, de 7 de abril, por el que se declara el cese de don Manuel Chaves González como Presidente de la Junta de Andalucía.
+Real Decreto 545/2009, de 7 de abril, por el que se declara el cese de
+don Manuel Chaves González como Presidente de la Junta de Andalucía.
 </td>
 </tr>
 <tr>
@@ -515,7 +537,8 @@ Real Decreto 545/2009, de 7 de abril, por el que se declara el cese de don Manue
 </td>
 <td style="text-align:center;">
 <ol start="2" style="list-style-type: upper-roman">
-<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+<li>Autoridades y personal. - A. Nombramientos, situaciones e
+incidencias
 </td>
 <td style="text-align:center;">
 PRESIDENCIA DEL GOBIERNO
@@ -524,7 +547,8 @@ PRESIDENCIA DEL GOBIERNO
 Ceses
 </td>
 <td style="text-align:center;">
-Real Decreto 546/2009, de 7 de abril, por el que se dispone el cese de don Pedro Solbes Mira como Ministro de Economía y Hacienda.
+Real Decreto 546/2009, de 7 de abril, por el que se dispone el cese de
+don Pedro Solbes Mira como Ministro de Economía y Hacienda.
 </td>
 </tr>
 <tr>
@@ -536,7 +560,8 @@ Real Decreto 546/2009, de 7 de abril, por el que se dispone el cese de don Pedro
 </td>
 <td style="text-align:center;">
 <ol start="2" style="list-style-type: upper-roman">
-<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+<li>Autoridades y personal. - A. Nombramientos, situaciones e
+incidencias
 </td>
 <td style="text-align:center;">
 PRESIDENCIA DEL GOBIERNO
@@ -545,7 +570,8 @@ PRESIDENCIA DEL GOBIERNO
 Ceses
 </td>
 <td style="text-align:center;">
-Real Decreto 547/2009, de 7 de abril, por el que se dispone el cese de doña Magdalena Álvarez Arza como Ministra de Fomento.
+Real Decreto 547/2009, de 7 de abril, por el que se dispone el cese de
+doña Magdalena Álvarez Arza como Ministra de Fomento.
 </td>
 </tr>
 <tr>
@@ -557,7 +583,8 @@ Real Decreto 547/2009, de 7 de abril, por el que se dispone el cese de doña Mag
 </td>
 <td style="text-align:center;">
 <ol start="2" style="list-style-type: upper-roman">
-<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+<li>Autoridades y personal. - A. Nombramientos, situaciones e
+incidencias
 </td>
 <td style="text-align:center;">
 PRESIDENCIA DEL GOBIERNO
@@ -566,7 +593,9 @@ PRESIDENCIA DEL GOBIERNO
 Ceses
 </td>
 <td style="text-align:center;">
-Real Decreto 548/2009, de 7 de abril, por el que se dispone el cese de doña Mercedes Cabrera Calvo-Sotelo como Ministra de Educación, Política Social y Deporte.
+Real Decreto 548/2009, de 7 de abril, por el que se dispone el cese de
+doña Mercedes Cabrera Calvo-Sotelo como Ministra de Educación, Política
+Social y Deporte.
 </td>
 </tr>
 <tr>
@@ -578,7 +607,8 @@ Real Decreto 548/2009, de 7 de abril, por el que se dispone el cese de doña Mer
 </td>
 <td style="text-align:center;">
 <ol start="2" style="list-style-type: upper-roman">
-<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+<li>Autoridades y personal. - A. Nombramientos, situaciones e
+incidencias
 </td>
 <td style="text-align:center;">
 PRESIDENCIA DEL GOBIERNO
@@ -587,7 +617,8 @@ PRESIDENCIA DEL GOBIERNO
 Ceses
 </td>
 <td style="text-align:center;">
-Real Decreto 549/2009, de 7 de abril, por el que se dispone el cese de doña Elena Salgado Méndez como Ministra de Administraciones Públicas.
+Real Decreto 549/2009, de 7 de abril, por el que se dispone el cese de
+doña Elena Salgado Méndez como Ministra de Administraciones Públicas.
 </td>
 </tr>
 <tr>
@@ -599,7 +630,8 @@ Real Decreto 549/2009, de 7 de abril, por el que se dispone el cese de doña Ele
 </td>
 <td style="text-align:center;">
 <ol start="2" style="list-style-type: upper-roman">
-<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+<li>Autoridades y personal. - A. Nombramientos, situaciones e
+incidencias
 </td>
 <td style="text-align:center;">
 PRESIDENCIA DEL GOBIERNO
@@ -608,7 +640,8 @@ PRESIDENCIA DEL GOBIERNO
 Ceses
 </td>
 <td style="text-align:center;">
-Real Decreto 550/2009, de 7 de abril, por el que se dispone el cese de don César Antonio Molina Sánchez como Ministro de Cultura.
+Real Decreto 550/2009, de 7 de abril, por el que se dispone el cese de
+don César Antonio Molina Sánchez como Ministro de Cultura.
 </td>
 </tr>
 <tr>
@@ -620,7 +653,8 @@ Real Decreto 550/2009, de 7 de abril, por el que se dispone el cese de don Césa
 </td>
 <td style="text-align:center;">
 <ol start="2" style="list-style-type: upper-roman">
-<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+<li>Autoridades y personal. - A. Nombramientos, situaciones e
+incidencias
 </td>
 <td style="text-align:center;">
 PRESIDENCIA DEL GOBIERNO
@@ -629,7 +663,8 @@ PRESIDENCIA DEL GOBIERNO
 Ceses
 </td>
 <td style="text-align:center;">
-Real Decreto 551/2009, de 7 de abril, por el que se dispone el cese de don Bernat Soria Escoms como Ministro de Sanidad y Consumo.
+Real Decreto 551/2009, de 7 de abril, por el que se dispone el cese de
+don Bernat Soria Escoms como Ministro de Sanidad y Consumo.
 </td>
 </tr>
 <tr>
@@ -641,7 +676,8 @@ Real Decreto 551/2009, de 7 de abril, por el que se dispone el cese de don Berna
 </td>
 <td style="text-align:center;">
 <ol start="2" style="list-style-type: upper-roman">
-<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+<li>Autoridades y personal. - A. Nombramientos, situaciones e
+incidencias
 </td>
 <td style="text-align:center;">
 PRESIDENCIA DEL GOBIERNO
@@ -650,7 +686,8 @@ PRESIDENCIA DEL GOBIERNO
 Nombramientos
 </td>
 <td style="text-align:center;">
-Real Decreto 552/2009, de 7 de abril, por el que se nombra Vicepresidenta Segunda del Gobierno a doña Elena Salgado Méndez.
+Real Decreto 552/2009, de 7 de abril, por el que se nombra
+Vicepresidenta Segunda del Gobierno a doña Elena Salgado Méndez.
 </td>
 </tr>
 <tr>
@@ -662,7 +699,8 @@ Real Decreto 552/2009, de 7 de abril, por el que se nombra Vicepresidenta Segund
 </td>
 <td style="text-align:center;">
 <ol start="2" style="list-style-type: upper-roman">
-<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+<li>Autoridades y personal. - A. Nombramientos, situaciones e
+incidencias
 </td>
 <td style="text-align:center;">
 PRESIDENCIA DEL GOBIERNO
@@ -671,7 +709,8 @@ PRESIDENCIA DEL GOBIERNO
 Nombramientos
 </td>
 <td style="text-align:center;">
-Real Decreto 553/2009, de 7 de abril, por el que se nombra Vicepresidente Tercero del Gobierno a don Manuel Chaves González.
+Real Decreto 553/2009, de 7 de abril, por el que se nombra
+Vicepresidente Tercero del Gobierno a don Manuel Chaves González.
 </td>
 </tr>
 <tr>
@@ -683,7 +722,8 @@ Real Decreto 553/2009, de 7 de abril, por el que se nombra Vicepresidente Tercer
 </td>
 <td style="text-align:center;">
 <ol start="2" style="list-style-type: upper-roman">
-<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+<li>Autoridades y personal. - A. Nombramientos, situaciones e
+incidencias
 </td>
 <td style="text-align:center;">
 PRESIDENCIA DEL GOBIERNO
@@ -692,7 +732,8 @@ PRESIDENCIA DEL GOBIERNO
 Nombramientos
 </td>
 <td style="text-align:center;">
-Real Decreto 554/2009, de 7 de abril, por el que se nombra Ministra de Economía y Hacienda a doña Elena Salgado Méndez.
+Real Decreto 554/2009, de 7 de abril, por el que se nombra Ministra de
+Economía y Hacienda a doña Elena Salgado Méndez.
 </td>
 </tr>
 <tr>
@@ -704,7 +745,8 @@ Real Decreto 554/2009, de 7 de abril, por el que se nombra Ministra de Economía
 </td>
 <td style="text-align:center;">
 <ol start="2" style="list-style-type: upper-roman">
-<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+<li>Autoridades y personal. - A. Nombramientos, situaciones e
+incidencias
 </td>
 <td style="text-align:center;">
 PRESIDENCIA DEL GOBIERNO
@@ -713,7 +755,8 @@ PRESIDENCIA DEL GOBIERNO
 Nombramientos
 </td>
 <td style="text-align:center;">
-Real Decreto 555/2009, de 7 de abril, por el que se nombra Ministro de Fomento a don José Blanco López.
+Real Decreto 555/2009, de 7 de abril, por el que se nombra Ministro de
+Fomento a don José Blanco López.
 </td>
 </tr>
 <tr>
@@ -725,7 +768,8 @@ Real Decreto 555/2009, de 7 de abril, por el que se nombra Ministro de Fomento a
 </td>
 <td style="text-align:center;">
 <ol start="2" style="list-style-type: upper-roman">
-<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+<li>Autoridades y personal. - A. Nombramientos, situaciones e
+incidencias
 </td>
 <td style="text-align:center;">
 PRESIDENCIA DEL GOBIERNO
@@ -734,7 +778,8 @@ PRESIDENCIA DEL GOBIERNO
 Nombramientos
 </td>
 <td style="text-align:center;">
-Real Decreto 556/2009, de 7 de abril, por el que se nombra Ministro de Educación a don Ángel Gabilondo Pujol.
+Real Decreto 556/2009, de 7 de abril, por el que se nombra Ministro de
+Educación a don Ángel Gabilondo Pujol.
 </td>
 </tr>
 <tr>
@@ -746,7 +791,8 @@ Real Decreto 556/2009, de 7 de abril, por el que se nombra Ministro de Educació
 </td>
 <td style="text-align:center;">
 <ol start="2" style="list-style-type: upper-roman">
-<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+<li>Autoridades y personal. - A. Nombramientos, situaciones e
+incidencias
 </td>
 <td style="text-align:center;">
 PRESIDENCIA DEL GOBIERNO
@@ -755,7 +801,8 @@ PRESIDENCIA DEL GOBIERNO
 Nombramientos
 </td>
 <td style="text-align:center;">
-Real Decreto 557/2009, de 7 de abril, por el que se nombra Ministro de Política Territorial a don Manuel Chaves González.
+Real Decreto 557/2009, de 7 de abril, por el que se nombra Ministro de
+Política Territorial a don Manuel Chaves González.
 </td>
 </tr>
 <tr>
@@ -767,7 +814,8 @@ Real Decreto 557/2009, de 7 de abril, por el que se nombra Ministro de Política
 </td>
 <td style="text-align:center;">
 <ol start="2" style="list-style-type: upper-roman">
-<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+<li>Autoridades y personal. - A. Nombramientos, situaciones e
+incidencias
 </td>
 <td style="text-align:center;">
 PRESIDENCIA DEL GOBIERNO
@@ -776,7 +824,8 @@ PRESIDENCIA DEL GOBIERNO
 Nombramientos
 </td>
 <td style="text-align:center;">
-Real Decreto 558/2009, de 7 de abril, por el que se nombra Ministra de Cultura a doña Ángeles González Sinde.
+Real Decreto 558/2009, de 7 de abril, por el que se nombra Ministra de
+Cultura a doña Ángeles González Sinde.
 </td>
 </tr>
 <tr>
@@ -788,7 +837,8 @@ Real Decreto 558/2009, de 7 de abril, por el que se nombra Ministra de Cultura a
 </td>
 <td style="text-align:center;">
 <ol start="2" style="list-style-type: upper-roman">
-<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+<li>Autoridades y personal. - A. Nombramientos, situaciones e
+incidencias
 </td>
 <td style="text-align:center;">
 PRESIDENCIA DEL GOBIERNO
@@ -797,7 +847,8 @@ PRESIDENCIA DEL GOBIERNO
 Nombramientos
 </td>
 <td style="text-align:center;">
-Real Decreto 559/2009, de 7 de abril, por el que se nombra Ministra de Sanidad y Política Social a doña Trinidad Jiménez García-Herrera.
+Real Decreto 559/2009, de 7 de abril, por el que se nombra Ministra de
+Sanidad y Política Social a doña Trinidad Jiménez García-Herrera.
 </td>
 </tr>
 <tr>
@@ -809,7 +860,8 @@ Real Decreto 559/2009, de 7 de abril, por el que se nombra Ministra de Sanidad y
 </td>
 <td style="text-align:center;">
 <ol start="2" style="list-style-type: upper-roman">
-<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+<li>Autoridades y personal. - A. Nombramientos, situaciones e
+incidencias
 </td>
 <td style="text-align:center;">
 MINISTERIO DE JUSTICIA
@@ -818,7 +870,10 @@ MINISTERIO DE JUSTICIA
 Nombramientos
 </td>
 <td style="text-align:center;">
-Orden JUS/1813/2009, de 8 de julio, por la que se nombran Abogados Fiscales a los alumnos del Centro de Estudios Jurídicos, correspondientes a la convocatoria aprobada por Acuerdo de la Comisión de Selección de Jueces y Fiscales de 5 de marzo de 2007.
+Orden JUS/1813/2009, de 8 de julio, por la que se nombran Abogados
+Fiscales a los alumnos del Centro de Estudios Jurídicos,
+correspondientes a la convocatoria aprobada por Acuerdo de la Comisión
+de Selección de Jueces y Fiscales de 5 de marzo de 2007.
 </td>
 </tr>
 <tr>
@@ -838,7 +893,11 @@ JEFATURA DEL ESTADO
 Navegación aérea
 </td>
 <td style="text-align:center;">
-Real Decreto-ley 1/2010, de 5 de febrero, por el que se regula la prestación de servicios de tránsito aéreo, se establecen las obligaciones de los proveedores civiles de dichos servicios y se fijan determinadas condiciones laborales para los controladores civiles de tránsito aéreo.
+Real Decreto-ley 1/2010, de 5 de febrero, por el que se regula la
+prestación de servicios de tránsito aéreo, se establecen las
+obligaciones de los proveedores civiles de dichos servicios y se fijan
+determinadas condiciones laborales para los controladores civiles de
+tránsito aéreo.
 </td>
 </tr>
 <tr>
@@ -859,7 +918,10 @@ MINISTERIO DE ECONOMÍA Y HACIENDA
 Servicios mínimos
 </td>
 <td style="text-align:center;">
-Orden EHA/1058/2010, de 29 de abril, por la que se establecen las normas para garantizar el funcionamiento de los servicios mínimos esenciales en la Corporación RTVE, S.A., y en las sociedades mercantiles estatales Televisión Española y Radio Nacional de España.
+Orden EHA/1058/2010, de 29 de abril, por la que se establecen las normas
+para garantizar el funcionamiento de los servicios mínimos esenciales en
+la Corporación RTVE, S.A., y en las sociedades mercantiles estatales
+Televisión Española y Radio Nacional de España.
 </td>
 </tr>
 <tr>
@@ -879,7 +941,9 @@ JEFATURA DEL ESTADO
 Fondo de Apoyo
 </td>
 <td style="text-align:center;">
-Real Decreto-ley 7/2010, de 7 de mayo, por el que se crea el Fondo de Apoyo a la República Helénica y se autoriza un crédito extraordinario por importe de 9.794.387.450 euros para su dotación.
+Real Decreto-ley 7/2010, de 7 de mayo, por el que se crea el Fondo de
+Apoyo a la República Helénica y se autoriza un crédito extraordinario
+por importe de 9.794.387.450 euros para su dotación.
 </td>
 </tr>
 <tr>
@@ -900,7 +964,10 @@ BANCO DE ESPAÑA
 Entidades de crédito
 </td>
 <td style="text-align:center;">
-Resolución de 22 de mayo de 2010, del Fondo de Reestructuración Ordenada Bancaria, por la que se hace público el acuerdo de su Comisión Rectora de la misma fecha en relación con la Caja de Ahorros y Monte de Piedad de Córdoba.
+Resolución de 22 de mayo de 2010, del Fondo de Reestructuración Ordenada
+Bancaria, por la que se hace público el acuerdo de su Comisión Rectora
+de la misma fecha en relación con la Caja de Ahorros y Monte de Piedad
+de Córdoba.
 </td>
 </tr>
 <tr>
@@ -920,7 +987,9 @@ JEFATURA DEL ESTADO
 Empleo. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Real Decreto-ley 13/2010, de 3 de diciembre, de actuaciones en el ámbito fiscal, laboral y liberalizadoras para fomentar la inversión y la creación de empleo.
+Real Decreto-ley 13/2010, de 3 de diciembre, de actuaciones en el ámbito
+fiscal, laboral y liberalizadoras para fomentar la inversión y la
+creación de empleo.
 </td>
 </tr>
 <tr>
@@ -940,7 +1009,9 @@ MINISTERIO DE LA PRESIDENCIA
 Tráfico aéreo. Medidas extraordinarias
 </td>
 <td style="text-align:center;">
-Real Decreto 1673/2010, de 4 de diciembre, por el que se declara el estado de alarma para la normalización del servicio público esencial del transporte aéreo.
+Real Decreto 1673/2010, de 4 de diciembre, por el que se declara el
+estado de alarma para la normalización del servicio público esencial del
+transporte aéreo.
 </td>
 </tr>
 <tr>
@@ -960,7 +1031,8 @@ JEFATURA DEL ESTADO
 Constitución Española. Reforma
 </td>
 <td style="text-align:center;">
-Reforma del artículo 135 de la Constitución Española, de 27 de septiembre de 2011.
+Reforma del artículo 135 de la Constitución Española, de 27 de
+septiembre de 2011.
 </td>
 </tr>
 <tr>
@@ -1000,7 +1072,8 @@ JEFATURA DEL ESTADO
 Entidades de crédito
 </td>
 <td style="text-align:center;">
-Real Decreto-ley 24/2012, de 31 de agosto, de reestructuración y resolución de entidades de crédito.
+Real Decreto-ley 24/2012, de 31 de agosto, de reestructuración y
+resolución de entidades de crédito.
 </td>
 </tr>
 <tr>
@@ -1020,7 +1093,10 @@ PRESIDENCIA DEL GOBIERNO
 Condecoraciones
 </td>
 <td style="text-align:center;">
-Real Decreto 209/2014, de 24 de marzo, por el que se concede, a título póstumo, el Collar de la Real y Distinguida Orden Española de Carlos III al excelentísimo señor don Adolfo Suárez González, Presidente del Gobierno y duque de Suárez.
+Real Decreto 209/2014, de 24 de marzo, por el que se concede, a título
+póstumo, el Collar de la Real y Distinguida Orden Española de Carlos III
+al excelentísimo señor don Adolfo Suárez González, Presidente del
+Gobierno y duque de Suárez.
 </td>
 </tr>
 <tr>
@@ -1032,7 +1108,8 @@ Real Decreto 209/2014, de 24 de marzo, por el que se concede, a título póstumo
 </td>
 <td style="text-align:center;">
 <ol start="2" style="list-style-type: upper-roman">
-<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+<li>Autoridades y personal. - A. Nombramientos, situaciones e
+incidencias
 </td>
 <td style="text-align:center;">
 PRESIDENCIA DEL GOBIERNO
@@ -1041,7 +1118,9 @@ PRESIDENCIA DEL GOBIERNO
 Ceses
 </td>
 <td style="text-align:center;">
-Real Decreto 302/2014, de 28 de abril, por el que se dispone el cese de don Miguel Arias Cañete como Ministro de Agricultura, Alimentación y Medio Ambiente.
+Real Decreto 302/2014, de 28 de abril, por el que se dispone el cese de
+don Miguel Arias Cañete como Ministro de Agricultura, Alimentación y
+Medio Ambiente.
 </td>
 </tr>
 <tr>
@@ -1053,7 +1132,8 @@ Real Decreto 302/2014, de 28 de abril, por el que se dispone el cese de don Migu
 </td>
 <td style="text-align:center;">
 <ol start="2" style="list-style-type: upper-roman">
-<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+<li>Autoridades y personal. - A. Nombramientos, situaciones e
+incidencias
 </td>
 <td style="text-align:center;">
 PRESIDENCIA DEL GOBIERNO
@@ -1062,7 +1142,9 @@ PRESIDENCIA DEL GOBIERNO
 Nombramientos
 </td>
 <td style="text-align:center;">
-Real Decreto 303/2014, de 28 de abril, por el que se nombra Ministra de Agricultura, Alimentación y Medio Ambiente a doña Isabel García Tejerina.
+Real Decreto 303/2014, de 28 de abril, por el que se nombra Ministra de
+Agricultura, Alimentación y Medio Ambiente a doña Isabel García
+Tejerina.
 </td>
 </tr>
 <tr>
@@ -1082,7 +1164,8 @@ JEFATURA DEL ESTADO
 Cortes Generales. Disolución y convocatoria de elecciones
 </td>
 <td style="text-align:center;">
-Real Decreto 184/2016, de 3 de mayo, de disolución del Congreso de los Diputados y del Senado y de convocatoria de elecciones.
+Real Decreto 184/2016, de 3 de mayo, de disolución del Congreso de los
+Diputados y del Senado y de convocatoria de elecciones.
 </td>
 </tr>
 <tr>
@@ -1102,7 +1185,8 @@ JEFATURA DEL ESTADO
 Medidas tributarias
 </td>
 <td style="text-align:center;">
-Real Decreto-ley 2/2016, de 30 de septiembre, por el que se introducen medidas tributarias dirigidas a la reducción del déficit público.
+Real Decreto-ley 2/2016, de 30 de septiembre, por el que se introducen
+medidas tributarias dirigidas a la reducción del déficit público.
 </td>
 </tr>
 <tr>
@@ -1122,7 +1206,18 @@ MINISTERIO DE HACIENDA Y ADMINISTRACIONES PÚBLICAS
 Impuesto sobre Sociedades e Impuesto sobre la Renta de no Residentes
 </td>
 <td style="text-align:center;">
-Orden HAP/1552/2016, de 30 de septiembre, por la que se modifica la Orden EHA/1721/2011, de 16 de junio, por la que se aprueba el modelo 222 para efectuar los pagos fraccionados a cuenta del Impuesto sobre Sociedades en régimen de consolidación fiscal estableciéndose las condiciones generales y el procedimiento para su presentación telemática, y la Orden HAP/2055/2012, de 28 de septiembre, por la que se aprueba el modelo 202 para efectuar los pagos fraccionados a cuenta del Impuesto sobre Sociedades y del Impuesto sobre la Renta de no Residentes correspondiente a establecimientos permanentes y entidades en régimen de atribución de rentas constituidas en el extranjero con presencia en territorio español, y se establecen las condiciones generales y el procedimiento para su presentación telemática.
+Orden HAP/1552/2016, de 30 de septiembre, por la que se modifica la
+Orden EHA/1721/2011, de 16 de junio, por la que se aprueba el modelo 222
+para efectuar los pagos fraccionados a cuenta del Impuesto sobre
+Sociedades en régimen de consolidación fiscal estableciéndose las
+condiciones generales y el procedimiento para su presentación
+telemática, y la Orden HAP/2055/2012, de 28 de septiembre, por la que se
+aprueba el modelo 202 para efectuar los pagos fraccionados a cuenta del
+Impuesto sobre Sociedades y del Impuesto sobre la Renta de no Residentes
+correspondiente a establecimientos permanentes y entidades en régimen de
+atribución de rentas constituidas en el extranjero con presencia en
+territorio español, y se establecen las condiciones generales y el
+procedimiento para su presentación telemática.
 </td>
 </tr>
 <tr>
@@ -1142,7 +1237,10 @@ CORTES GENERALES
 Medidas al amparo del artículo 155 de la Constitución
 </td>
 <td style="text-align:center;">
-Resolución de 27 de octubre de 2017, de la Presidencia del Senado, por la que se publica el Acuerdo del Pleno del Senado, por el que se aprueban las medidas requeridas por el Gobierno, al amparo del artículo 155 de la Constitución.
+Resolución de 27 de octubre de 2017, de la Presidencia del Senado, por
+la que se publica el Acuerdo del Pleno del Senado, por el que se
+aprueban las medidas requeridas por el Gobierno, al amparo del artículo
+155 de la Constitución.
 </td>
 </tr>
 <tr>
@@ -1162,7 +1260,16 @@ MINISTERIO DE LA PRESIDENCIA Y PARA LAS ADMINISTRACIONES TERRITORIALES
 Medidas al amparo del artículo 155 de la Constitución
 </td>
 <td style="text-align:center;">
-Orden PRA/1034/2017, de 27 de octubre, por la que se publica el Acuerdo del Consejo de Ministros de 21 de octubre de 2017, por el que, en aplicación de lo dispuesto en el artículo 155 de la Constitución, se tiene por no atendido el requerimiento planteado al M. H. Sr. Presidente de la Generalitat de Cataluña, para que la Generalitat de Cataluña proceda al cumplimiento de sus obligaciones constitucionales y a la cesación de sus actuaciones gravemente contrarias al interés general, y se proponen al Senado para su aprobación las medidas necesarias para garantizar el cumplimiento de las obligaciones constitucionales y para la protección del mencionado interés general.
+Orden PRA/1034/2017, de 27 de octubre, por la que se publica el Acuerdo
+del Consejo de Ministros de 21 de octubre de 2017, por el que, en
+aplicación de lo dispuesto en el artículo 155 de la Constitución, se
+tiene por no atendido el requerimiento planteado al M. H. Sr. Presidente
+de la Generalitat de Cataluña, para que la Generalitat de Cataluña
+proceda al cumplimiento de sus obligaciones constitucionales y a la
+cesación de sus actuaciones gravemente contrarias al interés general, y
+se proponen al Senado para su aprobación las medidas necesarias para
+garantizar el cumplimiento de las obligaciones constitucionales y para
+la protección del mencionado interés general.
 </td>
 </tr>
 <tr>
@@ -1174,7 +1281,8 @@ Orden PRA/1034/2017, de 27 de octubre, por la que se publica el Acuerdo del Cons
 </td>
 <td style="text-align:center;">
 <ol start="2" style="list-style-type: upper-roman">
-<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+<li>Autoridades y personal. - A. Nombramientos, situaciones e
+incidencias
 </td>
 <td style="text-align:center;">
 MINISTERIO DEL INTERIOR
@@ -1183,7 +1291,10 @@ MINISTERIO DEL INTERIOR
 Ceses
 </td>
 <td style="text-align:center;">
-Orden INT/1038/2017, de 28 de octubre, por la que se dispone el cese de don Josep Lluís Trapero Álvarez en la plaza de la categoría de Mayor de la Escala Superior del Cuerpo de Mossos d’Esquadra, para la que fue nombrado por Resolución INT/774/2017, de 11 de abril.
+Orden INT/1038/2017, de 28 de octubre, por la que se dispone el cese de
+don Josep Lluís Trapero Álvarez en la plaza de la categoría de Mayor de
+la Escala Superior del Cuerpo de Mossos d’Esquadra, para la que fue
+nombrado por Resolución INT/774/2017, de 11 de abril.
 </td>
 </tr>
 <tr>
@@ -1204,7 +1315,8 @@ ADMINISTRACIÓN LOCAL
 Personal funcionario y laboral
 </td>
 <td style="text-align:center;">
-Resolución de 4 de abril de 2019, del Ayuntamiento de Berga (Barcelona), referente a la convocatoria para proveer varias plazas.
+Resolución de 4 de abril de 2019, del Ayuntamiento de Berga (Barcelona),
+referente a la convocatoria para proveer varias plazas.
 </td>
 </tr>
 <tr>
@@ -1225,7 +1337,8 @@ ADMINISTRACIÓN LOCAL
 Personal funcionario y laboral
 </td>
 <td style="text-align:center;">
-Resolución de 4 de abril de 2019, del Ayuntamiento de Berga (Barcelona), referente a la convocatoria para proveer varias plazas.
+Resolución de 4 de abril de 2019, del Ayuntamiento de Berga (Barcelona),
+referente a la convocatoria para proveer varias plazas.
 </td>
 </tr>
 <tr>
@@ -1246,7 +1359,8 @@ ADMINISTRACIÓN LOCAL
 Personal funcionario y laboral
 </td>
 <td style="text-align:center;">
-Resolución de 16 de abril de 2019, del Ayuntamiento de Gironella (Barcelona), referente a la convocatoria para proveer una plaza.
+Resolución de 16 de abril de 2019, del Ayuntamiento de Gironella
+(Barcelona), referente a la convocatoria para proveer una plaza.
 </td>
 </tr>
 <tr>
@@ -1266,7 +1380,13 @@ TRIBUNAL CONSTITUCIONAL
 Recursos de inconstitucionalidad
 </td>
 <td style="text-align:center;">
-Recurso de inconstitucionalidad n.º 976-2019, contra los artículos 1.1; 1.2; 2.1; 2.2 apartados d) y e) [en este último caso exclusivamente respecto de la mención al “pacto”]; 3; 4; 5.1; 5.2.b); 7.1.c); 9; 10.1; 13; 14 a 22; 25; 26.1, 2 y 3; 27; 32.a); 33.5, Disposiciones adicionales segunda y tercera, y Disposición final tercera de la Ley de las Cortes de Aragón 8/2018, de 28 de junio, de actualización de los derechos históricos de Aragón.
+Recurso de inconstitucionalidad n.º 976-2019, contra los artículos 1.1;
+1.2; 2.1; 2.2 apartados d) y e) [en este último caso exclusivamente
+respecto de la mención al “pacto”]; 3; 4; 5.1; 5.2.b); 7.1.c); 9; 10.1;
+13; 14 a 22; 25; 26.1, 2 y 3; 27; 32.a); 33.5, Disposiciones adicionales
+segunda y tercera, y Disposición final tercera de la Ley de las Cortes
+de Aragón 8/2018, de 28 de junio, de actualización de los derechos
+históricos de Aragón.
 </td>
 </tr>
 <tr>
@@ -1286,7 +1406,8 @@ JEFATURA DEL ESTADO
 Cortes Generales. Disolución y convocatoria de elecciones
 </td>
 <td style="text-align:center;">
-Real Decreto 551/2019, de 24 de septiembre, de disolución del Congreso de los Diputados y del Senado y de convocatoria de elecciones.
+Real Decreto 551/2019, de 24 de septiembre, de disolución del Congreso
+de los Diputados y del Senado y de convocatoria de elecciones.
 </td>
 </tr>
 <tr>
@@ -1298,7 +1419,8 @@ Real Decreto 551/2019, de 24 de septiembre, de disolución del Congreso de los D
 </td>
 <td style="text-align:center;">
 <ol start="2" style="list-style-type: upper-roman">
-<li>Autoridades y personal. - A. Nombramientos, situaciones e incidencias
+<li>Autoridades y personal. - A. Nombramientos, situaciones e
+incidencias
 </td>
 <td style="text-align:center;">
 PRESIDENCIA DEL GOBIERNO
@@ -1307,7 +1429,10 @@ PRESIDENCIA DEL GOBIERNO
 Despacho
 </td>
 <td style="text-align:center;">
-Real Decreto 715/2019, de 30 de noviembre, por el que se dispone que la Ministra de Defensa en funciones asuma el despacho ordinario de los asuntos del Ministerio de Asuntos Exteriores, Unión Europea y Cooperación.
+Real Decreto 715/2019, de 30 de noviembre, por el que se dispone que la
+Ministra de Defensa en funciones asuma el despacho ordinario de los
+asuntos del Ministerio de Asuntos Exteriores, Unión Europea y
+Cooperación.
 </td>
 </tr>
 <tr>
@@ -1321,13 +1446,18 @@ Real Decreto 715/2019, de 30 de noviembre, por el que se dispone que la Ministra
 I. Disposiciones generales
 </td>
 <td style="text-align:center;">
-MINISTERIO DE LA PRESIDENCIA, RELACIONES CON LAS CORTES Y MEMORIA DEMOCRÁTICA
+MINISTERIO DE LA PRESIDENCIA, RELACIONES CON LAS CORTES Y MEMORIA
+DEMOCRÁTICA
 </td>
 <td style="text-align:center;">
 Medidas excepcionales. Salud pública
 </td>
 <td style="text-align:center;">
-Orden PCM/205/2020, de 10 de marzo, por la que se publica el Acuerdo del Consejo de Ministros de 10 de marzo de 2020, por el que se establecen medidas excepcionales para limitar la propagación y el contagio por el COVID-19, mediante la prohibición de los vuelos directos entre la República italiana y los aeropuertos españoles.
+Orden PCM/205/2020, de 10 de marzo, por la que se publica el Acuerdo del
+Consejo de Ministros de 10 de marzo de 2020, por el que se establecen
+medidas excepcionales para limitar la propagación y el contagio por el
+COVID-19, mediante la prohibición de los vuelos directos entre la
+República italiana y los aeropuertos españoles.
 </td>
 </tr>
 <tr>
@@ -1341,13 +1471,19 @@ Orden PCM/205/2020, de 10 de marzo, por la que se publica el Acuerdo del Consejo
 I. Disposiciones generales
 </td>
 <td style="text-align:center;">
-MINISTERIO DE LA PRESIDENCIA, RELACIONES CON LAS CORTES Y MEMORIA DEMOCRÁTICA
+MINISTERIO DE LA PRESIDENCIA, RELACIONES CON LAS CORTES Y MEMORIA
+DEMOCRÁTICA
 </td>
 <td style="text-align:center;">
 Medidas excepcionales. Salud pública
 </td>
 <td style="text-align:center;">
-Orden PCM/216/2020, de 12 de marzo, por la que se publica el Acuerdo del Consejo de Ministros de 12 de marzo de 2020, por el que se establecen medidas excepcionales para limitar la propagación y el contagio por el COVID-19, mediante la prohibición de entrada de buques de pasaje procedentes de la República italiana y de cruceros de cualquier origen con destino a puertos españoles.
+Orden PCM/216/2020, de 12 de marzo, por la que se publica el Acuerdo del
+Consejo de Ministros de 12 de marzo de 2020, por el que se establecen
+medidas excepcionales para limitar la propagación y el contagio por el
+COVID-19, mediante la prohibición de entrada de buques de pasaje
+procedentes de la República italiana y de cruceros de cualquier origen
+con destino a puertos españoles.
 </td>
 </tr>
 <tr>
@@ -1361,13 +1497,16 @@ Orden PCM/216/2020, de 12 de marzo, por la que se publica el Acuerdo del Consejo
 I. Disposiciones generales
 </td>
 <td style="text-align:center;">
-MINISTERIO DE LA PRESIDENCIA, RELACIONES CON LAS CORTES Y MEMORIA DEMOCRÁTICA
+MINISTERIO DE LA PRESIDENCIA, RELACIONES CON LAS CORTES Y MEMORIA
+DEMOCRÁTICA
 </td>
 <td style="text-align:center;">
 Estado de alarma
 </td>
 <td style="text-align:center;">
-Real Decreto 463/2020, de 14 de marzo, por el que se declara el estado de alarma para la gestión de la situación de crisis sanitaria ocasionada por el COVID-19.
+Real Decreto 463/2020, de 14 de marzo, por el que se declara el estado
+de alarma para la gestión de la situación de crisis sanitaria ocasionada
+por el COVID-19.
 </td>
 </tr>
 <tr>
@@ -1387,7 +1526,10 @@ MINISTERIO DE DEFENSA
 Estado de alarma. Medidas crisis sanitaria
 </td>
 <td style="text-align:center;">
-Instrucción de 15 de marzo de 2020, del Ministerio de Defensa, por la que se establecen medidas para la gestión de la situación de crisis sanitaria ocasionada por el COVID-19 en el ámbito del Ministerio de Defensa.
+Instrucción de 15 de marzo de 2020, del Ministerio de Defensa, por la
+que se establecen medidas para la gestión de la situación de crisis
+sanitaria ocasionada por el COVID-19 en el ámbito del Ministerio de
+Defensa.
 </td>
 </tr>
 <tr>
@@ -1407,7 +1549,11 @@ MINISTERIO DEL INTERIOR
 Estado de alarma. Fuerzas y Cuerpos de Seguridad
 </td>
 <td style="text-align:center;">
-Orden INT/226/2020, de 15 de marzo, por la que se establecen criterios de actuación para las Fuerzas y Cuerpos de Seguridad en relación con el Real Decreto 463/2020, de 14 de marzo, por el que se declara el estado de alarma para la gestión de la situación de crisis sanitaria ocasionada por el COVID-19.
+Orden INT/226/2020, de 15 de marzo, por la que se establecen criterios
+de actuación para las Fuerzas y Cuerpos de Seguridad en relación con el
+Real Decreto 463/2020, de 14 de marzo, por el que se declara el estado
+de alarma para la gestión de la situación de crisis sanitaria ocasionada
+por el COVID-19.
 </td>
 </tr>
 <tr>
@@ -1427,7 +1573,11 @@ MINISTERIO DEL INTERIOR
 Estado de alarma. Instituciones Penitenciarias
 </td>
 <td style="text-align:center;">
-Orden INT/227/2020, de 15 de marzo, en relación con las medidas que se adoptan en el ámbito de Instituciones Penitenciarias al amparo del Real Decreto 463/2020, de 14 de marzo, por el que se declara el estado de alarma para la gestión de la situación de crisis sanitaria ocasionada por el COVID-19.
+Orden INT/227/2020, de 15 de marzo, en relación con las medidas que se
+adoptan en el ámbito de Instituciones Penitenciarias al amparo del Real
+Decreto 463/2020, de 14 de marzo, por el que se declara el estado de
+alarma para la gestión de la situación de crisis sanitaria ocasionada
+por el COVID-19.
 </td>
 </tr>
 <tr>
@@ -1447,7 +1597,11 @@ MINISTERIO DEL INTERIOR
 Estado de alarma. Sistema Nacional de Protección Civil
 </td>
 <td style="text-align:center;">
-Orden INT/228/2020, de 15 de marzo, por la que se establecen criterios de aplicación del Real Decreto 463/2020, de 14 de marzo, por el que se declara el estado de alarma para la gestión de la situación de crisis sanitaria ocasionada por el COVID-19, en el ámbito del Sistema Nacional de Protección Civil.
+Orden INT/228/2020, de 15 de marzo, por la que se establecen criterios
+de aplicación del Real Decreto 463/2020, de 14 de marzo, por el que se
+declara el estado de alarma para la gestión de la situación de crisis
+sanitaria ocasionada por el COVID-19, en el ámbito del Sistema Nacional
+de Protección Civil.
 </td>
 </tr>
 <tr>
@@ -1467,7 +1621,10 @@ MINISTERIO DE TRANSPORTES, MOVILIDAD Y AGENDA URBANA
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Orden TMA/229/2020, de 15 de marzo, por la que dictan disposiciones respecto al acceso de los transportistas profesionales a determinados servicios necesarios para facilitar el transporte de mercancías en el territorio nacional.
+Orden TMA/229/2020, de 15 de marzo, por la que dictan disposiciones
+respecto al acceso de los transportistas profesionales a determinados
+servicios necesarios para facilitar el transporte de mercancías en el
+territorio nacional.
 </td>
 </tr>
 <tr>
@@ -1487,7 +1644,9 @@ MINISTERIO DE TRANSPORTES, MOVILIDAD Y AGENDA URBANA
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Orden TMA/230/2020, de 15 de marzo, por la que se concreta la actuación de las autoridades autonómicas y locales respecto de la fijación de servicios de transporte público de su titularidad.
+Orden TMA/230/2020, de 15 de marzo, por la que se concreta la actuación
+de las autoridades autonómicas y locales respecto de la fijación de
+servicios de transporte público de su titularidad.
 </td>
 </tr>
 <tr>
@@ -1507,7 +1666,12 @@ MINISTERIO DE TRANSPORTES, MOVILIDAD Y AGENDA URBANA
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Orden TMA/231/2020, de 15 de marzo, por la que se determina la obligación de disponer mensajes obligatorios en los sistemas de venta de billetes online de todas las compañías marítimas, aéreas y de transporte terrestre, así como cualquier otra persona, física o jurídica, que intervenga en la comercialización de los billetes que habiliten para realizar un trayecto con origen y/o destino en el territorio español.
+Orden TMA/231/2020, de 15 de marzo, por la que se determina la
+obligación de disponer mensajes obligatorios en los sistemas de venta de
+billetes online de todas las compañías marítimas, aéreas y de transporte
+terrestre, así como cualquier otra persona, física o jurídica, que
+intervenga en la comercialización de los billetes que habiliten para
+realizar un trayecto con origen y/o destino en el territorio español.
 </td>
 </tr>
 <tr>
@@ -1527,7 +1691,9 @@ MINISTERIO DE SANIDAD
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Orden SND/232/2020, de 15 de marzo, por la que se adoptan medidas en materia de recursos humanos y medios para la gestión de la situación de crisis sanitaria ocasionada por el COVID-19.
+Orden SND/232/2020, de 15 de marzo, por la que se adoptan medidas en
+materia de recursos humanos y medios para la gestión de la situación de
+crisis sanitaria ocasionada por el COVID-19.
 </td>
 </tr>
 <tr>
@@ -1547,7 +1713,11 @@ MINISTERIO DE SANIDAD
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Orden SND/233/2020, de 15 de marzo, por la que se establecen determinadas obligaciones de información de acuerdo con lo previsto en el Real Decreto 463/2020, de 14 de marzo, por el que se declara el estado de alarma para la gestión de la situación de crisis sanitaria ocasionada por el COVID-19.
+Orden SND/233/2020, de 15 de marzo, por la que se establecen
+determinadas obligaciones de información de acuerdo con lo previsto en
+el Real Decreto 463/2020, de 14 de marzo, por el que se declara el
+estado de alarma para la gestión de la situación de crisis sanitaria
+ocasionada por el COVID-19.
 </td>
 </tr>
 <tr>
@@ -1567,7 +1737,9 @@ MINISTERIO DE SANIDAD
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Orden SND/234/2020, de 15 de marzo, sobre adopción de disposiciones y medidas de contención y remisión de información al Ministerio de Sanidad ante la situación de crisis sanitaria ocasionada por el COVID-19.
+Orden SND/234/2020, de 15 de marzo, sobre adopción de disposiciones y
+medidas de contención y remisión de información al Ministerio de Sanidad
+ante la situación de crisis sanitaria ocasionada por el COVID-19.
 </td>
 </tr>
 <tr>
@@ -1587,7 +1759,9 @@ MINISTERIO DEL INTERIOR
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Orden INT/239/2020, de 16 de marzo, por la que se restablecen los controles en las fronteras interiores terrestres con motivo de la situación de crisis sanitaria ocasionada por el COVID-19.
+Orden INT/239/2020, de 16 de marzo, por la que se restablecen los
+controles en las fronteras interiores terrestres con motivo de la
+situación de crisis sanitaria ocasionada por el COVID-19.
 </td>
 </tr>
 <tr>
@@ -1607,7 +1781,10 @@ MINISTERIO DE TRANSPORTES, MOVILIDAD Y AGENDA URBANA
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Orden TMA/240/2020, de 16 de marzo, por la que se dictan disposiciones respecto a la apertura de determinados establecimientos de restauración y otros comercios en los aeródromos de uso público para la prestación de servicios de apoyo a servicios esenciales.
+Orden TMA/240/2020, de 16 de marzo, por la que se dictan disposiciones
+respecto a la apertura de determinados establecimientos de restauración
+y otros comercios en los aeródromos de uso público para la prestación de
+servicios de apoyo a servicios esenciales.
 </td>
 </tr>
 <tr>
@@ -1627,7 +1804,9 @@ MINISTERIO DE TRANSPORTES, MOVILIDAD Y AGENDA URBANA
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Orden TMA/241/2020, de 16 de marzo, por la que se establecen las medidas de transporte a aplicar a las conexiones entre la península y la Ciudad de Ceuta.
+Orden TMA/241/2020, de 16 de marzo, por la que se establecen las medidas
+de transporte a aplicar a las conexiones entre la península y la Ciudad
+de Ceuta.
 </td>
 </tr>
 <tr>
@@ -1647,7 +1826,9 @@ MINISTERIO DE TRANSPORTES, MOVILIDAD Y AGENDA URBANA
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Orden TMA/242/2020, de 16 de marzo, por la que se establecen las medidas de transporte a aplicar a las conexiones entre la península y la Ciudad de Melilla.
+Orden TMA/242/2020, de 16 de marzo, por la que se establecen las medidas
+de transporte a aplicar a las conexiones entre la península y la Ciudad
+de Melilla.
 </td>
 </tr>
 <tr>
@@ -1667,7 +1848,8 @@ MINISTERIO DE TRANSPORTES, MOVILIDAD Y AGENDA URBANA
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Orden TMA/245/2020, de 17 de marzo, por la que se disponen medidas para el mantenimiento de los tráficos ferroviarios.
+Orden TMA/245/2020, de 17 de marzo, por la que se disponen medidas para
+el mantenimiento de los tráficos ferroviarios.
 </td>
 </tr>
 <tr>
@@ -1687,7 +1869,9 @@ MINISTERIO DE TRANSPORTES, MOVILIDAD Y AGENDA URBANA
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Orden TMA/246/2020, de 17 de marzo, por la que se establecen las medidas de transporte a aplicar a las conexiones entre la península y la Comunidad Autónoma de Canarias.
+Orden TMA/246/2020, de 17 de marzo, por la que se establecen las medidas
+de transporte a aplicar a las conexiones entre la península y la
+Comunidad Autónoma de Canarias.
 </td>
 </tr>
 <tr>
@@ -1707,7 +1891,9 @@ MINISTERIO DE TRANSPORTES, MOVILIDAD Y AGENDA URBANA
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Orden TMA/247/2020, de 17 de marzo, por la que se establecen las medidas de transporte a aplicar a las conexiones entre la península y la Comunidad Autónoma de Illes Balears.
+Orden TMA/247/2020, de 17 de marzo, por la que se establecen las medidas
+de transporte a aplicar a las conexiones entre la península y la
+Comunidad Autónoma de Illes Balears.
 </td>
 </tr>
 <tr>
@@ -1727,7 +1913,11 @@ MINISTERIO DE SANIDAD
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Orden SND/257/2020, de 19 de marzo, por la que se declara la suspensión de apertura al público de establecimientos de alojamiento turístico, de acuerdo con el artículo 10.6 del Real Decreto 463/2020, de 14 de marzo, por el que se declara el estado de alarma para la gestión de la situación de crisis sanitaria ocasionada por el COVID-19.
+Orden SND/257/2020, de 19 de marzo, por la que se declara la suspensión
+de apertura al público de establecimientos de alojamiento turístico, de
+acuerdo con el artículo 10.6 del Real Decreto 463/2020, de 14 de marzo,
+por el que se declara el estado de alarma para la gestión de la
+situación de crisis sanitaria ocasionada por el COVID-19.
 </td>
 </tr>
 <tr>
@@ -1747,7 +1937,9 @@ MINISTERIO DE INDUSTRIA, COMERCIO Y TURISMO
 Estado de alarma. Material sanitario
 </td>
 <td style="text-align:center;">
-Resolución de 20 de marzo de 2020, de la Secretaría General de Industria y de la Pequeña y Mediana Empresa, sobre especificaciones alternativas a las mascarillas EPI con marcado CE europeo.
+Resolución de 20 de marzo de 2020, de la Secretaría General de Industria
+y de la Pequeña y Mediana Empresa, sobre especificaciones alternativas a
+las mascarillas EPI con marcado CE europeo.
 </td>
 </tr>
 <tr>
@@ -1767,7 +1959,10 @@ MINISTERIO DE SANIDAD
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Orden SND/290/2020, de 26 de marzo, por la que se prorroga la Resolución INT/718/2020, de 12 de marzo de 2020, de la Generalitat de Cataluña, por la que se acuerda restringir la salida de las personas de los municipios de Igualada, Vilanova del Camí, Santa Margarida de Montbui y Òdena.
+Orden SND/290/2020, de 26 de marzo, por la que se prorroga la Resolución
+INT/718/2020, de 12 de marzo de 2020, de la Generalitat de Cataluña, por
+la que se acuerda restringir la salida de las personas de los municipios
+de Igualada, Vilanova del Camí, Santa Margarida de Montbui y Òdena.
 </td>
 </tr>
 <tr>
@@ -1787,7 +1982,10 @@ JEFATURA DEL ESTADO
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Real Decreto-ley 10/2020, de 29 de marzo, por el que se regula un permiso retribuido recuperable para las personas trabajadoras por cuenta ajena que no presten servicios esenciales, con el fin de reducir la movilidad de la población en el contexto de la lucha contra el COVID-19.
+Real Decreto-ley 10/2020, de 29 de marzo, por el que se regula un
+permiso retribuido recuperable para las personas trabajadoras por cuenta
+ajena que no presten servicios esenciales, con el fin de reducir la
+movilidad de la población en el contexto de la lucha contra el COVID-19.
 </td>
 </tr>
 <tr>
@@ -1807,7 +2005,10 @@ MINISTERIO DE TRANSPORTES, MOVILIDAD Y AGENDA URBANA
 Estado de alarma. Alojamientos turísticos
 </td>
 <td style="text-align:center;">
-Orden TMA/305/2020, de 30 de marzo, por la que se modifica el anexo de la Orden TMA/277/2020, de 23 de marzo, por la que se declaran servicios esenciales a determinados alojamientos turísticos y se adoptan disposiciones complementarias.
+Orden TMA/305/2020, de 30 de marzo, por la que se modifica el anexo de
+la Orden TMA/277/2020, de 23 de marzo, por la que se declaran servicios
+esenciales a determinados alojamientos turísticos y se adoptan
+disposiciones complementarias.
 </td>
 </tr>
 <tr>
@@ -1827,7 +2028,9 @@ MINISTERIO DE TRANSPORTES, MOVILIDAD Y AGENDA URBANA
 Estado de alarma. Transporte de viajeros
 </td>
 <td style="text-align:center;">
-Orden TMA/306/2020, de 30 de marzo, por la que se dictan instrucciones sobre reducción de servicios de transporte de viajeros durante la vigencia del Real Decreto-ley 10/2020.
+Orden TMA/306/2020, de 30 de marzo, por la que se dictan instrucciones
+sobre reducción de servicios de transporte de viajeros durante la
+vigencia del Real Decreto-ley 10/2020.
 </td>
 </tr>
 <tr>
@@ -1847,7 +2050,10 @@ MINISTERIO DE SANIDAD
 Estado de alarma. Modelo de declaración responsable
 </td>
 <td style="text-align:center;">
-Orden SND/307/2020, 30 de marzo, por la que se establecen los criterios interpretativos para la aplicación del Real Decreto-ley 10/2020, de 29 de marzo, y el modelo de declaración responsable para facilitar los trayectos necesarios entre el lugar de residencia y de trabajo.
+Orden SND/307/2020, 30 de marzo, por la que se establecen los criterios
+interpretativos para la aplicación del Real Decreto-ley 10/2020, de 29
+de marzo, y el modelo de declaración responsable para facilitar los
+trayectos necesarios entre el lugar de residencia y de trabajo.
 </td>
 </tr>
 <tr>
@@ -1867,7 +2073,12 @@ MINISTERIO DE SANIDAD
 Estado de alarma. Junta de Extremadura
 </td>
 <td style="text-align:center;">
-Orden SND/339/2020, de 12 de abril, por la que se dejan sin efecto las restricciones previstas en la Resolución de 13 de marzo de 2020, del Vicepresidente Segundo y Consejero de Sanidad y Servicios Sociales de la Junta de Extremadura por la que se acuerdan medidas preventivas en materia de salud pública en relación con el municipio del Arroyo de la Luz.
+Orden SND/339/2020, de 12 de abril, por la que se dejan sin efecto las
+restricciones previstas en la Resolución de 13 de marzo de 2020, del
+Vicepresidente Segundo y Consejero de Sanidad y Servicios Sociales de la
+Junta de Extremadura por la que se acuerdan medidas preventivas en
+materia de salud pública en relación con el municipio del Arroyo de la
+Luz.
 </td>
 </tr>
 <tr>
@@ -1887,7 +2098,10 @@ MINISTERIO DE SANIDAD
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Orden SND/340/2020, de 12 de abril, por la que se suspenden determinadas actividades relacionadas con obras de intervención en edificios existentes en las que exista riesgo de contagio por el COVID-19 para personas no relacionadas con dicha actividad.
+Orden SND/340/2020, de 12 de abril, por la que se suspenden determinadas
+actividades relacionadas con obras de intervención en edificios
+existentes en las que exista riesgo de contagio por el COVID-19 para
+personas no relacionadas con dicha actividad.
 </td>
 </tr>
 <tr>
@@ -1907,7 +2121,10 @@ MINISTERIO DE SANIDAD
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Orden SND/354/2020, de 19 de abril, por la que se establecen medidas excepcionales para garantizar el acceso de la población a los productos de uso recomendados como medidas higiénicas para la prevención de contagios por el COVID-19.
+Orden SND/354/2020, de 19 de abril, por la que se establecen medidas
+excepcionales para garantizar el acceso de la población a los productos
+de uso recomendados como medidas higiénicas para la prevención de
+contagios por el COVID-19.
 </td>
 </tr>
 <tr>
@@ -1927,7 +2144,10 @@ MINISTERIO DE SANIDAD
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Orden SND/370/2020, de 25 de abril, sobre las condiciones en las que deben desarrollarse los desplazamientos por parte de la población infantil durante la situación de crisis sanitaria ocasionada por el COVID-19.
+Orden SND/370/2020, de 25 de abril, sobre las condiciones en las que
+deben desarrollarse los desplazamientos por parte de la población
+infantil durante la situación de crisis sanitaria ocasionada por el
+COVID-19.
 </td>
 </tr>
 <tr>
@@ -1947,7 +2167,10 @@ MINISTERIO DE TRANSPORTES, MOVILIDAD Y AGENDA URBANA
 Estado de alarma. Movilidad
 </td>
 <td style="text-align:center;">
-Orden TMA/384/2020, de 3 de mayo, por la que se dictan instrucciones sobre la utilización de mascarillas en los distintos medios de transporte y se fijan requisitos para garantizar una movilidad segura de conformidad con el plan para la transición hacia una nueva normalidad.
+Orden TMA/384/2020, de 3 de mayo, por la que se dictan instrucciones
+sobre la utilización de mascarillas en los distintos medios de
+transporte y se fijan requisitos para garantizar una movilidad segura de
+conformidad con el plan para la transición hacia una nueva normalidad.
 </td>
 </tr>
 <tr>
@@ -1967,7 +2190,12 @@ MINISTERIO DE SANIDAD
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Orden SND/386/2020, de 3 de mayo, por la que se flexibilizan determinadas restricciones sociales y se determinan las condiciones de desarrollo de la actividad de comercio minorista y de prestación de servicios, así como de las actividades de hostelería y restauración en los territorios menos afectados por la crisis sanitaria ocasionada por el COVID-19.
+Orden SND/386/2020, de 3 de mayo, por la que se flexibilizan
+determinadas restricciones sociales y se determinan las condiciones de
+desarrollo de la actividad de comercio minorista y de prestación de
+servicios, así como de las actividades de hostelería y restauración en
+los territorios menos afectados por la crisis sanitaria ocasionada por
+el COVID-19.
 </td>
 </tr>
 <tr>
@@ -1987,7 +2215,9 @@ MINISTERIO DE SANIDAD
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Orden SND/387/2020, de 3 de mayo, por la que se regula el proceso de cogobernanza con las comunidades autónomas y ciudades de Ceuta y Melilla para la transición a una nueva normalidad.
+Orden SND/387/2020, de 3 de mayo, por la que se regula el proceso de
+cogobernanza con las comunidades autónomas y ciudades de Ceuta y Melilla
+para la transición a una nueva normalidad.
 </td>
 </tr>
 <tr>
@@ -2007,7 +2237,10 @@ MINISTERIO DE SANIDAD
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Orden SND/388/2020, de 3 de mayo, por la que se establecen las condiciones para la apertura al público de determinados comercios y servicios, y la apertura de archivos, así como para la práctica del deporte profesional y federado.
+Orden SND/388/2020, de 3 de mayo, por la que se establecen las
+condiciones para la apertura al público de determinados comercios y
+servicios, y la apertura de archivos, así como para la práctica del
+deporte profesional y federado.
 </td>
 </tr>
 <tr>
@@ -2027,7 +2260,10 @@ MINISTERIO DE SANIDAD
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Orden SND/399/2020, de 9 de mayo, para la flexibilización de determinadas restricciones de ámbito nacional, establecidas tras la declaración del estado de alarma en aplicación de la fase 1 del Plan para la transición hacia una nueva normalidad.
+Orden SND/399/2020, de 9 de mayo, para la flexibilización de
+determinadas restricciones de ámbito nacional, establecidas tras la
+declaración del estado de alarma en aplicación de la fase 1 del Plan
+para la transición hacia una nueva normalidad.
 </td>
 </tr>
 <tr>
@@ -2047,7 +2283,10 @@ MINISTERIO DE SANIDAD
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Orden SND/414/2020, de 16 de mayo, para la flexibilización de determinadas restricciones de ámbito nacional establecidas tras la declaración del estado de alarma en aplicación de la fase 2 del Plan para la transición hacia una nueva normalidad.
+Orden SND/414/2020, de 16 de mayo, para la flexibilización de
+determinadas restricciones de ámbito nacional establecidas tras la
+declaración del estado de alarma en aplicación de la fase 2 del Plan
+para la transición hacia una nueva normalidad.
 </td>
 </tr>
 <tr>
@@ -2067,7 +2306,9 @@ MINISTERIO DE TRANSPORTES, MOVILIDAD Y AGENDA URBANA
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Orden TMA/415/2020, de 17 de mayo, por la que se amplía la relación de puntos de entrada designados con capacidad de atención a emergencias de salud pública de importancia internacional.
+Orden TMA/415/2020, de 17 de mayo, por la que se amplía la relación de
+puntos de entrada designados con capacidad de atención a emergencias de
+salud pública de importancia internacional.
 </td>
 </tr>
 <tr>
@@ -2087,7 +2328,9 @@ MINISTERIO DE SANIDAD
 Estado de alarma. Fronteras
 </td>
 <td style="text-align:center;">
-Orden SND/439/2020, de 23 de mayo, por la que se prorrogan los controles en las fronteras interiores terrestres, aéreas y marítimas con motivo de la situación de crisis sanitaria ocasionada por el COVID-19.
+Orden SND/439/2020, de 23 de mayo, por la que se prorrogan los controles
+en las fronteras interiores terrestres, aéreas y marítimas con motivo de
+la situación de crisis sanitaria ocasionada por el COVID-19.
 </td>
 </tr>
 <tr>
@@ -2107,7 +2350,10 @@ MINISTERIO DE SANIDAD
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Orden SND/440/2020, de 23 de mayo, por la que se modifican diversas órdenes para una mejor gestión de la crisis sanitaria ocasionada por el COVID-19 en aplicación del Plan para la transición hacia una nueva normalidad.
+Orden SND/440/2020, de 23 de mayo, por la que se modifican diversas
+órdenes para una mejor gestión de la crisis sanitaria ocasionada por el
+COVID-19 en aplicación del Plan para la transición hacia una nueva
+normalidad.
 </td>
 </tr>
 <tr>
@@ -2127,7 +2373,11 @@ MINISTERIO DE SANIDAD
 Estado de alarma. Transporte internacional
 </td>
 <td style="text-align:center;">
-Orden SND/441/2020, de 23 de mayo, por la que se prorroga la Orden TMA/410/2020, de 14 de mayo, por la que se limita la entrada en España a las aeronaves y buques de pasaje a través de los puntos de entrada designados con capacidad de atención a emergencias de salud pública de importancia internacional.
+Orden SND/441/2020, de 23 de mayo, por la que se prorroga la Orden
+TMA/410/2020, de 14 de mayo, por la que se limita la entrada en España a
+las aeronaves y buques de pasaje a través de los puntos de entrada
+designados con capacidad de atención a emergencias de salud pública de
+importancia internacional.
 </td>
 </tr>
 <tr>
@@ -2147,7 +2397,10 @@ MINISTERIO DE SANIDAD
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Orden SND/458/2020, de 30 de mayo, para la flexibilización de determinadas restricciones de ámbito nacional establecidas tras la declaración del estado de alarma en aplicación de la fase 3 del Plan para la transición hacia una nueva normalidad.
+Orden SND/458/2020, de 30 de mayo, para la flexibilización de
+determinadas restricciones de ámbito nacional establecidas tras la
+declaración del estado de alarma en aplicación de la fase 3 del Plan
+para la transición hacia una nueva normalidad.
 </td>
 </tr>
 <tr>
@@ -2167,7 +2420,10 @@ MINISTERIO DE SANIDAD
 Estado de alarma. Medidas urgentes
 </td>
 <td style="text-align:center;">
-Orden SND/507/2020, de 6 de junio, por la que se modifican diversas órdenes con el fin de flexibilizar determinadas restricciones de ámbito nacional y establecer las unidades territoriales que progresan a las fases 2 y 3 del Plan para la transición hacia una nueva normalidad.
+Orden SND/507/2020, de 6 de junio, por la que se modifican diversas
+órdenes con el fin de flexibilizar determinadas restricciones de ámbito
+nacional y establecer las unidades territoriales que progresan a las
+fases 2 y 3 del Plan para la transición hacia una nueva normalidad.
 </td>
 </tr>
 <tr>
@@ -2187,7 +2443,10 @@ TRIBUNAL CONSTITUCIONAL
 Conflictos constitucionales
 </td>
 <td style="text-align:center;">
-Conflicto positivo de competencia n.º 6116-2019, en relación con el Acuerdo Gov/90/2019, de 25 de junio, del Gobierno de la Generalidad de Cataluña, por el que se aprueba el Plan estratégico de acción exterior y de relaciones con la Unión Europea 2019-2022.
+Conflicto positivo de competencia n.º 6116-2019, en relación con el
+Acuerdo Gov/90/2019, de 25 de junio, del Gobierno de la Generalidad de
+Cataluña, por el que se aprueba el Plan estratégico de acción exterior y
+de relaciones con la Unión Europea 2019-2022.
 </td>
 </tr>
 <tr>
@@ -2201,13 +2460,16 @@ Conflicto positivo de competencia n.º 6116-2019, en relación con el Acuerdo Go
 I. Disposiciones generales
 </td>
 <td style="text-align:center;">
-MINISTERIO DE LA PRESIDENCIA, RELACIONES CON LAS CORTES Y MEMORIA DEMOCRÁTICA
+MINISTERIO DE LA PRESIDENCIA, RELACIONES CON LAS CORTES Y MEMORIA
+DEMOCRÁTICA
 </td>
 <td style="text-align:center;">
 Estado de alarma
 </td>
 <td style="text-align:center;">
-Real Decreto 900/2020, de 9 de octubre, por el que se declara el estado de alarma para responder ante situaciones de especial riesgo por transmisión no controlada de infecciones causadas por el SARS-CoV-2.
+Real Decreto 900/2020, de 9 de octubre, por el que se declara el estado
+de alarma para responder ante situaciones de especial riesgo por
+transmisión no controlada de infecciones causadas por el SARS-CoV-2.
 </td>
 </tr>
 <tr>
@@ -2221,13 +2483,16 @@ Real Decreto 900/2020, de 9 de octubre, por el que se declara el estado de alarm
 I. Disposiciones generales
 </td>
 <td style="text-align:center;">
-MINISTERIO DE LA PRESIDENCIA, RELACIONES CON LAS CORTES Y MEMORIA DEMOCRÁTICA
+MINISTERIO DE LA PRESIDENCIA, RELACIONES CON LAS CORTES Y MEMORIA
+DEMOCRÁTICA
 </td>
 <td style="text-align:center;">
 Estado de alarma
 </td>
 <td style="text-align:center;">
-Real Decreto 926/2020, de 25 de octubre, por el que se declara el estado de alarma para contener la propagación de infecciones causadas por el SARS-CoV-2.
+Real Decreto 926/2020, de 25 de octubre, por el que se declara el estado
+de alarma para contener la propagación de infecciones causadas por el
+SARS-CoV-2.
 </td>
 </tr>
 <tr>
@@ -2247,7 +2512,11 @@ MINISTERIO DEL INTERIOR
 Fronteras
 </td>
 <td style="text-align:center;">
-Orden INT/1236/2020, de 22 de diciembre, por la que se establecen criterios para la restricción temporal del acceso por vía terrestre al espacio Schengen a través del puesto de control de personas con el territorio de Gibraltar por razones de salud pública con motivo de la crisis sanitaria ocasionada por el COVID-19.
+Orden INT/1236/2020, de 22 de diciembre, por la que se establecen
+criterios para la restricción temporal del acceso por vía terrestre al
+espacio Schengen a través del puesto de control de personas con el
+territorio de Gibraltar por razones de salud pública con motivo de la
+crisis sanitaria ocasionada por el COVID-19.
 </td>
 </tr>
 <tr>
@@ -2261,13 +2530,65 @@ Orden INT/1236/2020, de 22 de diciembre, por la que se establecen criterios para
 I. Disposiciones generales
 </td>
 <td style="text-align:center;">
-MINISTERIO DE LA PRESIDENCIA, RELACIONES CON LAS CORTES Y MEMORIA DEMOCRÁTICA
+MINISTERIO DE LA PRESIDENCIA, RELACIONES CON LAS CORTES Y MEMORIA
+DEMOCRÁTICA
 </td>
 <td style="text-align:center;">
 Medidas excepcionales
 </td>
 <td style="text-align:center;">
-Orden PCM/1237/2020, de 22 de diciembre, por la que se publica el Acuerdo del Consejo de Ministros de 22 de diciembre de 2020, por el que se establecen medidas excepcionales para limitar la propagación y el contagio por el COVID-19, mediante la limitación de los vuelos directos y buques de pasaje entre Reino Unido y los aeropuertos y puertos españoles.
+Orden PCM/1237/2020, de 22 de diciembre, por la que se publica el
+Acuerdo del Consejo de Ministros de 22 de diciembre de 2020, por el que
+se establecen medidas excepcionales para limitar la propagación y el
+contagio por el COVID-19, mediante la limitación de los vuelos directos
+y buques de pasaje entre Reino Unido y los aeropuertos y puertos
+españoles.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+93
+</td>
+<td style="text-align:center;">
+2021-04-29
+</td>
+<td style="text-align:center;">
+I. Disposiciones generales
+</td>
+<td style="text-align:center;">
+TRIBUNAL CONSTITUCIONAL
+</td>
+<td style="text-align:center;">
+Recursos de inconstitucionalidad
+</td>
+<td style="text-align:center;">
+Recurso de inconstitucionalidad n.º 1200-2021, contra el artículo 88 de
+la Ley de la Generalitat de Cataluña 5/2020, de 29 de abril, de medidas
+fiscales, financieras, administrativas y del sector público y de
+creación del impuesto sobre las instalaciones que inciden en el medio
+ambiente.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+94
+</td>
+<td style="text-align:center;">
+2021-12-23
+</td>
+<td style="text-align:center;">
+I. Disposiciones generales
+</td>
+<td style="text-align:center;">
+JEFATURA DEL ESTADO
+</td>
+<td style="text-align:center;">
+Medidas urgentes
+</td>
+<td style="text-align:center;">
+Real Decreto-ley 30/2021, de 23 de diciembre, por el que se adoptan
+medidas urgentes de prevención y contención para hacer frente a la
+crisis sanitaria ocasionada por la COVID-19.
 </td>
 </tr>
 </tbody>
@@ -2299,10 +2620,16 @@ Orden PCM/1237/2020, de 22 de diciembre, por la que se publica el Acuerdo del Co
 </ol></li>
 </ol></li>
 </ol>
-<p>Si miramos la tendencia general vemos que hay algunos días (generalmente hacia principio de año) que se aprueban cosas de hace casi un año:</p>
+<p>Si miramos la tendencia general vemos que hay algunos días
+(generalmente hacia principio de año) que se aprueban cosas de hace casi
+un año:</p>
 <p><img src="retraso_files/figure-html/retraso_mediano-1.png" width="672" /><img src="retraso_files/figure-html/retraso_mediano-2.png" width="672" /></p>
-<p>Aunque la tendencia es a reducir el tiempo entre aprobación y publicación, hay un retraso entre aprobado y publicado de unos 12 días habitualmente.</p>
-<p>En cambio si miramos todas las publicaciones vemos que la tendencia es a reducir pero que la mayoría de publicaciones tienen una tardanza de unos 30 días:</p>
+<p>Aunque la tendencia es a reducir el tiempo entre aprobación y
+publicación, hay un retraso entre aprobado y publicado de unos 12 días
+habitualmente.</p>
+<p>En cambio si miramos todas las publicaciones vemos que la tendencia
+es a reducir pero que la mayoría de publicaciones tienen una tardanza de
+unos 30 días:</p>
 <p><img src="retraso_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 </div>
 

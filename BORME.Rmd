@@ -115,7 +115,7 @@ df3 %>%
     scale_y_continuous(expand = c(0, 10)) +
     labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado",
          x = element_blank(), y = "Emisor") +
-    guides(col = FALSE) +
+    guides(col = "none") +
     scale_color_viridis_d() +
     theme_bw()
 
@@ -128,7 +128,7 @@ df3 %>%
     gghighlight(n > 150, use_direct_label = FALSE) +
     scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
     scale_y_continuous(expand = c(0, 10)) +
-    # guides(col = FALSE) +
+    # guides(col = "none") +
     scale_color_viridis_d() +
     labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado",
          x = element_blank(), y = "Emisor") +
@@ -165,7 +165,7 @@ dff %>%
     geom_point(aes(date, ratio, col = emisor)) +
     scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
     scale_y_continuous(expand = c(0, 0)) +
-    guides(col = FALSE) +
+    guides(col = "none") +
     scale_color_viridis_d() +
     labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado",
          x = element_blank()) +
@@ -185,7 +185,7 @@ dff %>%
     geom_col(aes(y= log10(n), x = fct_reorder(department, n), fill = log10(n))) +
     scale_y_continuous(expand = c(0, 0)) +
     coord_flip() +
-    guides(fill = FALSE) +
+    guides(fill = "none") +
     labs(x = "Departamento", y= "log10(Publicaciones)") +
     scale_fill_viridis_c(option = "A", direction = -1) +
     labs(caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
