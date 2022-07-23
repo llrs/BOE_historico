@@ -75,7 +75,7 @@ freqs %>%
              axis1 = forcats::fct_reorder(section, -Freq, .fun = sum), 
              axis2 = forcats::fct_reorder(departament, -Freq, .fun = sum))) +
   geom_alluvium() +
-  geom_stratum(fill = "white", color = "darkgrey") +
+  # geom_stratum(fill = "white", color = "darkgrey") +
   ggfittext::geom_fit_text(mapping = aes(label = after_stat(stratum)), 
                            stat = "stratum", min.size = 1) +
   guides(fill = "none") +
@@ -171,14 +171,23 @@ id_tweet <- function(x) {
   httr::content(x)$id_str
 }
 
+
+media_alt_txt <- paste("Gráfico alluvial con los anuncios publicados hoy.",
+                       "Hay dos columnas de las categorías sección y departamento, ordenado por frequencia.",
+                       "Hoy hay", length(unique(freqs$section[freqs$Type == "Anuncio"])), 
+                       "secciones y", length(unique(freqs$departament[freqs$Type == "Anuncio"])), "departamentos.")
+
+
 files2 <- c("docs/last_BOE_files/figure-html/graphics-1.png",
-                     "docs/last_BOE_files/figure-html/anuncios-1.png")
+            "docs/last_BOE_files/figure-html/anuncios-1.png")
 files2 <- files2[c(TRUE, anuncios != 0)]
 r <- post_tweet(status = paste0(status, collapse = ""),
-                media = files2)
+                media_alt_text = media_alt_txt,
+                media = files2, media)
 # Reply to boegob
 gt <- get_timeline("boegob", n = 1) # Last publication:
 r2 <- post_tweet(status = paste0(status, collapse = ""), media = files2,
+                 media_alt_text = media_alt_txt,
                  in_reply_to_status_id = gt$status_id[1],
                  auto_populate_reply_metadata = TRUE)
 ```
