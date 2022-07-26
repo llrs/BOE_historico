@@ -172,10 +172,15 @@ id_tweet <- function(x) {
 }
 
 
-media_alt_txt <- paste("Gráfico alluvial con los anuncios publicados hoy.",
+media_alt_txt <- c(paste("Gráfico alluvial con las disposiciones publicadas hoy.",
+                       "Hay dos columnas de las categorías sección y departamento, ordenado por frequencia.",
+                       "Hoy hay", length(unique(freqs$section[freqs$Type != "Anuncio"])), 
+                       "secciones y", length(unique(freqs$departament[freqs$Type != "Anuncio"])), "departamentos."),
+                   
+                   paste("Gráfico alluvial con los anuncios publicados hoy.",
                        "Hay dos columnas de las categorías sección y departamento, ordenado por frequencia.",
                        "Hoy hay", length(unique(freqs$section[freqs$Type == "Anuncio"])), 
-                       "secciones y", length(unique(freqs$departament[freqs$Type == "Anuncio"])), "departamentos.")
+                       "secciones y", length(unique(freqs$departament[freqs$Type == "Anuncio"])), "departamentos."),)
 
 
 files2 <- c("docs/last_BOE_files/figure-html/graphics-1.png",
