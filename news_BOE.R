@@ -1,14 +1,13 @@
 library('BOE')
 suppressPackageStartupMessages({library("rtweet")})
 suppressPackageStartupMessages({library("poorman")})
-token <- rtweet::create_token(
-    app = "Boletines Españoles",
-    consumer_key =    Sys.getenv("TWITTER_API_KEY"),
-    consumer_secret = Sys.getenv("TWITTER_API_SECRET_KEY"),
+token <- rtweet::rtweet_bot(
+    api_key =    Sys.getenv("TWITTER_API_KEY"),
+    api_secret = Sys.getenv("TWITTER_API_SECRET_KEY"),
     access_token =    Sys.getenv("TWITTER_ACCESS_TOKEN"),
     access_secret =   Sys.getenv("TWITTER_ACCESS_SECRET_TOKEN")
 )
-
+rtweet::auth_as(token)
 today <- Sys.Date()
 print(list.files(pattern = "*.RDS"))
 if (file.access("boe-hoy.RDS", mode = "4") == 0) {
