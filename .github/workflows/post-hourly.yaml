@@ -28,8 +28,8 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-2-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-2-
+          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-3-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-3-
       - name: Install dependencies
         # if: ${{ failure() }} # https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstepsif
         run: |
@@ -46,7 +46,7 @@ jobs:
       - name: run BOE
         run: Rscript news_BOE.R
       - name: Save remaining
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: update
           path: boe-hoy.RDS
