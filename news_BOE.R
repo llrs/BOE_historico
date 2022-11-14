@@ -14,6 +14,7 @@ if (file.access("boe-hoy.RDS", mode = "4") == 0) {
     message("Artifact downloaded and found.")
     boe <- readRDS("boe-hoy.RDS")
 } else {
+    httr::set_config(httr::config(ssl_verifypeer = FALSE))
     message("Data downloaded from the website.")
     boe <- retrieve_sumario(today)
     boe <- boe[!is.na(boe$epigraph), ]

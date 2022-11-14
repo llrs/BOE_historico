@@ -18,5 +18,6 @@ token <- rtweet::rtweet_bot(
 )
 rtweet::auth_as(token)
 if (valid_url(url_sumario)) {
+    httr::set_config(httr::config(ssl_verifypeer = FALSE))
     rmarkdown::render_site("last_BORME.Rmd")
 }
