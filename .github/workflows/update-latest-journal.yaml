@@ -33,11 +33,11 @@ jobs:
         run:  sudo apt-get install libcurl4-openssl-dev
       - name: Cache R packages # From https://github.com/r-lib/actions/blob/master/.github/workflows/check-standard.yaml#L50-L56
         if: runner.os != 'Windows'
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-4-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-4-
+          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-5-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-5-
       - name: Install dependencies
         # if: ${{ failure() }} # https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstepsif
         run: |

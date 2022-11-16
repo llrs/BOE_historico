@@ -1,6 +1,7 @@
 library("rtweet")
 library("BOE")
 today <- Sys.Date()
+httr::set_config(httr::config(ssl_verifypeer = FALSE))
 url_sumario <- query_xml(sumario_xml(today, "BORME"))
 
 valid_url <- function(url_in, t = 2){
@@ -18,6 +19,5 @@ token <- rtweet::rtweet_bot(
 )
 rtweet::auth_as(token)
 if (valid_url(url_sumario)) {
-    httr::set_config(httr::config(ssl_verifypeer = FALSE))
     rmarkdown::render_site("last_BORME.Rmd")
 }
