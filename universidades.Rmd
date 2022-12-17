@@ -19,7 +19,7 @@ library("forcats", warn.conflicts = FALSE)
 library("stringr", warn.conflicts = FALSE)
 
 con <- DBI::dbConnect(RSQLite::SQLite(),
-                      dbname = "boes.sqlite")
+                      dbname = "boe.sqlite")
 unis <- con %>% 
     tbl("sumario") %>% 
     filter(departament == "UNIVERSIDADES") %>% 

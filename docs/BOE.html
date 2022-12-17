@@ -13,7 +13,7 @@
 
 <title>El Boe a vista de pájaro</title>
 
-<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -170,11 +170,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -203,8 +207,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -212,16 +216,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -369,15 +366,17 @@ $(document).ready(function () {
 
 <div id="TOC">
 <ul>
-<li><a href="#preparación">Preparación</a></li>
-<li><a href="#sección">Sección</a></li>
-<li><a href="#departamento">Departamento</a></li>
-<li><a href="#epígrafe">Epígrafe</a></li>
-<li><a href="#texto">Texto</a></li>
-<li><a href="#número-de-páginas">Número de páginas</a></li>
-<li><a href="#relación-entre-boletines-y-códigos-publicaciones">Relación
-entre boletines y códigos publicaciones</a></li>
-<li><a href="#conclusiones">Conclusiones</a></li>
+<li><a href="#preparación" id="toc-preparación">Preparación</a></li>
+<li><a href="#sección" id="toc-sección">Sección</a></li>
+<li><a href="#departamento" id="toc-departamento">Departamento</a></li>
+<li><a href="#epígrafe" id="toc-epígrafe">Epígrafe</a></li>
+<li><a href="#texto" id="toc-texto">Texto</a></li>
+<li><a href="#número-de-páginas" id="toc-número-de-páginas">Número de
+páginas</a></li>
+<li><a href="#relación-entre-boletines-y-códigos-publicaciones"
+id="toc-relación-entre-boletines-y-códigos-publicaciones">Relación entre
+boletines y códigos publicaciones</a></li>
+<li><a href="#conclusiones" id="toc-conclusiones">Conclusiones</a></li>
 </ul>
 </div>
 
@@ -385,7 +384,7 @@ entre boletines y códigos publicaciones</a></li>
 <h1>Preparación</h1>
 <p>Cargamos los datos del BOE del 2009/01/01 (fecha a partir de la cual
 lo que figure en la página web tiene validez legal) hasta el
-2022-03-24.</p>
+2021-02-20.</p>
 </div>
 <div id="sección" class="section level1">
 <h1>Sección</h1>

@@ -13,7 +13,7 @@
 
 <title>Tipo de leyes</title>
 
-<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -170,11 +170,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -203,8 +207,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -212,16 +216,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -397,13 +394,6 @@ en el sumario respecto a la publicación y posteriormente se publicó una
 corrección. Omito las dos publicaciones a partir de ahora. Podemos ver
 que hay mucha variación según el tipo de publicación:</p>
 <table>
-<colgroup>
-<col width="38%" />
-<col width="11%" />
-<col width="14%" />
-<col width="19%" />
-<col width="14%" />
-</colgroup>
 <thead>
 <tr class="header">
 <th align="left">Tipo</th>
@@ -425,7 +415,7 @@ que hay mucha variación según el tipo de publicación:</p>
 <td align="left">real decreto</td>
 <td align="left">0 days</td>
 <td align="left">1.0 days</td>
-<td align="left">18.00 days</td>
+<td align="left">19.00 days</td>
 <td align="left">209 days</td>
 </tr>
 <tr class="odd">
@@ -446,14 +436,14 @@ que hay mucha variación según el tipo de publicación:</p>
 <td align="left">instrucción</td>
 <td align="left">2 days</td>
 <td align="left">5.0 days</td>
-<td align="left">9.00 days</td>
+<td align="left">8.25 days</td>
 <td align="left">51 days</td>
 </tr>
 <tr class="even">
 <td align="left">orden</td>
 <td align="left">0 days</td>
 <td align="left">11.0 days</td>
-<td align="left">16.00 days</td>
+<td align="left">17.00 days</td>
 <td align="left">388 days</td>
 </tr>
 <tr class="odd">
@@ -471,60 +461,53 @@ que hay mucha variación según el tipo de publicación:</p>
 <td align="left">68 days</td>
 </tr>
 <tr class="odd">
-<td align="left">decreto foral legislativo</td>
-<td align="left">13 days</td>
-<td align="left">25.0 days</td>
-<td align="left">47.50 days</td>
-<td align="left">106 days</td>
-</tr>
-<tr class="even">
 <td align="left">orden foral</td>
 <td align="left">8 days</td>
 <td align="left">27.0 days</td>
 <td align="left">27.50 days</td>
 <td align="left">29 days</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">ley</td>
 <td align="left">1 days</td>
 <td align="left">29.0 days</td>
 <td align="left">46.00 days</td>
 <td align="left">700 days</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">decreto ley</td>
 <td align="left">30 days</td>
 <td align="left">37.5 days</td>
 <td align="left">41.25 days</td>
 <td align="left">45 days</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">decreto-ley foral</td>
 <td align="left">15 days</td>
-<td align="left">41.0 days</td>
-<td align="left">51.25 days</td>
+<td align="left">40.0 days</td>
+<td align="left">48.50 days</td>
 <td align="left">83 days</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">decreto</td>
 <td align="left">1 days</td>
-<td align="left">43.0 days</td>
-<td align="left">68.00 days</td>
+<td align="left">42.0 days</td>
+<td align="left">66.00 days</td>
 <td align="left">1315 days</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">decreto legislativo</td>
 <td align="left">15 days</td>
 <td align="left">43.0 days</td>
 <td align="left">77.75 days</td>
 <td align="left">224 days</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">decreto-ley</td>
 <td align="left">4 days</td>
-<td align="left">51.0 days</td>
-<td align="left">66.00 days</td>
-<td align="left">389 days</td>
+<td align="left">48.0 days</td>
+<td align="left">60.50 days</td>
+<td align="left">345 days</td>
 </tr>
 </tbody>
 </table>
