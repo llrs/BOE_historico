@@ -43,6 +43,8 @@ jobs:
           workflow: post-hourly.yaml
           name: update
           workflow_conclusion: success
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
       - name: run BOE
         run: Rscript news_BOE.R
       - name: Save remaining
