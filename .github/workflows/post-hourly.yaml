@@ -43,12 +43,6 @@ jobs:
           workflow: post-hourly.yaml
           name: update
           workflow_conclusion: success
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        timeout-minutes: 15
-        with:
-          limit-access-to-actor: true
-
       - name: run BOE
         run: Rscript news_BOE.R
       - name: Save remaining
@@ -56,3 +50,9 @@ jobs:
         with:
           name: update
           path: boe-hoy.RDS
+      - name: Setup tmate session
+        if: ${{ failure() }}
+        uses: mxschmitt/action-tmate@v3
+        timeout-minutes: 15
+        with:
+          limit-access-to-actor: true
