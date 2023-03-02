@@ -21,8 +21,8 @@ knitr::opts_chunk$set(echo = FALSE, include = TRUE, message=FALSE, warning=FALSE
 today <- Sys.Date()
 library("BOE")
 sumario_hoy <- try(retrieve_sumario(today, journal = "BORME"), silent = TRUE)
-if (is(sumario_hoy, "try-error")) {
-    knitr::knit_exit()
+if (inherits(sumario_hoy, "try-error")) {
+    knitr::knit_exit("Sorry tody I couldn't retrieve the results")
 }
 ```
 

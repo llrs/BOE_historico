@@ -21,6 +21,9 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, error = FA
 today <- Sys.Date()
 library("BOE")
 sumario_hoy <- try(retrieve_sumario(today), silent = TRUE)
+if (inherits(sumario_hoy, "try-error")) {
+    knitr::knit_exit("Sorry tody I couldn't retrieve the results")
+}
 tipo <- gsub(pattern = "BOE-([AB])-.*", 
      replacement = "\\1", sumario_hoy$publication)
 ts <- table(tipo)
