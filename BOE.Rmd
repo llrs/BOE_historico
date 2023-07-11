@@ -106,7 +106,7 @@ df2 %>%
 dff %>% 
     group_by(date, section) %>% 
     summarise(n = n()) %>% 
-    mutate(publications = sum(n), ratio = n/publications) %>% 
+    mutate(publications = sum(n), ratio = n / publications) %>% 
     ungroup() %>% 
     group_by(date) %>% 
     filter(ratio == max(ratio)) %>% 
@@ -256,7 +256,7 @@ dff %>%
     filter(epigraph != "") %>% 
     group_by(date, epigraph) %>% 
     summarise(n = n()) %>% 
-    mutate(publications = sum(n), ratio = n/publications) %>% 
+    mutate(publications = sum(n), ratio = n / publications) %>% 
     ungroup() %>% 
     group_by(date) %>% 
     filter(ratio == max(ratio)) %>% 

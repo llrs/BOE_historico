@@ -1,6 +1,6 @@
-library('BOE')
-suppressPackageStartupMessages({library("rtweet")})
-suppressPackageStartupMessages({library("poorman")})
+library("BOE")
+suppressPackageStartupMessages(library("rtweet"))
+suppressPackageStartupMessages(library("poorman"))
 token <- rtweet::rtweet_bot(
     api_key =    Sys.getenv("TWITTER_API_KEY"),
     api_secret = Sys.getenv("TWITTER_API_SECRET_KEY"),
