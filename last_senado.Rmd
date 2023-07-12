@@ -1,0 +1,28 @@
+---
+title: "Lo último del Senado"
+description: "Resumen de las sesiones plenarias del senado."
+base_url: https:llrs.github.io/BOE_histórico/
+repository_url: https://github.com/llrs/BOE_histórico
+output: html_document
+    # includes:
+    #   in_header: twitter_BOE.html
+output_dir: docs
+self_contained: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, error = FALSE, include = TRUE)
+```
+
+```{r dates}
+library("senadoRES")
+library("DT")
+ses_plen <- plenarias(14)
+sumario_hoy <- sumario(sumario_csv(14, ses_plen$sesionNumero[1]))
+s <- sumario_hoy[, c("directorioBol", "apDescripcion", "subDescripcion", "objeto", "fase")]
+s$directorioBol <- paste0("<a href=", "https://www.senado.es/",
+                          s$directorioBol,"/", sumario_hoy$cve, ".PDF>link</a>")
+DT::datatable(s, escape = FALSE)
+```

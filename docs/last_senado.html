@@ -11,7 +11,7 @@
 
 
 
-<title>Justicia</title>
+<title>Lo último del Senado</title>
 
 <script src="site_libs/header-attrs-2.23/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -32,6 +32,14 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.27/datatables.js"></script>
+<link href="site_libs/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.12.1/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
 <link href="site_libs/font-awesome-6.4.0/css/all.min.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-6.4.0/css/v4-shims.min.css" rel="stylesheet" />
 <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -360,70 +368,13 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Justicia</h1>
+<h1 class="title toc-ignore">Lo último del Senado</h1>
 
 </div>
 
-<div id="TOC">
-<ul>
-<li><a href="#juzgados-de-lo-mercantil"
-id="toc-juzgados-de-lo-mercantil">Juzgados de lo mercantil</a></li>
-<li><a href="#juzgados-de-primera-instancia-e-instrucción"
-id="toc-juzgados-de-primera-instancia-e-instrucción">Juzgados de primera
-instancia e instrucción</a></li>
-<li><a href="#militar" id="toc-militar">Militar</a></li>
-</ul>
-</div>
 
-<p>Una cosa que me sorprendió mucho al mirar el resumen de 10 años del
-BOE fue el incremento en publicaciones hacia 2017. Posteriormente al
-mirar los departamentos me sorprendió que hubiera ese incremento en un
-determinado departamento de Justicia. En este análisis exploro un poco
-más algunos departamentos de Justicia y sus tendencias.</p>
-<div id="juzgados-de-lo-mercantil" class="section level1">
-<h1>Juzgados de lo mercantil</h1>
-<p>Se puede apreciar un incremento en publicaciones de un departamento
-alrededor de 2014. Esto es debido a las sentencias de los juzgados de lo
-mercantil.</p>
-<p><img src="Departamentos_files/figure-html/deprt-1.png" width="960" /></p>
-<p>Nos centraremos entre el 2012 y 2014 por ser los años donde hay más
-actividad. Dónde creo que se publican anuncios de los litigios y
-procedimientos iniciados durante la crisis de 2008:</p>
-<p><img src="Departamentos_files/figure-html/mercantil-1.png" width="960" /><img src="Departamentos_files/figure-html/mercantil-2.png" width="960" /></p>
-<p>Cómo podemos ver impactó mayormente en los juzgados localizados en
-Madrid.</p>
-<p><img src="Departamentos_files/figure-html/mercantil_tops-1.png" width="960" /></p>
-</div>
-<div id="juzgados-de-primera-instancia-e-instrucción"
-class="section level1">
-<h1>Juzgados de primera instancia e instrucción</h1>
-<p>Uno de los más espectaculares cambios es el incremento en
-publicaciones a partir de 2016. Esto es debido como veremos a los
-juzgados de primera instancia:</p>
-<p><img src="Departamentos_files/figure-html/primera-1.png" width="672" /></p>
-<p>Como podemos ver hay un incremento espectacular en el 2016 de
-anuncios. Vamos a ver que juzgados son los que más han publicado:</p>
-<p><img src="Departamentos_files/figure-html/primeras_2016-1.png" width="960" /></p>
-<p>Podemos ver el incremento de estos juzgados a partir de 2016</p>
-<p><img src="Departamentos_files/figure-html/primeras-1.png" width="960" /></p>
-<p>Podemos ver que en algunos juzgados antes de 2016 no se habían
-publicado ningún anuncio:</p>
-<p><img src="Departamentos_files/figure-html/primera_tops-1.png" width="960" /></p>
-<p>Tal vez esto es debido a alguna ley o mejora de las condiciones de
-los juzgados</p>
-</div>
-<div id="militar" class="section level1">
-<h1>Militar</h1>
-<p>Cómo regalo y para comparar aquí van los cambios en publicaciones de
-la justicia militar.</p>
-<p><img src="Departamentos_files/figure-html/militia-1.png" width="672" /></p>
-<p><img src="Departamentos_files/figure-html/militia2-1.png" width="960" /></p>
-<p>Los tribunales militares territoriales incluyen edictos.</p>
-<p><img src="Departamentos_files/figure-html/milita3-1.png" width="960" /></p>
-<p>Los juzgados togados militares incluye requisitorias y anulaciones. Y
-se han visto relativamente pocas publicaciones en los últimos 10
-años.</p>
-</div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-8bf1f2f5a777eb6a318b" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-8bf1f2f5a777eb6a318b">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19"],["<a href=https://www.senado.es/legis14/publicaciones/pdf/senado/bocg/BOCG_D_14_71_539.PDF>link<\/a>","<a href=https://www.senado.es/legis14/publicaciones/pdf/senado/bocg/BOCG_D_14_71_540.PDF>link<\/a>","<a href=https://www.senado.es/legis14/publicaciones/pdf/senado/bocg/BOCG_D_14_71_541.PDF>link<\/a>","<a href=https://www.senado.es/legis14/publicaciones/pdf/senado/bocg/BOCG_D_14_71_542.PDF>link<\/a>","<a href=https://www.senado.es/legis14/publicaciones/pdf/senado/bocg/BOCG_D_14_71_543.PDF>link<\/a>","<a href=https://www.senado.es/legis14/publicaciones/pdf/senado/bocg/BOCG_D_14_71_544.PDF>link<\/a>","<a href=https://www.senado.es/legis14/publicaciones/pdf/senado/bocg/BOCG_D_14_71_545.PDF>link<\/a>","<a href=https://www.senado.es/legis14/publicaciones/pdf/senado/bocg/BOCG_D_14_71_546.PDF>link<\/a>","<a href=https://www.senado.es/legis14/publicaciones/pdf/senado/bocg/BOCG_D_14_71_547.PDF>link<\/a>","<a href=https://www.senado.es/legis14/publicaciones/pdf/senado/bocg/BOCG_D_14_71_548.PDF>link<\/a>","<a href=https://www.senado.es/legis14/publicaciones/pdf/senado/bocg/BOCG_D_14_71_549.PDF>link<\/a>","<a href=https://www.senado.es/legis14/publicaciones/pdf/senado/bocg/BOCG_D_14_71_550.PDF>link<\/a>","<a href=https://www.senado.es/legis14/publicaciones/pdf/senado/bocg/BOCG_D_14_71_551.PDF>link<\/a>","<a href=https://www.senado.es/legis14/publicaciones/pdf/senado/bocg/BOCG_D_14_71_552.PDF>link<\/a>","<a href=https://www.senado.es/legis14/publicaciones/pdf/senado/bocg/BOCG_D_14_71_553.PDF>link<\/a>","<a href=https://www.senado.es/legis14/publicaciones/pdf/senado/bocg/BOCG_D_14_71_554.PDF>link<\/a>","<a href=https://www.senado.es/legis14/publicaciones/pdf/senado/bocg/BOCG_D_14_71_555.PDF>link<\/a>","<a href=https://www.senado.es/legis14/publicaciones/pdf/senado/bocg/BOCG_D_14_71_556.PDF>link<\/a>","<a href=https://www.senado.es/legis14/publicaciones/pdf/senado/bocg/BOCG_D_14_71_557.PDF>link<\/a>"],["AUTORIZACIONES","AUTORIZACIONES","AUTORIZACIONES","AUTORIZACIONES","AUTORIZACIONES","AUTORIZACIONES","AUTORIZACIONES","AUTORIZACIONES","AUTORIZACIONES","AUTORIZACIONES","AUTORIZACIONES","AUTORIZACIONES","AUTORIZACIONES","AUTORIZACIONES","AUTORIZACIONES","AUTORIZACIONES","AUTORIZACIONES","AUTORIZACIONES","AUTORIZACIONES"],["TRATADOS Y CONVENIOS INTERNACIONALES","TRATADOS Y CONVENIOS INTERNACIONALES","TRATADOS Y CONVENIOS INTERNACIONALES","TRATADOS Y CONVENIOS INTERNACIONALES","TRATADOS Y CONVENIOS INTERNACIONALES","TRATADOS Y CONVENIOS INTERNACIONALES","TRATADOS Y CONVENIOS INTERNACIONALES","TRATADOS Y CONVENIOS INTERNACIONALES","TRATADOS Y CONVENIOS INTERNACIONALES","TRATADOS Y CONVENIOS INTERNACIONALES","TRATADOS Y CONVENIOS INTERNACIONALES","TRATADOS Y CONVENIOS INTERNACIONALES","TRATADOS Y CONVENIOS INTERNACIONALES","TRATADOS Y CONVENIOS INTERNACIONALES","TRATADOS Y CONVENIOS INTERNACIONALES","TRATADOS Y CONVENIOS INTERNACIONALES","TRATADOS Y CONVENIOS INTERNACIONALES","TRATADOS Y CONVENIOS INTERNACIONALES","TRATADOS Y CONVENIOS INTERNACIONALES"],["Renovación de la reserva formulada por España al Convenio penal sobre la corrupción.","Acuerdo Internacional en materia de fiscalidad y protección de los intereses financieros entre el Reino de España y el Reino Unido de la Gran Bretaña e Irlanda del Norte en relación con Gibraltar, hecho \"ad referendum\" en Madrid y Londres el 4 de marzo de 2019.","Instrumento de Enmienda a la Constitución de la Organización Internacional del Trabajo, 1986, hecho en Ginebra el 24 de junio de 1986.","Protocolo entre el Reino de España y el Reino de Marruecos para la donación irrevocable de la propiedad del Gran Teatro Cervantes de Tánger, hecho en Rabat el 13 de febrero de 2019.","Declaración de aceptación por España de la adhesión del Principado de Andorra al Convenio sobre la obtención de pruebas en el extranjero en materia civil o mercantil, hecho en La Haya el 18 de marzo de 1970.","Declaración de aceptación por España de la adhesión de la República Federativa de Brasil al Convenio sobre la obtención de pruebas en el extranjero en materia civil o mercantil, hecho en La Haya el 18 de marzo de 1970.","Declaración de aceptación por España de la adhesión de la República de Costa Rica al Convenio sobre la obtención de pruebas en el extranjero en materia civil o mercantil, hecho en La Haya el 18 de marzo de 1970.","Declaración de aceptación por España de la adhesión de la República de Kazajstán al Convenio sobre la obtención de pruebas en el extranjero en materia civil o mercantil, hecho en La Haya el 18 de marzo de 1970.","Denuncia del Acuerdo entre el Reino de España y la Universidad de las Naciones Unidas relativo al Instituto Internacional de la Universidad de las Naciones Unidas para la Alianza de Civilizaciones en Barcelona, hecho en Madrid y Tokio el 28 de junio de 2010.","Denuncia del Acuerdo entre el Reino de España y la Universidad de las Naciones Unidas relativo al establecimiento, funcionamiento y ubicación del Instituto Internacional de la Universidad de las Naciones Unidas para la Alianza de Civilizaciones en Barcelona, hecho en Madrid y Tokio el 28 de junio de 2010.","Convenio entre el Reino de España y la República de Azerbaiyán para evitar la doble imposición y prevenir la evasión fiscal en materia de impuestos sobre la renta y sobre el patrimonio y su Protocolo, hecho en Bakú el 23 de abril de 2014.","Convenio del Consejo de Europa sobre la lucha contra el tráfico de órganos humanos, hecho en Santiago de Compostela el 25 de marzo de 2015.","Acuerdo de asociación global y reforzado entre la Unión Europea y la Comunidad Europea de la Energía Atómica y sus Estados Miembros, por una parte, y la República de Armenia, por otra, hecho en Bruselas el 24 de noviembre de 2017.","Convenio entre el Reino de España y Rumanía para eliminar la doble imposición en relación con los impuestos sobre la renta y prevenir la evasión y elusión fiscales y su Protocolo, hecho en Bucarest el 18 de octubre de 2017.","Convenio entre el Reino de España y la República de Cabo Verde para evitar la doble imposición y prevenir la evasión fiscal en materia de impuestos sobre la renta y su Protocolo, hecho en Madrid el 5 de junio de 2017.","Acuerdo de Asociación Estratégica entre la Unión Europea y sus Estados Miembros, por una parte, y Japón, por otra, hecho en Tokio el 17 de julio de 2018.","Protocolo de enmienda del Convenio del Consejo de Europa para la protección de las personas con respecto al tratamiento automatizado de datos de carácter personal, hecho en Estrasburgo el 10 de octubre de 2018, y Declaración que España desea formular.","Acuerdo entre el Reino de España y la República de Nicaragua sobre Transporte Aéreo, hecho en Montreal el 26 de septiembre de 2019.","Acuerdo sobre Transporte Aéreo entre el Reino de España y la República de Corea, hecho en Madrid el 20 de diciembre de 2018."],["Texto remitido por el Congreso de los Diputados","Texto remitido por el Congreso de los Diputados","Texto remitido por el Congreso de los Diputados","Texto remitido por el Congreso de los Diputados","Texto remitido por el Congreso de los Diputados","Texto remitido por el Congreso de los Diputados","Texto remitido por el Congreso de los Diputados","Texto remitido por el Congreso de los Diputados","Texto remitido por el Congreso de los Diputados","Texto remitido por el Congreso de los Diputados","Texto remitido por el Congreso de los Diputados","Texto remitido por el Congreso de los Diputados","Texto remitido por el Congreso de los Diputados","Texto remitido por el Congreso de los Diputados","Texto remitido por el Congreso de los Diputados","Texto remitido por el Congreso de los Diputados","Texto remitido por el Congreso de los Diputados","Texto remitido por el Congreso de los Diputados","Texto remitido por el Congreso de los Diputados"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>directorioBol<\/th>\n      <th>apDescripcion<\/th>\n      <th>subDescripcion<\/th>\n      <th>objeto<\/th>\n      <th>fase<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 
 
 
