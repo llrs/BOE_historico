@@ -75,15 +75,3 @@ DT::datatable(s, filter = 'top', options = list(
 ), escape = FALSE)
 
 ```
-
-```{r twitter, eval=as.logical(Sys.getenv("BOE_TWITTER"))}
-library("rtweet")
-
-media_alt_txt <- paste("Gráfico alluvial con el BORME publicado hoy.",
-                       "Hay dos columnas de las categorías sección y emisor, ordenado por frequencia.")
-files2 <- "docs/last_BORME_files/figure-html/graphics-1.png"
-status <- "Resumen del #BORME de hoy en: https://llrs.github.io/BOE_historico/last_BORME.html"
-r <- post_tweet(status = paste0(status, collapse = ""),
-           media = files2, media_alt_text = media_alt_txt)
-```
-

@@ -48,7 +48,6 @@ jobs:
           install.packages('ggalluvial');
           install.packages('forcats');
           install.packages('DT');
-          install.packages('rtweet');
           install.packages('ggfittext')"
       - name: git config
         run: |
