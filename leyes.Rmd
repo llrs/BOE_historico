@@ -1,7 +1,6 @@
 ---
 title: "Tipo de leyes"
 output: html_document
-draft: true
 editor_options: 
   chunk_output_type: console
 ---
@@ -26,10 +25,11 @@ library("forcats", warn.conflicts = FALSE)
 library("tidyr", warn.conflicts = FALSE)
 library("stringr", warn.conflicts = FALSE)
 con <- DBI::dbConnect(RSQLite::SQLite(),
-                      dbname = "boe.sqlite")
+                      dbname = "boe2023.sqlite")
 boe <- con |> 
-  tbl("sumario") %>% 
-  collect() %>% 
+  tbl("sumario") |> 
+  filter(!is.na(epigraph)) |> 
+  collect() |> 
   mutate(date = as.Date(date),
          weekday = weekdays(date))
 DBI::dbDisconnect(con)
@@ -37,9 +37,8 @@ DBI::dbDisconnect(con)
 
 
 ```{r leyes}
-preleyes <- boe %>% 
-  as_tibble() %>% 
-  filter(!is.na(epigraph)) %>% 
+preleyes <- boe |> 
+  as_tibble() |> 
   filter(str_detect(text, "^Resoluci[oó]n", negate = TRUE),
          str_detect(text, "^Anuncio", negate = TRUE),
          str_detect(text, "^Recurso", negate = TRUE),
@@ -59,32 +58,33 @@ preleyes <- boe %>%
          ) 
 pattern_ley <- "(\\s[:alnum:]{0,} ?/)?[0-9]{1,}/[0-9]{4}"
 pattern_filter <- paste0("^(.+", pattern_ley,  "?),? de [0-9]{1,2} de \\w+,")
-leyes <- preleyes %>% 
-  filter(str_detect(text, pattern = pattern_filter)) %>%
-  mutate(rel = str_extract(text, pattern_filter)) %>% 
-  filter(nchar(rel) < 70) %>% 
-  mutate(
-         ley = str_extract(rel, pattern = pattern_ley),
+leyes <- preleyes |> 
+  filter(str_detect(text, pattern = pattern_filter)) |>
+  mutate(rel = str_extract(text, pattern_filter)) |> 
+  filter(nchar(rel) < 70) |> 
+  mutate(ley = str_extract(rel, pattern = pattern_ley),
          ley = str_remove(ley, "^\\s"),
-         fecha_pub = as.Date(gsub(x = rel, pattern = ".*/", replacement = ""), "%Y, de %d de %B,"),
-         tipo = str_remove(rel, paste0(pattern_ley, ",?.+"))) %>% 
-  mutate(tipo = case_when(endsWith(tipo, "PRE ") ~ str_remove(tipo, "PRE"),
+         fecha_aprob = as.Date(gsub(x = rel, pattern = ".*/", replacement = ""), "%Y, de %d de %B,"),
+         tipo = str_remove(rel, paste0(pattern_ley, ",?.+")),tipo = case_when(endsWith(tipo, "PRE ") ~ str_remove(tipo, "PRE"),
                           TRUE ~ tipo),
          ley = gsub(pattern = "PRE ([0-9]{1,})", replacement = "PRE\\1", rel),
          tipo = str_remove(tipo, "\\bde\\b"),
          tipo = trimws(tolower(tipo)),
-         tipo = as.factor(tipo)) %>% 
-  mutate(fecha_pub = case_when(
-    is.na(fecha_pub) ~ as.Date(gsub(x = rel, pattern = ".*/", replacement = ""), "%Y de %d de %B,"),
-    TRUE ~ fecha_pub))
+         tipo = as.factor(tipo)) |> 
+  mutate(fecha_aprob = case_when(
+    is.na(fecha_aprob) ~ as.Date(gsub(x = rel, pattern = ".*/", replacement = ""), "%Y de %d de %B,"),
+    TRUE ~ fecha_aprob)) |> 
+    mutate(fecha_aprob = case_when(
+    fecha_aprob > Sys.Date() ~ as.Date("2023-04-26"),
+    TRUE ~ fecha_aprob))
 ```
 
 Aquí podemos ver todas las normas publicadas en el BOE desde el 2009 hasta la fecha de recolección de datos según la fecha de aprobación y la fecha de publicación en el BOE.
 
 ```{r publicaciones}
-leyes %>% 
+leyes |> 
   ggplot() + 
-  geom_point(aes(fecha_pub, date, col = tipo)) +
+  geom_point(aes(fecha_aprob, date, col = tipo)) +
   theme_minimal() +
   labs(y = "Publicación", x = "Aprobación",
        col = "Tipo", 
@@ -94,19 +94,22 @@ leyes %>%
 Hay un grupo de normativas que han tardado mucho en publicarse.
 Algunas leyes se transfirieron del País Vasco al BOE mucho más tarde,
 Pero [otras](https://www.boe.es/buscar/doc.php?id=BOE-A-2009-20287) son acuerdos que han tardado mucho.
-Si hacemos un zoom en las que se han aprobado sede 2009 podemos ver mejor que se han publicado casi todo muy pronto:
+Si hacemos un zoom en las que se han aprobado desde el 2009 podemos ver mejor que se han publicado casi todo muy pronto:
 
 ```{r publicaciones-zoom}
-leyes %>% 
-  filter(fecha_pub >= as.Date("2009/01/01")) %>% 
+leyes |> 
+    filter(fecha_aprob > as.Date("2009-01-01")) |> 
   ggplot() + 
-  geom_linerange(aes(x = fecha_pub, y = date, ymin = date, ymax = fecha_pub),
+  geom_linerange(aes(x = fecha_aprob, y = date, ymin = fecha_aprob, ymax = date),
                  col = "grey") +
-  geom_point(aes(fecha_pub, date, col = tipo)) +
+  geom_point(aes(fecha_aprob, date, col = tipo)) +
   theme_minimal() +
   labs(y = "Publicación", x = "Aprobación",
        col = "Tipo", 
-       title = "Normativa según fecha aprobación y fecha publicación")
+       title = "Normativa según fecha aprobación y fecha publicación") +
+  scale_x_date(date_breaks = "2 years", date_labels = "%Y", expand = expansion(add = NA_integer_)) +
+  scale_y_date(date_breaks = "2 years", date_labels = "%Y", expand = expansion(add = NA_integer_))
+    
 ```
 
 Si agrupamos por rango de ley podemos observar si hay alguna tendencia. 
@@ -116,21 +119,26 @@ También he recortado las que no aparecen más de 5 veces en todo el conjunto.
 library("scales")
 colors <- hue_pal()(length(levels(leyes$tipo)))
 names(colors) <- levels(leyes$tipo)
-leyes_retraso <- leyes %>% 
-  mutate(retraso = date - fecha_pub)
-leyes_retraso %>%   
-  group_by(tipo) %>% 
+leyes_retraso <- leyes |> 
+  mutate(retraso = date - fecha_aprob)
+leyes_retraso |>   
+  group_by(tipo) |> 
   summarize(mediana = median(retraso, na.rm = TRUE),
+            min = min(retraso),
             r = quantile(retraso, probs = 0.75),
-            n = n()) %>% 
-  filter(n > 5) %>% 
+            rm = quantile(retraso, probs = 0.25),
+            max = max(retraso),
+            n = n()) |> 
+  filter(n > 5) |> 
   ggplot() + 
+    geom_pointrange(aes(fct_reorder(tipo, mediana, sum),
+                        y = mediana, ymin = rm, ymax = r, col = tipo)) +
   geom_point(aes(fct_reorder(tipo, mediana, sum), mediana, size = n, col = tipo)) +
   scale_color_manual(values = colors) +
   scale_size(breaks = seq(0, 20000, by = 2500)) +
   guides(col = "none") +
   theme_minimal() +
-  labs(x = element_blank(), y = "Días de retraso (mediana)",
+  labs(x = element_blank(), y = "Días de retraso (mediana), 25% y el 75% de las veces",
        title = "Retraso medio entre aprobación y publicación de la normativa",
        size = "Publicaciones") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
@@ -148,18 +156,18 @@ Podemos ver que hay mucha variación según el tipo de publicación:
 q <- function(x){
   quantile(x, probs = 0.75)
 }
-leyes_retraso %>% 
-  filter(fecha_pub >= as.Date("2009/01/01")) %>%
-  filter(!is.na(retraso)) %>%
-  filter(retraso >= 0) %>% 
-  ungroup() %>% 
-  group_by(tipo) %>% 
+leyes_retraso |> 
+  filter(fecha_aprob >= as.Date("2009/01/01")) |>
+  filter(!is.na(retraso)) |>
+  filter(retraso >= 0) |> 
+  ungroup() |> 
+  group_by(tipo) |> 
   summarize(across(retraso, .fns = list(
     min = min, median = median, q75 = q, max = max), .names = "{.fn}"),
-            n = n()) %>% 
-  filter(n > 1) %>% 
-  select(-n) %>% 
-  arrange(median, min, q75, max) %>% 
+            n = n()) |> 
+  filter(n > 1) |> 
+  select(-n) |> 
+  arrange(median, min, q75, max) |> 
   knitr::kable(row.names = FALSE, 
                col.names = c("Tipo", "Mínimo", "Mediana", "Percentil 75", "Máxmimo"))
 ```
@@ -167,28 +175,26 @@ leyes_retraso %>%
 En general se mantiene estable alrededor de 15 días entre la aprobación y la publicación:
 
 ```{r retraso-fecha}
-leyes_retraso %>% 
-  filter(fecha_pub >= as.Date("2009/01/01")) %>%
-  filter(retraso >= 0) %>% 
+leyes_retraso |> 
+  filter(fecha_aprob >= as.Date("2009/01/01")) |>
   ggplot() +
-  geom_smooth(aes(date, retraso)) +
+  geom_smooth(aes(date, retraso), span = "1 week") +
   theme_minimal() +
   theme(panel.grid.minor.x = element_blank()) +
   scale_y_continuous(breaks = seq(0, 20, by = 2), limits = c(0, NA)) +
   scale_x_date(breaks = "1 year", date_label = "%Y", expand = expansion()) +
   labs(x = "Publicación", y = "Días de retraso", 
        title = "Estimación del tiempo de retraso entre aprobación y publicación")
-
 ```
 
 Aunque hay más retraso últimamente esto se debe a un colapso por mayor número de publicaciones?
 
 ```{r reglas-tiempo}
-leyes %>% 
-  filter(fecha_pub >= as.Date("2009/01/01")) %>%
-  count(fecha_pub) %>% 
+leyes |> 
+  filter(fecha_aprob >= as.Date("2009/01/01")) |>
+  count(date) |> 
   ggplot() +
-  geom_smooth(aes(fecha_pub, n), ) +
+  geom_smooth(aes(date, n), ) +
   scale_y_continuous(expand = expansion(), limits = c(0, NA),
                      breaks = seq(0, 30, by = 2)) +
   scale_x_date(date_breaks = "1 year", date_label = "%Y", expand = expansion()) +
@@ -201,30 +207,29 @@ Cada vez se aprueban menos reglamentos, así pues el retraso no es por eso.
 Si miramos por tipo de legislación a lo mejor encontramos la causa:
 
 ```{r reglas-tiempo-tipo}
-date_tipo <- leyes %>% 
-  filter(fecha_pub >= as.Date("2009/01/01")) %>%
-  group_by(fecha_pub) %>% 
-  count(tipo) %>% 
+date_tipo <- leyes |> 
+  filter(fecha_aprob >= as.Date("2009/01/01")) |>
+  group_by(date = fecha_aprob) |> 
+  count(tipo) |> 
   ungroup()
-include_tipo <- date_tipo %>% 
-  filter(fecha_pub >= as.Date("2009/01/01")) %>%
-  group_by(tipo) %>% 
-  count(sort = TRUE) %>% 
-  filter(n > 100) %>% 
-  pull(tipo) %>% 
+include_tipo <- date_tipo |> 
+  group_by(tipo) |> 
+  count(sort = TRUE) |> 
+  filter(n > 100) |> 
+  pull(tipo) |> 
   droplevels()
-date_tipo %>% 
-  filter(tipo %in% include_tipo) %>% 
-  droplevels() %>% 
-  ggplot(aes(fecha_pub, n, col = fct_reorder(tipo, -n, .fun = sum))) +
-  geom_smooth() +
+date_tipo |> 
+  filter(tipo %in% include_tipo) |> 
+  droplevels() |> 
+  ggplot(aes(date, n, col = fct_reorder(tipo, -n, .fun = sum))) +
+  geom_smooth(span = "1 month") +
   scale_color_manual(values = colors) +
   scale_y_continuous(breaks = seq(0, 40, by = 2), expand = expansion(), 
                      limits = c(0, NA)) +
   scale_x_date(date_breaks = "1 year", date_label = "%Y", expand = expansion()) +
   theme_minimal() +
   labs(x = element_blank(), y = "Publicaciones", col = "Tipo",
-       title = "Tipo de publicaciones por fecha") +
+       title = "Tipo de publicaciones por fecha aprobación") +
   theme(panel.grid.minor.y = element_blank())
 ```
 
@@ -234,10 +239,10 @@ El resto de publicaciones se publican mucho menos y no se puede estimar bien su 
 ```{r reglas-tiempo-tipo2}
 theme_set(theme_minimal())
 
-leyes %>% 
-  group_by(year = floor_date(date, unit = "year"), tipo) %>% 
-  count(sort = TRUE) %>% 
-  ungroup() %>% 
+leyes |> 
+  group_by(year = floor_date(date, unit = "year"), tipo) |> 
+  count(sort = TRUE) |> 
+  ungroup() |> 
   ggplot() +
   geom_tile(aes(year, fct_reorder(tipo, n, sum), fill = n)) +
   guides(col = "none") +
@@ -252,16 +257,16 @@ leyes %>%
 Ahora bien ¿se publican cada día un poco o en un solo día salen muchas leyes?
 
 ```{r publicacion-cantidad-fecha}
-d <- boe %>% 
-  as_tibble() %>% 
-  ungroup() %>% 
-  summarize(d = length(unique(date))) %>% 
+d <- boe |> 
+  as_tibble() |> 
+  ungroup() |> 
+  summarize(d = length(unique(date))) |> 
   pull(d)
-date_tipo %>% 
-  group_by(tipo) %>% 
-  summarize(days = n(), pub = sum(n), pub2 = median(n)) %>% 
-  mutate(ddays = days/d, dpub = pub/days) %>% 
-  filter(pub2 != 0) %>% 
+date_tipo |> 
+  group_by(tipo) |> 
+  summarize(days = n(), pub = sum(n), pub2 = median(n)) |> 
+  mutate(ddays = days/d, dpub = pub/days) |> 
+  filter(pub2 != 0) |> 
   ggplot() +
   geom_point(aes(ddays, dpub, col = tipo), size = 3) +
   ggrepel::geom_text_repel(aes(ddays, dpub, col = tipo, label = tipo),
@@ -288,52 +293,61 @@ Sino es muy útil esta [página de la wikipedia](https://es.wikipedia.org/wiki/A
 Esto nos permite ver que se ha publicado con cada presidente (o sin presidente). 
 
 ```{r presidentes}
-presi <- leyes %>% 
+presi <- leyes |> 
   filter(departament == "JEFATURA DEL ESTADO",
-         epigraph %in% c("Nombramientos")) %>% 
-  filter(str_detect(text, "Presidente del Gobierno")) %>% 
+         epigraph %in% c("Nombramientos")) |> 
+  filter(str_detect(text, "Presidente del Gobierno")) |> 
   mutate(presidente = gsub(pattern = ".+ se nombra Presidente del Gobierno a don (.+)\\.", 
                                 replacement = "\\1",
                                 x = text),
-         type = "start") %>% 
+         type = "start") |> 
   select(date, presidente, type)
-cese <- leyes %>% 
+cese <- leyes |> 
   filter(departament == "PRESIDENCIA DEL GOBIERNO",
-         epigraph == "Ceses") %>% 
-  filter(str_detect(text, "cese de (.+?) como Presidente del Gobierno\\.")) %>% 
+         epigraph == "Ceses") |> 
+  filter(str_detect(text, "cese de (.+?) como Presidente del Gobierno\\.")) |> 
   mutate(presidente = gsub(pattern = ".+ cese de don (.+) como Presidente del Gobierno\\.", 
                               replacement = "\\1",
                               x = text),
-         type = "end") %>% 
+         type = "end") |> 
   select(date, presidente, type)
-presis <- rbind(presi, cese) %>% 
-  arrange(date, presidente) %>% 
-  mutate(presidencia = cumsum(type == "start") + 1) %>% 
-  group_by(presidencia) %>% 
-  pivot_wider(names_from = type, values_from = date) %>% 
-  mutate(start = if_else(is.na(start), as.Date("2009-01-01"), start),
-         end = if_else(is.na(end), as.Date("2021-02-21"), end))
-  
+presis <- rbind(presi, cese) |> 
+  arrange(date, presidente) |> 
+  mutate(presidencia = cumsum(type == "start") + 1) 
+
+presis2df <-   presis |> 
+    group_by(presidencia) |> 
+    pivot_wider(names_from = type, values_from = date) |> 
+    mutate(start = if_else(is.na(start), as.Date("2009-01-01"), start),
+           end = if_else(is.na(end), Sys.Date(), end))
 ```
 
 
 ```{r presidente-tipo}
-leyes_presi <- date_tipo %>% 
-  mutate(presi = case_when(
-    fecha_pub < presis$end[1] ~ presis$presidente[1],
-    fecha_pub < presis$end[2] & fecha_pub > presis$start[2] ~ presis$presidente[2],
-    fecha_pub < presis$end[3] & fecha_pub > presis$start[3] ~ presis$presidente[3],
-    fecha_pub < presis$end[4] & fecha_pub > presis$start[4] ~ presis$presidente[4],
-    fecha_pub < presis$end[5] & fecha_pub > presis$start[5] ~ presis$presidente[5],
-    TRUE ~ ""
-  ))
+# Create date intervals
+fie <- findInterval(date_tipo$date, presis$date[presis$type == "end"])
+fis <- findInterval(date_tipo$date, presis$date[presis$type == "start"])
+# based on the difference between start and end we know that these is without president
 
-leyes_presi %>% 
-  group_by(tipo, presi) %>% 
-  summarize(n = sum(n)) %>% 
-  ungroup() %>% 
-  group_by(presi) %>% 
-  mutate(perc = n/sum(n)) %>% 
+# create vector for naming presidents based on when they finish
+presis2 <- presis |> filter(type == "end") |> pull(presidente)
+names(presis2) <- seq_along(presis2) -1
+presis2 <- c(presis2, NA)
+names(presis2)[length(presis2)] <- length(presis2) -1
+
+leyes_presi <- date_tipo |> 
+    mutate(
+        end = fie,
+        start = fis,
+        presi = presis2[as.character(fie)],
+        presi = case_when(end != start ~ NA,
+                          .default = presi))
+leyes_presi |> 
+    group_by(tipo, presi) |> 
+    summarize(n = sum(n)) |> 
+  ungroup() |> 
+  group_by(presi) |> 
+  mutate(perc = n/sum(n)) |> 
   ggplot() +
   geom_tile(aes(presi, forcats::fct_reorder(tipo, n, .fun = sum), fill = perc)) +
   theme_minimal() +
@@ -349,18 +363,22 @@ Tampoco se aprueban leyes orgánicas cuando no hay presidente.
 Si miramos los tipos de leyes a lo largo del tiempo respecto los mandatos presidenciales quizá vemos otro panorama:
 
 ```{r presidentes-tipo}
-date_tipo %>% 
-  filter(tipo %in% c("orden", "real decreto")) %>% 
-  droplevels() %>% 
+date_tipo |> 
+  filter(tipo %in% c("orden", "real decreto")) |> 
+  droplevels() |> 
   ggplot() +
-  geom_rect(aes(xmin = start, xmax = end, ymin = 0, ymax = 35, 
-                fill = presidente), alpha = 0.5, data = presis) +
-  geom_smooth(aes(fecha_pub, n, linetype = fct_reorder(tipo, -n, .fun = sum))) +
+  geom_rect(aes(xmin = start, xmax = end, ymin = 0, ymax = 15, 
+                fill = presidente), alpha = 0.5, data = presis2df) +
+  geom_smooth(aes(date, n, linetype = fct_reorder(tipo, -n, .fun = sum))) +
+  # geom_path(aes(date, n,
+  #               linetype = fct_reorder(tipo, -n, .fun = sum, na.rm = TRUE, .na_rm = TRUE),
+  #               col = fct_reorder(tipo, -n, .fun = sum, na.rm = TRUE, .na_rm = TRUE))) +
   scale_x_date(date_breaks = "1 year", date_label = "%Y", expand = expansion()) +
+  scale_y_continuous(expand = expansion()) +
   theme_minimal() +
   scale_fill_brewer(type = "qual", palette = "Dark2") +
-  labs(x = element_blank(), y = "Publicaciones", linetype = "Tipo",
-       title = "Tipo de publicaciones por fecha", fill = "Presidente") +
-  theme(panel.grid.minor.y = element_blank())
+  labs(x = element_blank(), y = "Publicaciones", linetype = "Tipo", col = "Tipo",
+       title = "Tipo de publicaciones por fecha de publicación", fill = "Presidente") +
+  theme(panel.grid.minor.y = element_blank()) 
 ```
 

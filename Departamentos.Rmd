@@ -18,10 +18,10 @@ suppressPackageStartupMessages(library("dtplyr"))
 suppressPackageStartupMessages(library("dplyr"))
 
 con <- DBI::dbConnect(RSQLite::SQLite(),
-                      dbname = "boe.sqlite")
-df <- con %>% 
-    tbl("sumario") %>% 
-    collect() %>% 
+                      dbname = "boe2023.sqlite")
+df <- con |> 
+    tbl("sumario") |> 
+    collect() |> 
     mutate(date = as.Date(date),
            weekday = weekdays(date))
 DBI::dbDisconnect(con)
@@ -39,21 +39,22 @@ Se puede apreciar un incremento en publicaciones de un departamento alrededor de
 Esto es debido a las sentencias de los juzgados de lo mercantil.
 
 ```{r deprt, fig.width=10, fig.asp=1}
-deprt <- df %>% 
-    group_by(sumario_code, date) %>% 
+deprt <- df |> 
+    group_by(sumario_code, date) |> 
     count(departament)
 
-mercantil <- df %>% 
+mercantil <- df |> 
     filter(section == "4",
-           departament == "JUZGADOS DE LO MERCANTIL") %>% 
-    mutate(text = trimws(toupper(text))) %>% 
+           departament == "JUZGADOS DE LO MERCANTIL") |> 
+    mutate(text = trimws(toupper(text))) |> 
     mutate(text = gsub("\\.$", "", text))
 
-mercantil %>% 
-    mutate(year_s = as.character(year(date))) %>% 
-    count(year_s) %>% 
-    as_tibble() %>% 
+mercantil |> 
+    mutate(year_s = as.character(year(date))) |> 
+    count(year_s) |> 
+    as_tibble() |> 
     ggplot() +
+    scale_y_continuous(expand = expansion(mult = c(0, NA), add = c(0, NA)), limits = c(0, NA)) +
     geom_col(aes(year_s, n)) +
     labs(x = element_blank(), y = "Publicaciones",
          caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
@@ -63,35 +64,37 @@ mercantil %>%
 Nos centraremos entre el 2012 y 2014 por ser los años donde hay más actividad. Dónde creo que se publican anuncios de los litigios y procedimientos iniciados durante la crisis de 2008:
 
 ```{r mercantil, fig.width=10, fig.asp=1}
-tops <- mercantil %>%
+tops <- mercantil |>
     filter(date < as.Date("2014-12-31", format = "%Y-%m-%d") &
-               date > as.Date("2011-12-31", format = "%Y-%m-%d")) %>% 
-    group_by(date, text) %>% 
-    summarise(n = n(), p = sum(pages)) %>% 
-    ungroup() %>% 
-    as_tibble() %>% 
-    count(text, sort = TRUE) %>% 
+               date > as.Date("2011-12-31", format = "%Y-%m-%d")) |> 
+    group_by(date, text) |> 
+    summarise(n = n(), p = sum(pages)) |> 
+    ungroup() |> 
+    as_tibble() |> 
+    count(text, sort = TRUE) |> 
     top_n(16, n)
 
-tops %>% 
+tops |> 
     ggplot() +
     geom_col(aes(forcats::fct_reorder(text, -n), n)) +
+    scale_y_continuous(expand = expansion(mult = c(0, NA), add = c(0, NA)), limits = c(0, NA)) +
     labs(x = element_blank(), y = "Anuncios", 
          title = "Juzgados de lo mercantil entre 2012 y 2014",
          caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
     theme_minimal() +
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
-m <- mercantil %>% 
-    group_by(date) %>% 
-    count(text) %>% 
-    ungroup() %>% 
+m <- mercantil |> 
+    group_by(date) |> 
+    count(text) |> 
+    ungroup() |> 
     as_tibble()
-m %>% 
+m |> 
     ggplot() +
     geom_point(aes(date, n)) +
     geom_smooth(aes(date, n, col = forcats::fct_relevel(text, tops$text)),
                 data = filter(m, text %in% tops$text)) +
+    scale_y_continuous(expand = expansion(mult = c(0, NA), add = c(0, NA)), limits = c(0, NA)) +
     labs(col = "Juzgados", x = element_blank(), y = "Anuncios",
          caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
     scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
@@ -101,13 +104,14 @@ m %>%
 Cómo podemos ver impactó mayormente en los juzgados localizados en Madrid.
 
 ```{r mercantil_tops, fig.width=10, fig.asp=1}
-m %>% 
-    filter(text %in% tops$text) %>% 
+m |> 
+    filter(text %in% tops$text) |> 
     ggplot() +
     geom_point(aes(date, n)) +
     geom_smooth(aes(date, n, col = forcats::fct_relevel(text, tops$text))) +
     labs(col = "Juzgados", x = element_blank(), y = "Anuncios",
          caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
+    scale_y_continuous(expand = expansion(mult = c(0, NA), add = c(0, NA)), limits = c(0, NA)) +
     scale_x_date(labels = scales::date_format("%Y"), date_breaks = "2 years") +
     theme_bw() +
     facet_wrap(~ forcats::fct_relevel(text, tops$text), scales = "free_y") +
@@ -120,18 +124,20 @@ Uno de los más espectaculares cambios es el incremento en publicaciones a parti
 Esto es debido como veremos a los juzgados de primera instancia:
 
 ```{r primera}
-primera <- df %>% 
+primera <- df |> 
     filter(section == "4",
-           departament == "JUZGADOS DE PRIMERA INSTANCIA E INSTRUCCIÓN") %>% 
-    mutate(text = trimws(toupper(text))) %>% 
+           departament == "JUZGADOS DE PRIMERA INSTANCIA E INSTRUCCIÓN") |> 
+    mutate(text = trimws(toupper(text))) |> 
     mutate(text = gsub("\\.$", "", text))
 
-primera %>% 
-    mutate(year_s = as.character(year(date))) %>% 
-    count(year_s) %>% 
-    as_tibble() %>% 
+primera |> 
+    mutate(year_s = as.character(year(date))) |> 
+    filter(year(date) > 2016) |> 
+    count(year_s) |> 
+    as_tibble() |> 
     ggplot() +
     geom_col(aes(year_s, n)) +
+    scale_y_continuous(expand = expansion(mult = c(0, NA), add = c(0, NA)), limits = c(0, NA)) +
     labs(x = element_blank(), y = "Anuncios", 
          caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
     theme_bw() 
@@ -141,18 +147,19 @@ Como podemos ver hay un incremento espectacular en el 2016 de anuncios.
 Vamos a ver que juzgados son los que más han publicado:
 
 ```{r primeras_2016, fig.width=10, fig.asp=1}
-tops <- primera %>%
-    filter(date > as.Date("2015-12-31", format = "%Y-%m-%d")) %>% 
-    group_by(date, text) %>% 
-    summarise(n = n(), p = sum(pages)) %>% 
-    ungroup() %>% 
-    as_tibble() %>% 
-    count(text, sort = TRUE) %>% 
+tops <- primera |>
+    filter(date > as.Date("2015-12-31", format = "%Y-%m-%d")) |> 
+    group_by(date, text) |> 
+    summarise(n = n(), p = sum(pages)) |> 
+    ungroup() |> 
+    as_tibble() |> 
+    count(text, sort = TRUE) |> 
     top_n(16, n)
 
-tops %>% 
+tops |> 
     ggplot() +
     geom_col(aes(forcats::fct_reorder(text, -n), n)) +
+    scale_y_continuous(expand = expansion(mult = c(0, NA), add = c(0, NA)), limits = c(0, NA)) +
     labs(x = element_blank(), y = "Anuncios", 
          title = "Juzgados de primera instancia e instrucción a partir de 2016",
          caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
@@ -163,12 +170,12 @@ tops %>%
 Podemos ver el incremento de estos juzgados a partir de 2016
 
 ```{r primeras, fig.width=10, fig.asp=1}
-m <- primera %>% 
-    group_by(date) %>% 
-    count(text) %>% 
-    ungroup() %>% 
+m <- primera |> 
+    group_by(date) |> 
+    count(text) |> 
+    ungroup() |> 
     as_tibble()
-m %>% 
+m |> 
     ggplot() +
     geom_point(aes(date, n)) +
     geom_smooth(aes(date, n, col = forcats::fct_relevel(text, tops$text)),
@@ -176,22 +183,23 @@ m %>%
     labs(col = "Juzgados", x = element_blank(), y = "Anuncios",
          caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
     scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
-    scale_y_continuous(expand = c(0, 5), limits = c(0, max(m$n) + 5)) +
+    scale_y_continuous(expand = expansion(mult = c(0, NA), add = c(0, NA)), 
+                       limits = c(0, max(m$n) + 5)) +
     theme_bw()
 ```
 
 Podemos ver que en algunos juzgados antes de 2016 no se habían publicado ningún anuncio:
 
 ```{r primera_tops, fig.width=10, fig.asp=1}
-m %>% 
-    filter(text %in% tops$text) %>% 
+m |> 
+    filter(text %in% tops$text) |> 
     ggplot() +
     geom_point(aes(date, n)) +
     geom_smooth(aes(date, n, col = forcats::fct_relevel(text, tops$text))) +
     labs(col = "Juzgados", x = element_blank(), y = "Anuncios",
          caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
     scale_x_date(labels = scales::date_format("%Y"), date_breaks = "2 years") +
-    scale_y_continuous(expand = c(0, 5)) +
+    scale_y_continuous(expand = expansion(mult = c(0, NA), add = c(0, NA)), limits = c(0, NA)) +
     theme_bw() +
     facet_wrap(~ forcats::fct_relevel(text, tops$text), scales = "free_y") +
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
@@ -204,14 +212,14 @@ Tal vez esto es debido a alguna ley o mejora de las condiciones de los juzgados
 Cómo regalo y para comparar aquí van los cambios en publicaciones de la justicia militar.
 
 ```{r militia}
-ord <- df %>% 
-    filter(section == "4") %>% 
+ord <- df |> 
+    filter(section == "4") |> 
     as_tibble()
-militar <- ord %>% 
+militar <- ord |> 
     filter(departament %in% c("TRIBUNALES MILITARES TERRITORIALES", 
-                             "JUZGADOS TOGADOS MILITARES")) %>% 
-    mutate(text = trimws(toupper(text))) %>% 
-    mutate(text = gsub("\\.$", "", text)) %>% 
+                             "JUZGADOS TOGADOS MILITARES")) |> 
+    mutate(text = trimws(toupper(text))) |> 
+    mutate(text = gsub("\\.$", "", text)) |> 
     mutate(text = case_when(
         text == "ALMERIA" ~ "ALMERÍA",
         text == "EDICTO" ~ "EDICTOS",
@@ -220,29 +228,31 @@ militar <- ord %>%
         text == "TRBUNAL MILITAR TERRITORIAL PRIMERO" ~ "TRIBUNAL MILITAR TERRITORIAL PRIMERO",
         TRUE ~ text))
 
-militar %>% 
-    mutate(year_s = as.character(year(date))) %>% 
-    group_by(year_s) %>% 
-    count(departament) %>% 
-    ungroup() %>% 
-    as_tibble() %>% 
+militar |> 
+    mutate(year_s = as.character(year(date))) |> 
+    group_by(year_s) |> 
+    count(departament) |> 
+    ungroup() |> 
+    as_tibble() |> 
     ggplot() +
     geom_col(aes(year_s, n, fill = departament)) +
+    scale_y_continuous(expand = expansion(mult = c(0, NA), add = c(0, NA)), limits = c(0, NA)) +
     labs(x = element_blank(), y = "Anuncios", fill = "Departamento",
          caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +
     theme_bw() 
 ```
 
 ```{r militia2, fig.width=10, fig.asp=1}
-militar %>% 
-    filter(departament == "TRIBUNALES MILITARES TERRITORIALES") %>% 
-    mutate(year_s = as.character(year(date))) %>% 
-    group_by(year_s) %>% 
-    count(text) %>% 
-    ungroup() %>% 
-    as_tibble() %>% 
+militar |> 
+    filter(departament == "TRIBUNALES MILITARES TERRITORIALES") |> 
+    mutate(year_s = as.character(year(date))) |> 
+    group_by(year_s) |> 
+    count(text) |> 
+    ungroup() |> 
+    as_tibble() |> 
     ggplot() +
     geom_col(aes(year_s, n, fill = text)) +
+    scale_y_continuous(expand = expansion(mult = c(0, NA), add = c(0, NA)), limits = c(0, NA)) +
     scale_fill_viridis_d(option = "C") +
     labs(x = element_blank(), y = "Anuncios", fill = "Texto:", 
          title = "Tribunales militares territoriales",
@@ -253,15 +263,16 @@ militar %>%
 Los tribunales militares territoriales incluyen edictos.
 
 ```{r milita3, fig.width=10, fig.asp=1}
-militar %>% 
-    filter(departament == "JUZGADOS TOGADOS MILITARES") %>% 
-    mutate(year_s = as.character(year(date))) %>% 
-    group_by(year_s) %>% 
-    count(text) %>% 
-    ungroup() %>% 
-    as_tibble() %>% 
+militar |> 
+    filter(departament == "JUZGADOS TOGADOS MILITARES") |> 
+    mutate(year_s = as.character(year(date))) |> 
+    group_by(year_s) |> 
+    count(text) |> 
+    ungroup() |> 
+    as_tibble() |> 
     ggplot() +
     geom_col(aes(year_s, n, fill = text)) +
+    scale_y_continuous(expand = expansion(mult = c(0, NA), add = c(0, NA)), limits = c(0, NA)) +
     labs(x = element_blank(), y = "Anuncios", fill = "Texto:", 
          title = "Juzgados togados militares",
          caption = "Fuente: Agencia Estatal del Boletín Oficial del Estado") +

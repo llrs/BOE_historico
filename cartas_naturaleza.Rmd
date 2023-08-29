@@ -22,10 +22,11 @@ library("stringr", warn.conflicts = FALSE)
 
 
 con <- DBI::dbConnect(RSQLite::SQLite(),
-                      dbname = "boe.sqlite")
-dff <- con %>% 
-    tbl("sumario") %>% 
-    collect() %>% 
+                      dbname = "boe2023.sqlite")
+dff <- con |> 
+    tbl("sumario") |> 
+    filter(epigraph == "Nacionalidad española") |> 
+    collect() |> 
     mutate(date = as.Date(date),
            weekday = weekdays(date))
 DBI::dbDisconnect(con)
@@ -33,18 +34,15 @@ DBI::dbDisconnect(con)
 
 
 ```{r buscando}
-cn2 <- dff %>% 
-    filter(epigraph == "Nacionalidad española") %>% 
-    as_tibble()
-cn <- cn2 %>% 
-    mutate(CN = str_detect(text, "carta de naturaleza"))
+cn <- mutate(dff, CN = str_detect(text, "carta de naturaleza"))
 ```
 
 Esta vez repito un poco el análisis de [Cívio](https://civio.es/el-boe-nuestro-de-cada-dia/2013/06/24/espanoles-por-decreto/), pero sólo a partir de 2009 y hasta 2019. Más que nada para confirmar que las cifras cuadren, que efectivamente se da.
 
 ```{r dates}
-cn %>% 
-    count(date) %>% 
+cn |> 
+    filter(CN) |> 
+    count(date) |> 
     ggplot(aes(date, n)) + 
     geom_col() +
     scale_x_date(labels = scales::date_format("%Y"), date_breaks = "1 year") +
@@ -55,9 +53,10 @@ cn %>%
 ```
 
 ```{r years}
-cn %>% 
-    count(Year = format(date, "%Y")) %>%
-    mutate(Cartas = "Yes") %>% 
+cn |> 
+    filter(CN) |> 
+    count(Year = format(date, "%Y")) |>
+    mutate(Cartas = "Yes") |> 
     ggplot() + 
     geom_col(aes(Year, n)) +
     scale_y_continuous(expand = c(0, 10)) +
@@ -66,8 +65,9 @@ cn %>%
     theme_bw() +
     theme(panel.grid.major.x = element_blank())
     
-cn %>% 
-    count(Year = format(date, "%Y")) %>%
+cn |> 
+    filter(CN) |> 
+    count(Year = format(date, "%Y")) |>
     knitr::kable(row.names = FALSE, align = "c")
 ```
 
@@ -75,8 +75,8 @@ Para terminar con un poquito más de contenido. Los otros epígrafes sobre la "N
 
 
 ```{r kable, }
-d <- cn %>% 
-    filter(!CN) %>% 
+d <- cn |> 
+    filter(!CN) |> 
     select(date, section, section_number, departament, text, publication)
 
 knitr::kable(d, format = "html", row.names = TRUE, align = "c", 
