@@ -532,3 +532,16 @@ Rendering: last_BOE.Rmd
 /usr/bin/pandoc +RTS -K512m -RTS last_BOE.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output last_BOE.html --lua-filter /home/pi/R/aarch64-unknown-linux-gnu-library/4.3/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /home/pi/R/aarch64-unknown-linux-gnu-library/4.3/rmarkdown/rmarkdown/lua/latex-div.lua --variable bs3=TRUE --standalone --section-divs --template /home/pi/R/aarch64-unknown-linux-gnu-library/4.3/rmarkdown/rmd/h/default.html --no-highlight --variable highlightjs=1 --include-before-body /tmp/RtmpYHVBDB/rmarkdown-str4c291463ae23e.html --variable navbar=1 --variable theme=bootstrap --mathjax --variable 'mathjax-url=https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /tmp/RtmpYHVBDB/rmarkdown-str4c291608aba11.html --include-in-header twitter_BOE.html 
 
 Output created: docs/last_BOE.html
+
+Rendering: last_BOE.Rmd
+1/10           
+2/10 [setup]   
+3/10           
+4/10 [dates]   
+5/10           
+6/10 [graphics]
+7/10           
+8/10 [anuncios]
+9/10           
+10/10 [report]  
+/usr/bin/pandoc +RTS -K512m -RTS last_BOE.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output last_BOE.html --lua-filter /home/pi/R/aarch64-unknown-linux-gnu-library/4.3/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /home/pi/R/aarch64-unknown-linux-gnu-library/4.3/rmarkdown/rmarkdown/lua/latex-div.lua --variable bs3=TRUE --standalone --section-divs --template /home/pi/R/aarch64-unknown-linux-gnu-library/4.3/rmarkdown/rmd/h/default.html --no-highlight --variable highlightjs=1 --include-before-body /tmp/Rtmp4pEyPo/rmarkdown-str4e44a23e4a08f.html --variable navbar=1 --variable theme=bootstrap --mathjax --variable 'mathjax-url=https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /tmp/Rtmp4pEyPo/rmarkdown-str4e44a51be5028.html --include-in-header twitter_BOE.html 
