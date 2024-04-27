@@ -22,7 +22,7 @@ library("stringr", warn.conflicts = FALSE)
 
 
 con <- DBI::dbConnect(RSQLite::SQLite(),
-                      dbname = "boe2023.sqlite")
+                      dbname = "../BOE_db/boe.sqlite")
 dff <- con |> 
     tbl("sumario") |> 
     filter(epigraph == "Nacionalidad española") |> 

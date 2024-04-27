@@ -25,7 +25,7 @@ library("forcats", warn.conflicts = FALSE)
 library("tidyr", warn.conflicts = FALSE)
 library("stringr", warn.conflicts = FALSE)
 con <- DBI::dbConnect(RSQLite::SQLite(),
-                      dbname = "boe2023.sqlite")
+                      dbname = "../BOE_db/boe.sqlite")
 boe <- con |> 
   tbl("sumario") |> 
   filter(!is.na(epigraph)) |> 
