@@ -2479,3 +2479,15 @@ Backtrace:
  1. base::gsub(pattern = "BOE-([AB])-.*", replacement = "\\1", sumario_hoy$publication)
  2. base::is.factor(x)
 Execution halted
+
+Rendering: last_BOE.Rmd
+1/10           
+2/10 [setup]   
+3/10           
+4/10 [dates]   
+Error in `sumario_hoy$publication`:
+! $ operator is invalid for atomic vectors
+Backtrace:
+ 1. base::gsub(pattern = "BOE-([AB])-.*", replacement = "\\1", sumario_hoy$publication)
+ 2. base::is.factor(x)
+Execution halted
