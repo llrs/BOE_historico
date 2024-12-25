@@ -3051,3 +3051,24 @@ Backtrace:
  25. base (local) docall(restart$handler, restartArgs)
  27. evaluate (local) fun(base::quote(`<smplErrr>`))
 Execution halted
+
+Rendering: last_BOE.Rmd
+1/10           
+2/10 [setup]   
+3/10           
+4/10 [dates]   
+Error in `sumario_hoy$publication`:
+! $ operator is invalid for atomic vectors
+Backtrace:
+  1. rmarkdown::render_site("last_BOE.Rmd")
+  2. generator$render(...)
+  3. base::sapply(...)
+  4. base::lapply(X = X, FUN = FUN, ...)
+  5. rmarkdown (local) FUN(X[[i]], ...)
+     ...
+ 22. base::withRestarts(...)
+ 23. base (local) withRestartList(expr, restarts)
+ 24. base (local) withOneRestart(withRestartList(expr, restarts[-nr]), restarts[[nr]])
+ 25. base (local) docall(restart$handler, restartArgs)
+ 27. evaluate (local) fun(base::quote(`<smplErrr>`))
+Execution halted
