@@ -7417,3 +7417,41 @@ Backtrace:
  26.                                       ├─base::do.call("fun", lapply(args, enquote))
  27.                                       └─evaluate (local) fun(base::quote(`<smplErrr>`))
 Execution halted
+
+Rendering: last_BOE.Rmd
+1/10           
+2/10 [setup]   
+3/10           
+4/10 [dates]   
+Error in `sumario_hoy$publication`:
+! $ operator is invalid for atomic vectors
+Backtrace:
+     ▆
+  1. └─rmarkdown::render_site("last_BOE.Rmd")
+  2.   └─generator$render(...)
+  3.     └─base::sapply(...)
+  4.       └─base::lapply(X = X, FUN = FUN, ...)
+  5.         └─rmarkdown (local) FUN(X[[i]], ...)
+  6.           └─rmarkdown (local) render_one(...)
+  7.             ├─base::suppressMessages(rmarkdown::render(...))
+  8.             │ └─base::withCallingHandlers(...)
+  9.             └─rmarkdown::render(...)
+ 10.               └─knitr::knit(knit_input, knit_output, envir = envir, quiet = quiet)
+ 11.                 └─knitr:::process_file(text, output)
+ 12.                   ├─xfun:::handle_error(...)
+ 13.                   ├─base::withCallingHandlers(...)
+ 14.                   └─knitr:::process_group(group)
+ 15.                     └─knitr:::call_block(x)
+ 16.                       └─knitr:::block_exec(params)
+ 17.                         └─knitr:::eng_r(options)
+ 18.                           ├─knitr:::in_input_dir(...)
+ 19.                           │ └─knitr:::in_dir(input_dir(), expr)
+ 20.                           └─knitr (local) evaluate(...)
+ 21.                             └─evaluate::evaluate(...)
+ 22.                               └─base::withRestarts(...)
+ 23.                                 └─base (local) withRestartList(expr, restarts)
+ 24.                                   └─base (local) withOneRestart(withRestartList(expr, restarts[-nr]), restarts[[nr]])
+ 25.                                     └─base (local) docall(restart$handler, restartArgs)
+ 26.                                       ├─base::do.call("fun", lapply(args, enquote))
+ 27.                                       └─evaluate (local) fun(base::quote(`<smplErrr>`))
+Execution halted
